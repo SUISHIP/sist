@@ -33,14 +33,6 @@ input[type="text"] {
   border-radius: 5px;
   font-size: 18px;
 }
-                   .light-theme {
-  background: #eff6f5;
-  color: #333;
-}
-.dark-theme {
-  background: #1a2324;
-  color: #ddd
-}
                  </style>
                 </head>
                 <body>
@@ -49,9 +41,10 @@ input[type="text"] {
                  <div id="question-container">
                   <p id="question"></p>
                   <input type="text" id="answer" placeholder="回答">
-                  <button  type="button" onclick="checkAnswer()">確定</button>
+                  <button type="button" onclick="checkAnswer()">確定</button>
                   <p id="result"></p>
                  </div>
+
                  <h2>結果</h2>
                   <p>ミスし単語</p>
                   <table id="resultTable">
@@ -69,7 +62,6 @@ input[type="text"] {
 </details>
                   </footer>
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYwVAfWOosX8EYom7sHkBmFPvl2VgK7ovopRsFGByZqafFMw/viewform?usp=sf_link">フィードバックはこちら</a>
-                  
                  <script>
                   const problems = [
                  {
@@ -963,6 +955,10 @@ input[type="text"] {
   }
 });
 
-               
+                 </script>
+                  <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+<script>
+  new Darkmode().showWidget();
+</script>
                 </body>
                 </html>
