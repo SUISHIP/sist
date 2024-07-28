@@ -33,15 +33,24 @@ input[type="text"] {
   border-radius: 5px;
   font-size: 18px;
 }
+                   .light-theme {
+  background: #eff6f5;
+  color: #333;
+}
+.dark-theme {
+  background: #1a2324;
+  color: #ddd
+}
                  </style>
                 </head>
                 <body>
                  <h1>みにまるスペリング v1.1.4</h1>
                  <p>次の空欄に当てはまる語句を入力</p>
+                  <input id="btn-mode" type="checkbox"> ダークモード
                  <div id="question-container">
                   <p id="question"></p>
                   <input type="text" id="answer" placeholder="回答">
-                  <button class="darkmode-ignore" type="button" onclick="checkAnswer()">確定</button>
+                  <button  type="button" onclick="checkAnswer()">確定</button>
                   <p id="result"></p>
                  </div>
 
@@ -61,7 +70,7 @@ input[type="text"] {
 　　<li>今後のアプデで、ミス問題のリトライ、前置詞など、ランダムミニテスト(15問)実装したい</li>
 </details>
                   </footer>
-                  <a class="darkmode-ignore" href="https://docs.google.com/forms/d/e/1FAIpQLSeYwVAfWOosX8EYom7sHkBmFPvl2VgK7ovopRsFGByZqafFMw/viewform?usp=sf_link">フィードバックはこちら</a>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYwVAfWOosX8EYom7sHkBmFPvl2VgK7ovopRsFGByZqafFMw/viewform?usp=sf_link">フィードバックはこちら</a>
                  <script>
                   const problems = [
                  {
@@ -955,10 +964,20 @@ input[type="text"] {
   }
 });
 
-                 </script>
-                  <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-<script>
-  new Darkmode().showWidget();
-</script>
+                // チェックボックスの取得
+const btn = document.querySelector("#btn-mode");
+ 
+// チェックした時の挙動
+btn.addEventListener("change", () => {
+  if (btn.checked == true) {
+    // ダークモード
+    document.body.classList.remove("light-theme");
+    document.body.classList.add("dark-theme");
+  } else {
+    // ライトモード
+    document.body.classList.remove("dark-theme");
+    document.body.classList.add("light-theme");
+  }
+});
                 </body>
                 </html>
