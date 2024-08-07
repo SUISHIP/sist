@@ -884,9 +884,10 @@ button:hover {
   let results = [];
   let currentProblems = [];
 
-  function monsu() {
+ function monsu() {
     const numQuestions = parseInt(document.getElementById("numQuestions").value);
-    currentProblems = problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions);
+    const isRandom = document.getElementById("order").value === "random";
+    currentProblems = isRandom ? problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions) : problems.slice(0, numQuestions);
     showNextProblem();
   }
 
@@ -1018,11 +1019,25 @@ button:hover {
       option.textContent = i;
       select.appendChild(option);
     }
+    const orderLabel = document.createElement('label');
+    orderLabel.textContent = "出題順:";
+    const orderSelect = document.createElement('select');
+    orderSelect.id = "order";
+    const optionRandom = document.createElement('option');
+    optionRandom.value = "random";
+    optionRandom.textContent = "ランダム";
+    const optionSequential = document.createElement('option');
+    optionSequential.value = "sequential";
+    optionSequential.textContent = "順番";
+    orderSelect.appendChild(optionRandom);
+    orderSelect.appendChild(optionSequential);
     const startButton = document.createElement('button');
     startButton.textContent = "スタート";
     startButton.onclick = monsu;
     container.appendChild(label);
     container.appendChild(select);
+    container.appendChild(orderLabel);
+    container.appendChild(orderSelect);
     container.appendChild(startButton);
     document.body.insertBefore(container, document.getElementById("question-container"));
   }
