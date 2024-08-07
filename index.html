@@ -1,15 +1,15 @@
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                 <meta charset="UTF-8">
-                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                 <title>みにまるスペリング</title>
-                 <style>
-                  /* 確定ボタンのスタイル */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>みにまるスペリング</title>
+ <style>
+  /* 確定ボタンのスタイル */
 button {
-  background-color: #1e90ff; /* 水色 */
+  background-color: #000000; /* 水色 */
   color: white;
-  padding: 15px 32px;
+  padding: 8px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -33,932 +33,1001 @@ input[type="text"] {
   border-radius: 5px;
   font-size: 18px;
 }
-                 </style>
-                </head>
-                <body>
-                 <h1>みにまるスペリング v1.1.4</h1>
-                 <p>次の空欄に当てはまる語句を入力</p>
-                 <div id="question-container">
-                  <p id="question"></p>
-                  <input type="text" id="answer" placeholder="回答">
-                  <button type="button" onclick="checkAnswer()">確定</button>
-                  <p id="result"></p>
-                 </div>
 
-                 <h2>結果</h2>
-                  <p>ミスし単語</p>
-                  <table id="resultTable">
-                  <tr>
-                  </tr>
-                 </table>
-                  <footer>
-<details>
-　<summary>#管理者より</summary>
- <li>バージョン1.1では1~200番の問題が出ます</li>
- <li>わからん単語の分別にご活用ください</li>
-　　<li>だいたい一語のみに対応してます</li>
-　　<li>最後まで解くと間違えた問題を見れます</li>
-　　<li>今後のアプデで、ミス問題のリトライ、前置詞など、ランダムミニテスト(15問)実装したい</li>
-</details>
-                  </footer>
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYwVAfWOosX8EYom7sHkBmFPvl2VgK7ovopRsFGByZqafFMw/viewform?usp=sf_link">フィードバックはこちら</a>
-                 <script>
-                  const problems = [
-                 {
-    question: "follow her advice/彼女の助言に従う",
-    answer: "follow",
-},
-{
-    question: "consider the problem seriously/真剣にその問題を考える",
-    answer: "consider",
-},
-{
-    question: "increase by 20%/20%増加する",
-    answer: "increase",
-},
-{
-    question: "expect you to arrive soon/君がすぐ来ることを予期する",
-    answer: "expect",
-},
-{
-    question: "decide to tel the truth/真実を語る決意をする",
-    answer: "decide",
-},
-{
-    question: "develop a unique ability/特異な能力を発達させる",
-    answer: "develop",
-},
-{
-    question: "provide him with information/彼に情報を与える",
-    answer: "provide",
-},
-{
-    question: "continue to grow fast/急速に成長し続ける",
-    answer: "continue",
-},
-{
-    question: "The list includes his name./リストは彼の名前を含んでいる",
-    answer: "includes",
-},
-{
-    question: "remain silent/黙ったままでいる",
-    answer: "remain",
-},
-{
-    question: "reach the mountain top/山頂に達する",
-    answer: "reach",
-},
-{
-    question: "allow him to go out/彼に外出を許可する",
-    answer: "allow",
-},
-{
-    question: "be forced to work/働くよう強制される",
-    answer: "forced",
-},
-{
-    question: "offer help to the poor/貧しい人に援助を申し出る",
-    answer: "offer",
-},
-{
-    question: "realize the error/間違いを悟る",
-    answer: "realize",
-},
-{
-    question: "suggest a new way/新しいやり方を提案する",
-    answer: "suggest",
-},
-{
-    question: "require more attention/もっと注意を必要とする",
-    answer: "require",
-},
-{
-    question: "worry about money/お金のことを心配する",
-    answer: "worry",
-},
-{
-    question: "wonder where he has gone/彼はどこに行ったのかと思う",
-    answer: "wonder",
-},
-{
-    question: "The car cost me $50,000./その車には5万ドルかかった",
-    answer: "cost",
-},
-{
-    question: "tend to get angry/腹を立てがちである",
-    answer: "tend",
-},
-{
-    question: "Everything depends on him./すべては彼しだいだ",
-    answer: "depends",
-},
-{
-    question: "share a room with a friend/友人と部屋を共有する",
-    answer: "share",
-},
-{
-    question: "demand more freedom/もっと自由を要求する",
-    answer: "demand",
-},
-{
-    question: "support the President/大統領を支持する",
-    answer: "support",
-},
-{
-    question: "hire many young people/多くの若者を雇う",
-    answer: "hire",
-},
-{
-    question: "regard him as a friend/彼を友達とみなす",
-    answer: "regard",
-},
-{
-    question: "This story is based on fact./この話は事実に基づいている",
-    answer: "based",
-},
-{
-    question: "improve living conditions/生活状態を向上させる",
-    answer: "improve",
-},
-{
-    question: "recognize the importance/重要性を認める",
-    answer: "recognize",
-},
-{
-    question: "notice the color change/色彩の変化に気付く",
-    answer: "notice",
-},
-{
-    question: "You are supposed to wear a seat belt./シートベルトを締めることになっている",
-    answer: "supposed",
-},
-{
-    question: "raise both hands/両手を上げる",
-    answer: "raise",
-},
-{
-    question: "prefer tea to coffee/コーヒーよりお茶を好む",
-    answer: "prefer",
-},
-{
-    question: "cheer up the patients/患者を元気づける",
-    answer: "cheer up",
-},
-{
-    question: "suffer heavy damage/ひどい損害を受ける",
-    answer: "suffer",
-},
-{
-    question: "describe the lost bag/なくしたバッグの特徴を言う",
-    answer: "describe",
-},
-{
-    question: "prevent him from sleeping/彼が眠るのをさまげる",
-    answer: "prevent",
-},
-{
-    question: "reduce energy costs/エネルギー費を減らす",
-    answer: "reduce",
-},
-{
-    question: "mistake salt for sugar/塩と砂糖をまちがえる",
-    answer: "mistake",
-},
-{
-    question: "prepare a room for a guest/客のために部屋を準備する",
-    answer: "prepare",
-},
-{
-    question: "encourage children to read/子供に読書をすすめる",
-    answer: "encourage",
-},
-{
-    question: "prove to be true/本当だとわかる",
-    answer: "prove",
-},
-{
-    question: "treat him like a child/子供みたいに彼をあつかう",
-    answer: "treat",
-},
-{
-    question: "establish a company/会社を設立する",
-    answer: "establish",
-},
-{
-    question: "stress-related illness/ストレスと関係のある病気",
-    answer: "stress-related",
-},
-{
-    question: "compare Japan with China/日本と中国を比較する",
-    answer: "compare",
-},
-{
-    question: "spread the tablecloth/テーブルクロスを広げる",
-    answer: "spread",
-},
-{
-    question: "What does this word refer to?/この語は何を指示するか",
-    answer: "refer",
-},
-{
-    question: "supply the city with water/その都市に水を供給する",
-    answer: "supply",
-},
-{
-    question: "gain useful knowledge/有益な知識を得る",
-    answer: "gain",
-},
-{
-    question: "destroy forests/森林を破壊する",
-    answer: "destroy",
-},
-{
-    question: "apply the rule to every case/全ての場合に規則を当てはめる",
-    answer: "apply",
-},
-{
-    question: "seek help from the police/警官に助けを求める",
-    answer: "seek",
-},
-{
-    question: "search for the stolen car/盗難車を捜す",
-    answer: "search",
-},
-{
-    question: "He claims that he saw a UFO./彼はUFOを見たと主張する",
-    answer: "claims",
-},
-{
-    question: "draw a map/地図を描く",
-    answer: "draw",
-},
-{
-    question: "refuse to give up hope/希望を捨てるのを拒む",
-    answer: "refuse",
-},
-{
-    question: "respond to question/質問に答える",
-    answer: "respond",
-},
-{
-    question: "Never mention it again./二度とそのことを口にするな",
-    answer: "mention",
-},
-{
-    question: "judge a person by his looks/人を外見で判断する",
-    answer: "judge",
-},
-{
-    question: "The plane is approaching Chicago./飛行機はシカゴに接近している",
-    answer: "approaching",
-},
-{
-    question: "I admit that I was wrong./自分が間違っていたと認める",
-    answer: "admit",
-},
-{
-    question: "reflect the mood of the times/時代の気分を反映する",
-    answer: "reflect",
-},
-{
-    question: "perform the job/仕事を遂行する",
-    answer: "perform",
-},
-{
-    question: "a very boring movie/すごく退屈な映画",
-    answer: "boring",
-},
-{
-    question: "survive in the jungle/ジャングルで生き残る",
-    answer: "survive",
-},
-{
-    question: "Words represent ideas./言葉は考えを表す",
-    answer: "represent",
-},
-{
-    question: "argue that he is right/彼は正しいと主張する",
-    answer: "argue",
-},
-{
-    question: "take freedom for granted/自由を当然と考える",
-    answer: "take",
-},
-{
-    question: "The data indicate that he is right./データは彼が正しいことを示す",
-    answer: "indicate",
-},
-{
-    question: "The book belongs to Howard./その本はハワードのものだ",
-    answer: "belongs",
-},
-{
-    question: "acquire a language/言語を習得する",
-    answer: "acquire",
-},
-{
-    question: "reply to his letter/彼の手紙に返事をする",
-    answer: "reply",
-},
-{
-    question: "feed a large family/大勢の家族を養う",
-    answer: "feed",
-},
-{
-    question: "escape from reality/現実から逃避する",
-    answer: "escape",
-},
-{
-    question: "replace the old system/古い制度に取って代わる",
-    answer: "replace",
-},
-{
-    question: "reveal a surprising fact/驚くべき事実を明らかにする",
-    answer: "reveal",
-},
-{
-    question: "Japan is surrounded by the sea./日本は海に囲まれている",
-    answer: "surrounded",
-},
-{
-    question: "The job suits you./その仕事は君に合っている",
-    answer: "suits",
-},
-{
-         question: "the estimated population of Japan/日本の推定人口",
-         answer: "estimated",
-         },
-{
-         question: "aim at the Asian market/アジア市場をねらう",
-         answer: "aim",
-         },
-{
-         question: "earn money for the family/家族のためにお金をかせぐ",
-         answer: "earn",
-         },
-{
-         question: "My memory began to decline./記憶力が低下し始めた",
-         answer: "decline",
-         },
-{
-         question: "can't afford to buy a Ford/フォードを買う余裕が無い",
-         answer: "afford",
-         },
-{
-         question: "be confused by her anger/彼女の怒りに当惑する",
-         answer: "confused",
-         },
-{
-         question: "graduate from high school/高校を卒業する",
-         answer: "graduate",
-         },
-{
-         question: "vary from country to country/国によって変わる",
-         answer: "vary",
-         },
-{
-         question: "remove the cover/カバーを取り除く",
-         answer: "remove",
-         },
-{
-         question: "insist on going to France/フランスへ行くと言い張る",
-         answer: "insist",
-         },
-{
-         question: "examine every record/あらゆる記録を調べる",
-         answer: "examine",
-         },
-{
-         question: "remind him of the promise/彼に約束を思い出させる",
-         answer: "remind",
-         },
-{
-         question: "contribute to world peace/世界平和に貢献する",
-         answer: "contribute",
-         },
-{
-         question: "warn him of the danger/彼に危険を警告する",
-         answer: "warn",
-         },
-{
-         question: "connect the computer to the Internet/コンピューターをインターネットにつなぐ",
-         answer: "connect",
-         },
-{
-         question: "match him in power/力で彼に匹敵する",
-         answer: "match",
-         },
-{
-         question: "focus on the problem/その問題に焦点を合わせる",
-         answer: "focus",
-         },
-{
-         question: "reject the proposal/提案を拒否する",
-         answer: "reject",
-         },
-{
-         question: "convince him that it is true/それは本当だと彼に確信させる",
-         answer: "convince",
-         },
-{
-         question: "Health is associated with happiness./健康は幸福と関連している",
-         answer: "associated",
-         },
-{
-         question: "rush into the hospital/病院へ急いでいく",
-         answer: "rush",
-         },
-{
-         question: "stress the need for information/情報の必要性を強調する",
-         answer: "stress",
-         },
-{
-         question: "attract his attention/彼の注意を引きつける",
-         answer: "attract",
-         },
-{
-         question: "rely on their power/彼らの力に頼る",
-         answer: "rely",
-         },
-{
-         question: "regrect leaving home/家を出たのを後悔する",
-         answer: "regrect",
-         },
-{
-         question: "adopt a new system/新しいシステムを採用する",
-         answer: "adopt",
-         },
-{
-         question: "shake the bottle well/ビンをよく振る",
-         answer: "shake",
-         },
-{
-         question: "hurt her feelings/彼女の気持ちを傷つける",
-         answer: "hurt",
-         },
-{
-         question: "operate a computer with a mouse/マウスでコンピューターを操作する",
-         answer: "operate",
-         },
-{
-         question: "Exercise extends life./運動は寿命を延ばす",
-         answer: "extends",
-         },
-{
-         question: "blame others for the failure/失敗を他人のせいにする",
-         answer: "blame",
-         },
-{
-         question: "The book consists of six lessons./その本は6課で構成されている",
-         answer: "consists",
-         },
-{
-         question: "persuade them to go back/彼らを説得して帰らせる",
-         answer: "persuade",
-         },
-{
-         question: "admire her work/彼女の仕事に感嘆する",
-         answer: "admire",
-         },
-{
-         question: "be disappointed with the test results/試験の結果に失望する",
-         answer: "disappointed",
-         },
-{
-         question: "expand the market/市場を拡大する",
-         answer: "expand",
-         },
-{
-         question: "preserve forests/森林を保護する",
-         answer: "preserve",
-         },
-{
-         question: "struggle to get free/自由になろうともがく",
-         answer: "struggle",
-         },
-{
-         question: "arrange the meeting/会議の手はずを整える",
-         answer: "arrange",
-         },
-{
-         question: "disturb his sleep/彼の睡眠をさまたげる",
-         answer: "disturb",
-         },
-{
-         question: "employ foreign workers/外国人労働者を雇う",
-         answer: "employ",
-         },
-{
-         question: "engage in volunteer activities/ボランティア活動に従事する",
-         answer: "engage",
-         },
-{
-         question: "an abandoned pet/捨てられたペット",
-         answer: "abandoned",
-         },
-{
-         question: "display prices/価格を示す",
-         answer: "display",
-         },
-{
-         question: "encounter many difficulties/数々の困難に出会う",
-         answer: "encounter",
-         },
-{
-         question: "amuse students with jokes/冗談で学生を笑わせる",
-         answer: "amuse",
-         },
-{
-         question: "Sorry to bother you, but …/おじゃましてすいませんが…",
-         answer: "bother",
-         },
-{
-         question: "concentrate on what he is saying/彼の話に集中する",
-         answer: "concentrate",
-         },
-{
-         question: "adapt to a new culture/新しい文化に適応する",
-         answer: "adapt",
-         },
-{
-         question: "be puzzled by the problem/その問題に頭を悩ませる",
-         answer: "puzzled",
-         },
-{
-         question: "appeal to his feelings/彼の感情に訴えかける",
-         answer: "appeal",
-         },
-{
-         question: "combine song and dance/歌と踊りを結合させる",
-         answer: "combine",
-         },
-{
-         question: "delay his arrival/彼の到着を遅らせる",
-         answer: "delay",
-         },
-{
-         question: "repair the car/車を修理する",
-         answer: "repair",
-         },
-{
-         question: "a fascinating story/夢中にさせる物語",
-         answer: "fascinating",
-         },
-{
-         question: "pardon me./ごめんなさい",
-         answer: "pardon",
-         },
-{
-         question: "import food from abroad/海外から食料を輸入する",
-         answer: "import",
-         },
-{
-         question: "remark that he is kind/彼は親切だと述べる",
-         answer: "remark",
-         },
-{
-         question: "reserve a room at a hotel/ホテルの部屋を予約する",
-         answer: "reserve",
-         },
-{
-         question: "at an amazing speed/驚異的な早さで",
-         answer: "amazing",
-         },
-{
-         question: "frightening experiences/ぞっとするような経験",
-         answer: "frightening",
-         },
-{
-         question: "release him from work/仕事から彼を解放する",
-         answer: "release",
-         },
-{
-         question: "rent an apartment/アパートを借りる",
-         answer: "rent",
-         },
-{
-         question: "recover from ilness/病気から回復する",
-         answer: "recover",
-         },
-{
-         question: "suspect him of being a spy/彼をスパイではないかと疑う",
-         answer: "suspect",
-         },
-{
-         question: "deliver a message to a friend/友人に伝言を渡す",
-         answer: "deliver",
-         },
-{
-         question: "identify people by their eyes/目で人の本人確認をする",
-         answer: "identify",
-         },
-{
-         question: "The office is located in the area./オフィスはその地域にある",
-         answer: "located",
-         },
-{
-         question: "a car manufacturing company/車を製造する会社",
-         answer: "manufacturing",
-         },
-{
-         question: "occupy a high position/高い地位を占める",
-         answer: "occupy",
-         },
-{
-         question: "own a house/家を所有する",
-         answer: "own",
-         },
-{
-         question: "be exposed to danger/危険にさらされている",
-         answer: "exposed",
-         },
-{
-         question: "translate a novel into English/小説を英語に翻訳する",
-         answer: "translate",
-         },
-{
-         question: "cure him of his illness/彼の病気を治す",
-         answer: "cure",
-         },
-{
-         question: "perceive danger/危険に気付く",
-         answer: "perceive",
-         },
-{
-         question: "adjust to a new school/新しい学校に慣れる",
-         answer: "adjust",
-         },
-{
-         question: "be alarmed by the noise/その音にぎょっとする",
-         answer: "alarmed",
-         },
-{
-         question: "assist him in his work/彼の仕事を手伝う",
-         answer: "assist",
-         },
-{
-         question: "a frozen stream/凍った小川",
-         answer: "frozen",
-         },
-{
-         question: "spoil the party/パーティを台無しにする",
-         answer: "spoil",
-         },
-{
-         question: "shift gears/ギアを変える",
-         answer: "shift",
-         },
-{
-         question: "be embarrassed by the mistake/そもまちがいには恥ずかしい",
-         answer: "embarrassed",
-         },
-{
-         question: "approve of their marriage/二人の結婚を承認する",
-         answer: "approve",
-         },
-{
-         question: "weight 65 kilograms/65キログラムの重さがある",
-         answer: "weight",
-         },
-{
-         question: "stretch my legs/足を広げる",
-         answer: "stretch",
-         },
-{
-         question: "participate in the meeting/会議に参加する",
-         answer: "participate",
-         },
-{
-         question: "exhibit Picasso's works/ピカソの作品を展示する",
-         answer: "exhibit",
-         },
-{
-         question: "I owe my success to you./私の成功はあなたのおかげだ",
-         answer: "owe",
-         },
-{
-         question: "celebrate his birthday/彼の誕生日を祝う",
-         answer: "celebrate",
-         },
-{
-         question: "trees decorated with lights/電球で飾られた木々",
-         answer: "decorated",
-         },
-{
-         question: "forgive him for being late/彼の遅刻を許す",
-         answer: "forgive",
-         },
-{
-         question: "be seated on the bench/ベンチで座っている",
-         answer: "seated",
-         },
-{
-         question: "be injured in the accident/その事故で負傷する",
-         answer: "injured",
-         },
-{
-         question: "sew a wedding dress/ウエディングドレスを縫う",
-         answer: "sew",
-         },
-{
-         question: "the result of the test/テストの結果",
-         answer: "result",
-         },
-{
-         question: "features of human language/人類の言語の特徴",
-         answer: "features",
-         },
-{
-         question: "the problems of modern society/現代社会の問題",
-         answer: "society",
-         },
-{
-         question: "a water wheel/水車",
-         answer: "wheel",
-         },
-{
-         question: "put a high value on education/教育に高い価値を置く",
-         answer: "value",
-         },
-{
-         question: "the greenhouse effect of CO2/二酸化炭素の温室効果",
-         answer: "effect",
-         },
-{
-         question: "individuals in society/社会の中の個人",
-         answer: "individuals",
-         },
-{
-         question: "have a bad influence on children/子供に悪い影響を与える",
-         answer: "influence",
-         },
-{
-         question: "charge a fee for service/サービス料を請求する",
-         answer: "fee",
-         },
-{
-         question: "at the rate of 40% a year/年40％の割合で",
-         answer: "rate",
-         },
-{
-         question: "a sign of spring/春のきざし",
-         answer: "sign",
-         },
-{
-         question: "water and gas service/水道とガスの事業",
-         answer: "service",
-         },
-{
-         question: "advances in technology/科学技術の進歩",
-         answer: "advances",
-         },
-{
-         question: "laughter is the best medicine/笑いは最高の良薬だ",
-         answer: "laughter",
-         },
-{
-         question: "produce new materials/新しい物質をつくる",
-         answer: "materials",
-         },
-{
-         question: "a center of heavy industry/重工業の中心地",
-         answer: "industry",
-         },
-{
-         question: "an attempt to break the record/記録を破ろうとする試み",
-         answer: "attempt",
-         },
-{
-         question: "US trade with France/アメリカとフランスの貿易",
-         answer: "trade",
-         },
-{
-         question: "You've made progress in English/君の英語は進歩した",
-         answer: "progress",
-         },
-{
-         question: "make an excuse to leave early/早く帰るための言い訳をする",
-         answer: "excuse",
-         },
-{
-         question: "the custom of tipping/チップを払う習慣",
-         answer: "custom",
-         },
-{
-         question: "Read the following passage/次の一説を読みなさい",
-         answer: "passage",
-         },
-{
-         question: "the market economy/市場経済",
-         answer: "economy",
-         },
-{
-         question: "the tracks of a lion/ライオンの足跡",
-         answer: "tracks",
-         },
-{
-         question: "use public transportation/公共交通機関を使う",
-         answer: "transportation",
-         },
-{
-         question: "a government official/政府の役人",
-         answer: "official",
-         },
+select {
+  width: 200px;
+  height: 40px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+}
+ </style>
+</head>
+<body>
+ <h1>みにまるスペリング v1.2.4</h1>
+ <div id="question-container">
+  <p id="question"></p>
+  <input type="text" id="answer" placeholder="回答" onkeydown="if (event.key === 'Enter') checkAnswer()">
+  <button type="button" onclick="checkAnswer()" style="background-color: #1e90ff;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
 
-                 
-                ];
+button:hover {
+  background-color: #191970;
+}
+">確定</button>
+  <p id="result"></p>
+ </div>
 
-                let results = [];
+ <h2>結果</h2>
+  <p>ミスし単語</p>
+  <table id="resultTable">
+  <tr>
+  </tr>
+ </table>
+ <script>
+  const problems = [
+  {
+         question: "love at first sight/一目ぼれ",
+         answer: "love, sight",
+         },
+{
+         question: "a taste of lemon/レモンの味",
+         answer: "taste, lemon",
+         },
+{
+         question: "a wide range of information/広範囲の情報",
+         answer: "range, information",
+         },
+{
+         question: "make an appointment with the doctor/医者に予約する",
+         answer: "appointment, doctor",
+         },
+{
+         question: "a doctor and a patient/医者と患者",
+         answer: "doctor, patient",
+         },
+{
+         question: "a business project/事業計画",
+         answer: "business, project",
+         },
+{
+         question: "Would you do me a favor/頼みを聞いてもらえませんか",
+         answer: "favor",
+         },
+{
+         question: "differ in appearance/外見が違う",
+         answer: "appearance",
+         },
+{
+         question: "run the risk of losing money/お金を失う危険を冒す",
+         answer: "risk, money",
+         },
+{
+         question: "costs and benefits of the business/仕事のコストと利益",
+         answer: "costs, benefits, business",
+         },
+{
+         question: "residents of New York/ニューヨークの市民",
+         answer: "residents, New York",
+         },
+{
+         question: "their relatives and friends/彼らの親戚と友達",
+         answer: "relatives, friends",
+         },
+{
+         question: "a mountain region/山岳地方",
+         answer: "mountain, region",
+         },
+{
+         question: "unique characteristics/ユニークな特徴",
+         answer: "characteristics",
+         },
+{
+         question: "feel a sharp pain/鋭い痛みを感じる",
+         answer: "pain",
+         },
+{
+         question: "a pair of identical twins/一組の一卵双生児",
+         answer: "pair, twins",
+         },
+{
+         question: "on special occasions/特別な場合に",
+         answer: "occasions",
+         },
+{
+         question: "the principle of free trade/自由貿易の原則",
+         answer: "principle, trade",
+         },
+{
+         question: "the history department/歴史科学",
+         answer: "history, department",
+         },
+{
+         question: "It is my duty to help you./君を助けるのが私の義務だ",
+         answer: "duty",
+         },
+{
+         question: "the scene of the accident/事故の現場",
+         answer: "scene, accident",
+         },
+{
+         question: "the scientific basis of his theory/彼の理論の科学的根拠",
+         answer: "basis, theory",
+         },
+{
+         question: "the spirit of fair play/フェアプレーの精神",
+         answer: "spirit, play",
+         },
+{
+         question: "the medium of communication/コミュニケーションの手段",
+         answer: "medium, communication",
+         },
+{
+         question: "mass production/大量生産",
+         answer: "production",
+         },
+{
+         question: "gather a large audience/大勢の観客を集める",
+         answer: "audience",
+         },
+{
+         question: "the most important element/最も重要な要素",
+         answer: "element",
+         },
+{
+         question: "global climate change/地球規模の気候変動",
+         answer: "climate, change",
+         },
+{
+         question: "the French Revolution/フランス革命",
+         answer: "Revolution",
+         },
+{
+         question: "the first quarter of this century/今世紀の最初の4分の1",
+         answer: "quarter, century",
+         },
+{
+         question: "a room with little furniture/家具の少ない部屋",
+         answer: "room, furniture",
+         },
+{
+         question: "the human brain/人間の脳",
+         answer: "brain",
+         },
+{
+         question: "CO2 in the earth's atmosphere/地球の大気中の二酸化炭素",
+         answer: "CO2, atmosphere",
+         },
+{
+         question: "private property/私有財産",
+         answer: "property",
+         },
+{
+         question: "a reward for hard work/努力の報酬",
+         answer: "reward, work",
+         },
+{
+         question: "national security/国家の安全保障",
+         answer: "security",
+         },
+{
+         question: "give a cry of delight/喜びの声をあげる",
+         answer: "cry, delight",
+         },
+{
+         question: "a deserted road in the desert/砂漠の人影のない道",
+         answer: "road, desert",
+         },
+{
+         question: "people from different backgrounds/経歴の違う人々",
+         answer: "people, backgrounds",
+         },
+{
+         question: "a trend toward fewer children/少子化の傾向",
+         answer: "trend, children",
+         },
+{
+         question: "get 20% of the vote/20%の票を得る",
+         answer: "vote",
+         },
+{
+         question: "a negative impact on the environment/環境に対する悪い影響",
+         answer: "impact",
+         },
+{
+         question: "educational institutions/教育機関",
+         answer: "institutions",
+         },
+{
+         question: "social interaction with others/他人との社会的交流",
+         answer: "interaction",
+         },
+{
+         question: "an alternative to oil/石油の代わりになるもの",
+         answer: "alternative",
+         },
+{
+         question: "do no harm to children/子供に害を与えない",
+         answer: "harm",
+         },
+{
+         question: "go to a travel agency/旅行代理店に行く",
+         answer: "agency",
+         },
+{
+         question: "man's great capacity to learn/すばらしい人間の学習能力",
+         answer: "capacity",
+         },
+{
+         question: "the Italian foreign minister/イタリアの外務大臣",
+         answer: "minister",
+         },
+{
+         question: "a hospital volunteer/病院で働くボランティア",
+         answer: "volunteer",
+         },
+{
+         question: "have access to the Internet/インターネットを利用できる",
+         answer: "access",
+         },
+{
+         question: "large quantities of data/膨大な量のデータ",
+         answer: "quantities",
+         },
+{
+         question: "a branch of science/科学の一分野",
+         answer: "branch",
+         },
+{
+         question: "a common language/共通の言語",
+         answer: "common",
+         },
+{
+         question: "a rough sketch/大雑把なスケッチ",
+         answer: "rough",
+         },
+{
+         question: "He is likely to win./彼が勝つ可能性が高い",
+         answer: "likely",
+         },
+{
+         question: "serious social problems/深刻な社会問題",
+         answer: "serious",
+         },
+{
+         question: "a particular character/特有の性質",
+         answer: "particular",
+         },
+{
+         question: "information available to everyone/みんなが利用できる情報",
+         answer: "available",
+         },
+{
+         question: "bilingual children/二言語使用の子供たち",
+         answer: "bilingual",
+         },
+{
+         question: "I am ready to start./出発の用意ができている",
+         answer: "ready",
+         },
+{
+         question: "the correct answer/正しい答え",
+         answer: "correct",
+         },
+{
+         question: "be familiar with Japanese culture/日本の文化にくわしい",
+         answer: "familiar",
+         },
+{
+         question: "physical beauty/肉体美",
+         answer: "physical",
+         },
+{
+         question: "The book is worth reading./その本は読む価値がある",
+         answer: "worth",
+         },
+{
+         question: "be involved in the accident/事故に巻き込まれている",
+         answer: "involved",
+         },
+{
+         question: "I had a fantastic time/私は素晴らしい時を過ごした",
+         answer: "fantastic",
+         },
+{
+         question: "her private life/彼女の私生活",
+         answer: "private",
+         },
+{
+         question: "an obvious mistake/明白なまちがい",
+         answer: "obvious",
+         },
+{
+         question: "a native language/母語",
+         answer: "native",
+         },
+{
+         question: "a complex system/複雑なシステム",
+         answer: "complex",
+         },
+{
+         question: "I am willing to help her./喜んで彼女を助けるつもりだ",
+         answer: "willing",
+         },
+{
+         question: "the current international situation/今日の国際状況",
+         answer: "current",
+         },
+{
+         question: "male workers/男性の労働者",
+         answer: "male",
+         },
+{
+         question: "the proper use of words/言葉の適切な使い方",
+         answer: "proper",
+         },
+{
+         question: "He is capable of doing the job./彼はその仕事をする能力がある",
+         answer: "capable",
+         },
+{
+         question: "He is independent of his parents./彼は親から独立している。",
+         answer: "independent",
+         },
+{
+         question: "positive thinking/積極的な考え方",
+         answer: "positive",
+         },
+{
+         question: "a pleasant experience/楽しい経験",
+         answer: "pleasant",
+         },
+{
+         question: "a significant difference/重大な違い",
+         answer: "significant",
+         },
+{
+         question: "the former President/前大統領",
+         answer: "former",
+         },
+{
+         question: "a chemical reaction/化学反応",
+         answer: "chemical",
+         },
+{
+         question: "be upset by the accident/事故で動揺している",
+         answer: "upset",
+         },
+{
+         question: "from the previous year/前の年から",
+         answer: "previous",
+         },
+{
+         question: "keep calm/冷静でいる",
+         answer: "calm",
+         },
+{
+         question: "a specific individual/特定の個人",
+         answer: "specific",
+         },
+{
+         question: "health-conscious Americans/健康を意識するアメリカ人",
+         answer: "health-conscious",
+         },
+{
+         question: "be superior to others/他の人よりすぐれている",
+         answer: "superior",
+         },
+{
+         question: "an efficient use of energy/効率のよいエネルギーの使い方",
+         answer: "efficient",
+         },
+{
+         question: "fundamental human rights/基本的人権",
+         answer: "fundamental",
+         },
+{
+         question: "a narrow street/狭い道",
+         answer: "narrow",
+         },
+{
+         question: "a reasonable explanation/理にかなった説明",
+         answer: "reasonable",
+         },
+{
+         question: "feel nervous about the future/将来のことで不安になる",
+         answer: "nervous",
+         },
+{
+         question: "The brothers look alike./その兄弟は似ている",
+         answer: "alike",
+         },
+{
+         question: "domestic violence/家庭内暴力",
+         answer: "domestic",
+         },
+{
+         question: "a negative answer/否定的な答え",
+         answer: "negative",
+         },
+{
+         question: "make a moral judgment/道徳的な判断をする",
+         answer: "moral",
+         },
+{
+         question: "be eager to study in the US/アメリカ留学を熱望する",
+         answer: "eager",
+         },
+{
+         question: "the brain's remarkable ability/脳のすばらしい能力",
+         answer: "remarkable",
+         },
+{
+         question: "drive away evil spirits/悪い霊を追い払う",
+         answer: "evil",
+         },
+{
+  question: "stay awake all night/夜通し目が覚めている",
+  answer: "all night"
+},
+{
+  question: "his aged parents/彼の年老いた父母",
+  answer: ""
+},
+{
+  question: "I am anxious about your health./君の健康が心配だ",
+  answer: "about"
+},
+{
+  question: "a tough boxer/たくましいボクサー",
+  answer: ""
+},
+{
+  question: "nuclear energy/原子力エネルギー",
+  answer: ""
+},
+{
+  question: "the British legal system/イギリスの法律の制度",
+  answer: ""
+},
+{
+  question: "be curious about everything/何にでも好奇心を持つ",
+  answer: "about"
+},
+{
+  question: "civil rights/市民権",
+  answer: ""
+},
+{
+  question: "according to a recent study/最近の研究によると",
+  answer: "according to"
+},
+{
+  question: "a senior member of the club/クラブの先輩の部員",
+  answer: ""
+},
+{
+  question: "Soon afterward, he left/その後すぐ彼は去った",
+  answer: "soon"
+},
+{
+  question: "nearly 30 years ago/30年近く前に",
+  answer: "nearly"
+},
+{
+  question: "The car is small and therefore cheap./その車は小さい。それゆえ、安い。",
+  answer: "therefore"
+},
+{
+  question: "at exactly the same time/ぴったり同時に",
+  answer: "exactly"
+},
+{
+  question: "He will possibly come./ひょっとすると彼は来るかもしれない",
+  answer: "possibly"
+},
+{
+  question: "contrary to expectations/予想に反して",
+  answer: "contrary to"
+},
+{
+  question: "I occasionally go to the theater./私はたまに劇場に行く",
+  answer: "occasionally"
+},
+{
+  question: "Somehow I feel lonely./なぜか寂しい",
+  answer: "somehow"
+},
+{
+  question: "I seldom see him./彼に会うことはめったにない",
+  answer: "seldom"
+},
+{
+  question: "This is smaller and thus cheaper./この方が小さく、したがって安い",
+  answer: "thus"
+},
+{
+  question: "people throughout the world/世界中の人々",
+  answer: "throughout"
+},
+{
+  question: "Unlike my wife, I get up early./妻と違って私は早起きだ",
+  answer: "unlike"
+},
+{
+  question: "Besides being rich, he is kind./彼は金持ちの上にやさしい",
+  answer: "besides"
+},
+{
+  question: "It’s beyond my understanding./私の理解をこえている",
+  answer: "beyond"
+},
+{
+  question: "within a mile of the station/駅から１マイル以内で",
+  answer: "within"
+},
+{
+  question: "have neither time nor money/時間もお金もない",
+  answer: "neither"
+},
+{
+  question: "I’ll leave tomorrow unless it rains./明日雨が降らない限り出発する",
+  answer: "unless"
+},
+{
+  question: "work every day except Sunday/日曜以外毎日働く",
+  answer: "except"
+},
+{
+  question: "You ought to see a doctor/君は医者に診てもらうべきだ",
+  answer: ""
+},
+{
+  question: "in spite of difficulties/困難にもかかわらず",
+  answer: "in spite of"
+},
+{
+  question: "I don’t know whether it is true or not./本当かどうかわからない",
+  answer: "whether"
+},
+{
+    question: "explain why he was late/彼がなぜ遅れたかを説明する",
+    answer: "explain",
+},
+{
+    question: "accept the truth as it is/ありのまま真実を受け入れる",
+    answer: "accept",
+},
+{
+    question: "produce enough food/十分な食料を生産する",
+    answer: "produce",
+},
+{
+    question: "Does God really exist?/神は本当に存在するのか",
+    answer: "exist",
+},
+{
+    question: "express my feelings/私の気持ちを表現する",
+    answer: "express",
+},
+{
+    question: "add some milk to the soup/スープにミルクを加える",
+    answer: "add",
+},
+{
+    question: "avoid making mistakes/まちがいを犯すのを避ける",
+    answer: "avoid",
+},
+{
+    question: "marry Mary/メアリと結婚する",
+    answer: "marry",
+},
+{
+    question: "protect children from danger/危険から子どもたちを守る",
+    answer: "protect",
+},
+{
+    question: "Alcohol affects the brain./アルコールは脳に影響する",
+    answer: "affects",
+},
+{
+    question: "determine your future/君の未来を決定する",
+    answer: "determine",
+},
+{
+    question: "solve the problem/問題を解決する",
+    answer: "solve",
+},
+{
+    question: "Vegetables contain a lot of water./野菜はたくさんの水を含んでいる",
+    answer: "contain",
+},
+{
+    question: "discuss the problem with him/彼とその問題を議論する",
+    answer: "discuss",
+},
+{
+    question: "ignore the doctor's advice/医者の忠告を無視する",
+    answer: "ignore",
+},
+{
+    question: "guess how old she is/彼女の年を推測する",
+    answer: "guess",
+},
+{
+    question: "exchange yen for dollars/円をドルに交換する",
+    answer: "exchange",
+},
+{
+    question: "satisfy the needs of students/学生の要求を満たす",
+    answer: "satisfy",
+},
+{
+    question: "complain about the noise/騒音のことで苦情を言う",
+    answer: "complain",
+},
+{
+    question: "finally achieve the goal/ついに目標を達成する",
+    answer: "achieve",
+},
+{
+    question: "enable people to live longer/人々の長寿を可能にする",
+    answer: "enable",
+},
+{
+    question: "intend to live in America/アメリカに住むつもりだ",
+    answer: "intend",
+},
+{
+    question: "obtain information about him/彼に関する情報を得る",
+    answer: "obtain",
+},
+{
+    question: "divide the cake into six pieces/ケーキを6個に分割する",
+    answer: "divide",
+},
+{
+    question: "The noise annoys me./その音が私をいらだたせる",
+    answer: "annoys",
+},
+{
+    question: "My opinion differs from hers./私の考えは彼女と異なる",
+    answer: "differs",
+},
+{
+    question: "how to educate children/子供を教育する方法",
+    answer: "educate",
+},
+{
+    question: "borrow a book from a friend/友達から本を借りる",
+    answer: "borrow",
+},
+{
+    question: "invent a time machine/タイムマシンを発明する",
+    answer: "invent",
+},
+{
+    question: "promote economic growth/経済成長を促進する",
+    answer: "promote",
+},
+{
+    question: "advise him to eat vegetables/野菜を食べるよう彼に忠告する",
+    answer: "advise",
+},
+{
+    question: "retire from work at sixty/60で仕事を辞める",
+    answer: "retire",
+},
+{
+    question: "permit him to go out/彼に外出することを許す",
+    answer: "permit",
+},
+{
+    question: "recommend this book to you/あなたにこの本を勧める",
+    answer: "recommend",
+},
+{
+    question: "apologize to him for being late/遅れたことを彼に謝る",
+    answer: "apologize",
+},
+{
+    question: "inform him of his son's success/息子の成功を彼に知らせる",
+    answer: "inform",
+},
+{
+    question: "oppose their marriage/彼らに結婚に反対する",
+    answer: "oppose",
+},
+{
+    question: "trust an old friend/古い友達を信用する",
+    answer: "trust",
+},
+{
+    question: "select the best answer/最良の答えを選ぶ",
+    answer: "select",
+},
+{
+    question: "praise him for his work/仕事のことで彼をほめる",
+    answer: "praise",
+},
+{
+    question: "how to handle problems/どう問題に対処するべきか",
+    answer: "handle",
+},
+{
+    question: "propose a new way/新しいやり方を提案する",
+    answer: "propose",
+},
+{
+    question: "breathe fresh air/新鮮な空気を呼吸する",
+    answer: "breathe",
+},
+{
+    question: "criticize him for being late/遅刻したことで彼を非難する",
+    answer: "criticize",
+},
+{
+    question: "overcome difficulties/困難に打ち勝つ",
+    answer: "overcome",
+},
+{
+    question: "possess great power/大きな力を持っている",
+    answer: "possess",
+},
+{
+    question: "predict the future/未来を予言する",
+    answer: "predict",
+},
+{
+    question: "publish a book/本を出版する",
+    answer: "publish",
+},
+{
+    question: "leaves floating on the river/川面に浮かぶ木の葉",
+    answer: "floating",
+},
+{
+    question: "recall the good old days/古き良き時代を思い出す",
+    answer: "recall",
+},
+{
+    question: "explore the Amazon River/アマゾン川を探検する",
+    answer: "explore",
+},
+{
+    question: "pretend to be asleep/眠っているふりをする",
+    answer: "pretend",
+},
+{
+    question: "absorb a lot of water/大量の水を吸収する",
+    answer: "absorb",
+},
+{
+    question: "He resembles his father./彼は父親に似ている。",
+    answer: "resembles",
+},
+{
+    question: "tear the letter to pieces/ずたずたに手紙を引き裂く",
+    answer: "tear",
+},
+{
+    question: "consume a lot of energy/多量のエネルギーを消費する",
+    answer: "consume",
+},
+{
+    question: "compete with him for the gold medal/金メダルを目指して彼と競争する",
+    answer: "compete",
+},
+{
+    question: "quit smoking/タバコをやめる",
+    answer: "quit",
+},
+{
+    question: "announce a new plan/新しい計画を発表する",
+    answer: "announce",
+},
+{
+    question: "react quickly to light/光にすばやく反応する",
+    answer: "react",
+},
+{
+    question: "wander around the streets/街を歩き回る",
+    answer: "wander",
+},
+{
+    question: "Don't text while driving/運転中にメールを送るな",
+    answer: "text",
+},
+{
+    question: "generate electricity/電力を生み出す",
+    answer: "generate",
+},
+{
+    question: "score 10 goals/10点を取る",
+    answer: "score",
+},
+{
+    question: "the Japanese government/日本政府",
+    answer: "government",
+},
+{
+    question: "have little knowledge of English/英語の知識がほとんどない",
+    answer: "have",
+},
+{
+    question: "the Asian nations/アジアの諸国",
+    answer: "nations",
+},
+{
+    question: "make an effort to help him/彼を助けようと努力する",
+    answer: "make",
+},
+{
+    question: "the Cold War period/冷戦時代",
+    answer: "period",
+},
 
-                function checkAnswer() {
-                 const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-                 const currentProblem = problems[0];
-                 const correctAnswer = currentProblem.answer;
-                 const resultElement = document.getElementById("result");
-                document.getElementById("answer").value = "";
-                 // 正解の部分を _ で置き換える
-                 const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${correctAnswer}\\b`, 'gi'), (match) => `${match[0]}_`);
-                 document.getElementById("question").textContent = maskedQuestion;
+  ];
 
-                 if (userAnswer === correctAnswer) {
-                  resultElement.textContent = "正解！次の問題に進んでください。";
-                  results.push({question: currentProblem.question, answer: correctAnswer, userAnswer: userAnswer});
-                  problems.shift();
-                  if (problems.length > 0) {
-                   showNextProblem();
-                  } else {
-                   resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                   showResults();
-                  }
-                 } else {
-                  // 不正解の場合
-                  resultElement.textContent = "不正解です。";
-                  results.push({question: currentProblem.question, answer: correctAnswer, userAnswer: userAnswer});
+  let results = [];
+  let currentProblems = [];
 
-                  // 正解を表示
-                  const correctAnswerElement = document.createElement('span');
-                  correctAnswerElement.textContent = `正解: ${correctAnswer}`;
-                  correctAnswerElement.style.color = 'red';
-                  resultElement.appendChild(correctAnswerElement);
-
-                  // 2秒後に自動的に次の問題へ進む
-                  setTimeout(() => {
-                   problems.shift();
-                   if (problems.length > 0) {
-                    showNextProblem();
-                   } else {
-                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                    showResults();
-                   }
-                  }, 4000); // 4秒後に実行
-                 }
-                }
-
-                function showNextProblem() {
-                 const currentProblem = problems[0];
-                 const questionElement = document.getElementById("question");
-                 const maskedQuestion = currentProblem.question.replace(new RegExp(`(\\b${currentProblem.answer}\\b)`, 'gi'), (match, word) => `${word[0]}_`);
-                 questionElement.textContent = maskedQuestion;
-
-                 // 結果表示をクリア
-                 const resultElement = document.getElementById("result");
-                 resultElement.textContent = '';
-                }
-
-                function showResults() {
-                 const table = document.getElementById("resultTable");
-                 table.innerHTML = ''; // 結果テーブルを初期化する
-
-                 // 間違えた問題のみを表示
-                 for (let i = 0; i < results.length; i++) {
-                 if (results[i].userAnswer !== results[i].answer) {
-                  const tr = document.createElement('tr');
-                  const tdQuestion = document.createElement('td');
-                  const tdAnswer = document.createElement('td');
-                  const tdUserAnswer = document.createElement('td');
-                  tdQuestion.textContent = results[i].question;
-                  tdAnswer.textContent = results[i].answer;
-                  tdUserAnswer.textContent = results[i].userAnswer;
-                  tr.appendChild(tdAnswer);
-                  tr.appendChild(tdQuestion);
-                  table.appendChild(tr);
-                 }
-                 }
-                }
-
-                // 最初の問題を表示する
-                showNextProblem();
-   //Enterで確定
-  document.getElementById("answer").addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-    checkAnswer();
+  function monsu() {
+    const numQuestions = parseInt(document.getElementById("numQuestions").value);
+    currentProblems = problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions);
+    showNextProblem();
   }
-});
 
-                 </script>
-                  <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-<script>
-  new Darkmode().showWidget();
-</script>
-                </body>
-                </html>
+  function checkAnswer() {
+   const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+   const currentProblem = currentProblems[0];
+   const correctAnswer = currentProblem.answer;
+   const resultElement = document.getElementById("result");
+   document.getElementById("answer").value = "";
+   // 正解の部分を _ で置き換える
+   const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${correctAnswer}\\b`, 'gi'), `${correctAnswer[0]}_____`);
+   document.getElementById("question").textContent = maskedQuestion;
+   // 結果を配列に保存
+   results.push({
+    question: currentProblem.question,
+    answer: correctAnswer,
+    userAnswer: userAnswer,
+    isCorrect: userAnswer === correctAnswer
+   });
+   if (userAnswer === correctAnswer) {
+    resultElement.textContent = "";
+    currentProblems.shift();
+    if (currentProblems.length > 0) {
+     showNextProblem();
+    } else {
+     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+     showResults();
+    }
+   } else {
+    // 不正解の場合
+    resultElement.textContent = "不正解です。";
+    // 正解を表示
+    const correctAnswerElement = document.createElement('span');
+    correctAnswerElement.textContent = `正解: ${correctAnswer}`;
+    correctAnswerElement.style.color = 'red';
+    resultElement.appendChild(correctAnswerElement);
+
+    // 2秒後に自動的に次の問題へ進む
+    setTimeout(() => {
+     currentProblems.shift();
+     if (currentProblems.length > 0) {
+      showNextProblem();
+     } else {
+      resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+      showResults();
+     }
+    }, 3000); // n秒後に実行
+   }
+  }
+
+  function showNextProblem() {
+   const currentProblem = currentProblems[0];
+   const questionElement = document.getElementById("question");
+   const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `${currentProblem.answer[0]}_____`);
+   questionElement.textContent = maskedQuestion;
+
+   // 結果表示をクリア
+   const resultElement = document.getElementById("result");
+   resultElement.textContent = '';
+  }
+
+  function showResults() {
+   const table = document.getElementById("resultTable");
+   table.innerHTML = ''; // 結果テーブルを初期化する
+   // 間違えた問題のみを表示
+   for (let i = 0; i < results.length; i++) {
+    if (results[i].userAnswer !== results[i].answer) {
+     const tr = document.createElement('tr');
+     const tdQuestion = document.createElement('td');
+     const tdAnswer = document.createElement('td');
+     const tdUserAnswer = document.createElement('td');
+     tdQuestion.textContent = results[i].question;
+     tdAnswer.textContent = results[i].answer;
+     tdUserAnswer.textContent = results[i].userAnswer;
+     tr.appendChild(tdQuestion);
+     tr.appendChild(tdAnswer);
+     tr.appendChild(tdUserAnswer);
+     table.appendChild(tr);
+    }
+   }
+   // リセットとリトライボタンを表示
+   removeButtons();
+   const resetButton = document.createElement('button');
+   resetButton.textContent = "リセット";
+   resetButton.onclick = resetTest;
+   document.body.appendChild(resetButton);
+
+   const retryButton = document.createElement('button');
+   retryButton.textContent = "リトライ";
+   retryButton.onclick = retryMistakes;
+   document.body.appendChild(retryButton);
+  }
+
+  function removeButtons() {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      if (button.textContent === "リセット" || button.textContent === "リトライ") {
+        button.remove();
+      }
+    });
+  }
+
+  function resetTest() {
+    results = [];
+    currentProblems = [];
+    document.getElementById("resultTable").innerHTML = '';
+    document.getElementById("result").textContent = '';
+    monsu();
+    startTest();
+  }
+
+  function retryMistakes() {
+    removeButtons();
+    currentProblems = results.filter(result => !result.isCorrect);
+    results = [];
+    document.getElementById("resultTable").innerHTML = "";
+    showNextProblem();
+  }
+
+  // テスト開始
+  function startTest() {
+    const container = document.createElement('div');
+    const label = document.createElement('label');
+    label.textContent = "問題数:";
+    const select = document.createElement('select');
+    select.id = "numQuestions";
+    for (let i = 1; i <= problems.length; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      select.appendChild(option);
+    }
+    const startButton = document.createElement('button');
+    startButton.textContent = "スタート";
+    startButton.onclick = monsu;
+    container.appendChild(label);
+    container.appendChild(select);
+    container.appendChild(startButton);
+    document.body.insertBefore(container, document.getElementById("question-container"));
+  }
+
+  startTest();
+ </script>
+</body>
+</html>
