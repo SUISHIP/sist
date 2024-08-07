@@ -1010,7 +1010,7 @@ button:hover {
   function startTest() {
     const container = document.createElement('div');
     const label = document.createElement('label');
-    label.textContent = "問題数:";
+    label.textContent = "問題数";
     const select = document.createElement('select');
     select.id = "numQuestions";
     for (let i = 1; i <= problems.length; i++) {
@@ -1020,7 +1020,7 @@ button:hover {
       select.appendChild(option);
     }
     const orderLabel = document.createElement('label');
-    orderLabel.textContent = "出題順:";
+    orderLabel.textContent = "出題順";
     const orderSelect = document.createElement('select');
     orderSelect.id = "order";
     const optionRandom = document.createElement('option');
