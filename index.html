@@ -4,7 +4,6 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>みにまるスペリング</title>
- <p>範囲201~400</p>
  <style>
   /* 確定ボタンのスタイル */
 button {
@@ -77,7 +76,7 @@ button:hover {
   </tr>
  </table>
  <script>
-  const problems = [
+   const problems = [
   {
          question: "love at first sight/一目ぼれ",
          answer: "sight",
@@ -881,10 +880,11 @@ button:hover {
 
   ];
 
+
   let results = [];
   let currentProblems = [];
 
- function monsu() {
+  function monsu() {
     const numQuestions = parseInt(document.getElementById("numQuestions").value);
     const isRandom = document.getElementById("order").value === "random";
     currentProblems = isRandom ? problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions) : problems.slice(0, numQuestions);
@@ -908,7 +908,7 @@ button:hover {
     isCorrect: userAnswer === correctAnswer
    });
    if (userAnswer === correctAnswer) {
-    resultElement.textContent = "";
+    resultElement.textContent = "正解！次の問題に進んでください。";
     currentProblems.shift();
     if (currentProblems.length > 0) {
      showNextProblem();
@@ -934,7 +934,7 @@ button:hover {
       resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
       showResults();
      }
-    }, 3000); // n秒後に実行
+    }, 2000); // 2秒後に実行
    }
   }
 
@@ -1010,7 +1010,7 @@ button:hover {
   function startTest() {
     const container = document.createElement('div');
     const label = document.createElement('label');
-    label.textContent = "問題数";
+    label.textContent = "問題数:";
     const select = document.createElement('select');
     select.id = "numQuestions";
     for (let i = 1; i <= problems.length; i++) {
@@ -1020,7 +1020,7 @@ button:hover {
       select.appendChild(option);
     }
     const orderLabel = document.createElement('label');
-    orderLabel.textContent = "出題順";
+    orderLabel.textContent = "出題順:";
     const orderSelect = document.createElement('select');
     orderSelect.id = "order";
     const optionRandom = document.createElement('option');
@@ -1028,7 +1028,7 @@ button:hover {
     optionRandom.textContent = "ランダム";
     const optionSequential = document.createElement('option');
     optionSequential.value = "sequential";
-    optionSequential.textContent = "順番";
+    optionSequential.textContent = "順番どうり";
     orderSelect.appendChild(optionRandom);
     orderSelect.appendChild(optionSequential);
     const startButton = document.createElement('button');
