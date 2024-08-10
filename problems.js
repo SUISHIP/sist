@@ -137,7 +137,7 @@ const problems = [
          },
 {
          question: "a reward for hard work/努力の報酬",
-         answer: "reward,
+         answer: "reward",
          },
 {
          question: "national security/国家の安全保障",
