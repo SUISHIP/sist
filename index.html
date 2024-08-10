@@ -883,6 +883,14 @@ button:hover {
   let currentProblems = [];
 
   function monsu() {
+   const selectedRanges = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+    currentProblems = problems.filter(problem => {
+      const index = problems.indexOf(problem);
+      return selectedRanges.some(range => {
+        const [start, end] = range.split('-').map(Number);
+        return index >= start && index <= end;
+      });
+    });
     const numQuestions = parseInt(document.getElementById("numQuestions").value);
     const isRandom = document.getElementById("order").value === "random";
     currentProblems = isRandom ? problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions) : problems.slice(0, numQuestions);
@@ -1034,6 +1042,23 @@ button:hover {
     optionSequential.textContent = "順番どうり";
     orderSelect.appendChild(optionRandom);
     orderSelect.appendChild(optionSequential);
+    const rangeContainer = document.createElement('div');
+    const ranges = [
+      { label: '1-50', start: 0, end: 49 },
+      { label: '51-100', start: 50, end: 99 },
+      { label: '101-150', start: 100, end: 149 },
+      { label: '151-200', start: 150, end: 199 },
+     ];
+    ranges.forEach(range => {
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = range.label;
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.value;
+      label.textContent = range.label;
+      rangeContainer.appendChild(checkbox);
+      rangeContainer.appendChild(label);
+    });
     const startButton = document.createElement('button');
     startButton.textContent = "スタート";
     startButton.onclick = monsu;
