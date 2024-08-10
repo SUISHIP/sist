@@ -887,6 +887,11 @@ button:hover {
     const numQuestions = parseInt(document.getElementById("numQuestions").value);
     const isRandom = document.getElementById("order").value === "random";
     currentProblems = isRandom ? problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions) : problems.slice(0, numQuestions);
+ if (currentProblems.length === 0) {
+        return;
+    }
+
+
     showNextProblem();
   }
 
@@ -952,8 +957,8 @@ button:hover {
    const table = document.getElementById("resultTable");
    table.innerHTML = ''; // 結果テーブルを初期化する
    // 間違えた問題のみを表示
-   for (let i = 0; i < results.length; i++) {
-    if (results[i].userAnswer !== results[i].answer) {
+  for (let i = 0; i < results.length; i++) {
+        if (!results[i].isCorrect) {
      const tr = document.createElement('tr');
      const tdQuestion = document.createElement('td');
      const tdAnswer = document.createElement('td');
