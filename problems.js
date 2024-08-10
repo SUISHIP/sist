@@ -1,5 +1,5 @@
-   const problems = [
-  {
+const problems = [
+{
          question: "love at first sight/一目ぼれ",
          answer: "sight",
          },
