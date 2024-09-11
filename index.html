@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>🟥みにまるスペリング</title>
+ <title>みにまるスペリング</title>
  <style>
   /* 確定ボタンのスタイル */
 button {
@@ -45,15 +45,38 @@ select {
  </style>
 </head>
 <body>
- <header>
-    <nav>
-      <ul>
-        <a href="index.html">🟥スペリング</a> <a href="inp.html">🟦インプット</a></li>
-      </ul>
-    </nav>
-  </header>
- <h1>みにまるスペリング v1.2.5</h1>
- <p>実践形式で正確に綴れるまでテストしよう</p>
+ <h1>みにまるスペリング v1.2.6 β</h1>
+  <label for="startQuestion">始点:</label>
+<select id="startQuestion">
+     <option value="0">1</option>
+   <option value="49">50</option>
+   <option value="99">100</option>
+   <option value="149">150</option>
+   <option value="199">200</option>
+   <option value="249">250</option>
+   <option value="299">300</option>
+   <option value="349">350</option>
+   <option value="399">400</option>
+   <option value="449">450</option>
+   <option value="499">500</option>
+   <option value="549">550</option>
+</select>
+
+<label for="endQuestion">終点:</label>
+<select id="endQuestion">
+   <option value="49">50</option>
+   <option value="99">100</option>
+   <option value="149">150</option>
+   <option value="199">200</option>
+   <option value="249">250</option>
+   <option value="299">300</option>
+   <option value="349">350</option>
+   <option value="399">400</option>
+   <option value="449">450</option>
+   <option value="499">500</option>
+   <option value="549">550</option>
+   <option value="599">600</option>
+</select>
  <div id="question-container">
   <p id="question"></p>
   <input type="text" id="answer" placeholder="回答" onkeydown="if (event.key === 'Enter') checkAnswer()">
@@ -84,7 +107,209 @@ button:hover {
   </tr>
  </table>
  <script>
+   window.onload = function() {
+            populateQuestionDropdowns();
+        };
   const problems = [
+{question: "follow her advice 彼女の助言に従う",answer: "follow",},
+{question: "consider the problem seriously 真剣にその問題を考える",answer: "consider",},
+{question: "increase by 20% 20%増加する",answer: "inrease",},
+{question: "expect you to arrive soon 君がすぐ来ることを予期する",answer: "expect",},
+{question: "decide to tell the truth 真実を語る決意をする",answer: "decide",},
+{question: "develop a unique ability 特異な能力を発達させる",answer: "develop",},
+{question: "provide him with information 彼に情報を与える",answer: "provide",},
+{question: "continue to grow fast 急速に成長し続ける",answer: "continue",},
+{question: "The list includes his name. リストは彼の名前を含んでいる",answer: "includes",},
+{question: "remain silent 黙ったままでいる",answer: "remain",},
+{question: "reach the mountain top 山頂に達する",answer: "reach",},
+{question: "allow him to go out 彼に外出を許可する",answer: "allow",},
+{question: "be forced to work 働くよう強制される",answer: "forced",},
+{question: "offer help to the poor 貧しい人に援助を申し出る",answer: "offer",},
+{question: "realize the error 間違いを悟る",answer: "realize",},
+{question: "suggest a new way 新しいやり方を提案する",answer: "suggest",},
+{question: "require more attention もっと注意を必要とする",answer: "require",},
+{question: "worry about money お金のことを心配する",answer: "worry",},
+{question: "wonder where he has gone 彼はどこに行ったのかと思う",answer: "wonder",},
+{question: "The car cost me $50,000. その車には5万ドルかかった",answer: "cost",},
+{question: "tend to get angry 腹を立てがちである",answer: "tend",},
+{question: "Everything depends on him. すべては彼しだいだ",answer: "depends",},
+{question: "share a room with a friend 友人と部屋を共有する",answer: "share",},
+{question: "demand more freedom もっと自由を要求する",answer: "demand",},
+{question: "support the President 大統領を支持する",answer: "support",},
+{question: "hire many young people 多くの若者を雇う",answer: "hire",},
+{question: "regard him as a friend 彼を友達とみなす",answer: "regard",},
+{question: "This story is based on fact. この話は事実に基づいている",answer: "based",},
+{question: "improve living conditions 生活状態を向上させる",answer: "improve",},
+{question: "recognize the importance 重要性を認める",answer: "recognize",},
+{question: "notice the color change 色彩の変化に気付く",answer: "notice",},
+{question: "You are supposed to wear a seat belt. シートベルトを締めることになっている",answer: "supposed",},
+{question: "raise both hands 両手を上げる",answer: "raise",},
+{question: "prefer tea to coffee コーヒーよりお茶を好む",answer: "prefer",},
+{question: "cheer up the patients 患者を元気づける",answer: "patients",},
+{question: "suffer heavy damage ひどい損害を受ける",answer: "suffer",},
+{question: "describe the lost bag なくしたバッグの特徴を言う",answer: "describe",},
+{question: "prevent him from sleeping 彼が眠るのをさまげる",answer: "prevent",},
+{question: "reduce energy costs エネルギー費を減らす",answer: "reduce",},
+{question: "mistake salt for sugar 塩と砂糖をまちがえる",answer: "mistake",},
+{question: "prepare a room for a guest 客のために部屋を準備する",answer: "prepare",},
+{question: "encourage children to read 子供に読書をすすめる",answer: "encourage",},
+{question: "prove to be true 本当だとわかる",answer: "prove",},
+{question: "treat him like a child 子供みたいに彼をあつかう",answer: "treat",},
+{question: "establish a company 会社を設立する",answer: "establish",},
+{question: "stress-related illness ストレスと関係のある病気",answer: "related",},
+{question: "compare Japan with China 日本と中国を比較する",answer: "compare",},
+{question: "spread the tablecloth テーブルクロスを広げる",answer: "spread",},
+{question: "What does this word refer to? この語は何を指示するか",answer: "refer",},
+{question: "supply the city with water その都市に水を供給する",answer: "supply",},
+{question: "gain useful knowledge 有益な知識を得る",answer: "gain",},
+{question: "destroy forests 森林を破壊する",answer: "destroy",},
+{question: "apply the rule to every case 全ての場合に規則を当てはめる",answer: "apply",},
+{question: "seek help from the police 警官に助けを求める",answer: "seek",},
+{question: "search for the stolen car 盗難車を捜す",answer: "search",},
+{question: "He claims that he saw a UFO. 彼はUFOを見たと主張する",answer: "claims",},
+{question: "draw a map 地図を描く",answer: "draw",},
+{question: "refuse to give up hope 希望を捨てるのを拒む",answer: "refuse",},
+{question: "Never mention it again. 二度とそのことを口にするな",answer: "mention",},
+{question: "judge a person by his looks 人を外見で判断する",answer: "judge",},
+{question: "The plane is approaching Chicago. 飛行機はシカゴに接近している",answer: "approaching",},
+{question: "I admit that I was wrong. 自分が間違っていたと認める",answer: "admit",},
+{question: "reflect the mood of the times 時代の気分を反映する",answer: "reflect",},
+{question: "perform the job 仕事を遂行する",answer: "perform",},
+{question: "a very boring movie すごく退屈な映画",answer: "boring",},
+{question: "survive in the jungle ジャングルで生き残る",answer: "survive",},
+{question: "Words represent ideas. 言葉は考えを表す",answer: "represent",},
+{question: "argue that he is right 彼は正しいと主張する",answer: "argue",},
+{question: "take freedom for granted 自由を当然と考える",answer: "granted",},
+{question: "The data indicate that he is right. データは彼が正しいことを示す",answer: "indicate",},
+{question: "The book belongs to Howard. その本はハワードのものだ",answer: "belongs",},
+{question: "acquire a language 言語を習得する",answer: "acquire",},
+{question: "reply to his letter 彼の手紙に返事をする",answer: "reply",},
+{question: "feed a large family 大勢の家族を養う",answer: "feed",},
+{question: "escape from reality 現実から逃避する",answer: "escape",},
+{question: "replace the old system 古い制度に取って代わる",answer: "replace",},
+{question: "reveal a surprising fact 驚くべき事実を明らかにする",answer: "reveal",},
+{question: "Japan is surrounded by the sea. 日本は海に囲まれている",answer: "surrounded",},
+{question: "The job suits you. その仕事は君に合っている",answer: "suits",},
+{question: "the estimated population of Japan 日本の推定人口",answer: "estimated",},
+{question: "aim at the Asian market アジア市場をねらう",answer: "aim",},
+{question: "earn money for the family 家族くのためにお金をかせぐ",answer: "earn",},
+{question: "My memory began to decline. 記憶力が低下し始めた",answer: "decline",},
+{question: "can't afford to buy a Ford フォードを買う余裕が無い",answer: "afford",},
+{question: "be confused by her anger 彼女の怒りに当惑する",answer: "confused",},
+{question: "graduate from high school 高校を卒業する",answer: "graduate",},
+{question: "vary from country to country 国によって変わる",answer: "vary",},
+{question: "remove the cover カバーを取り除く",answer: "remove",},
+{question: "insist on going to France フランスへ行くと言い張る",answer: "insist",},
+{question: "examine every record あらゆる記録を調べる",answer: "examine",},
+{question: "remind him of the promise 彼に約束を思い出させる",answer: "remind",},
+{question: "contribute to world peace 世界平和に貢献する",answer: "contribute",},
+{question: "warn him of the danger 彼に危険を警告する",answer: "warn",},
+{question: "connect the computer to the Internet コンピューターをインターネットにつなぐ",answer: "connect",},
+{question: "match him in power 力で彼に匹敵する",answer: "match",},
+{question: "focus on the problem その問題に焦点を合わせる",answer: "focus",},
+{question: "reject the proposal 提案を拒否する",answer: "reject",},
+{question: "convince him that it is true それは本当だと彼に確信させる",answer: "convince",},
+{question: "Health is associated with happiness. 健康は幸福と関連している",answer: "associated",},
+{question: "rush into the hospital 病院へ急いでいく",answer: "rush",},
+{question: "stress the need for information 情報の必要性を強調する",answer: "stress",},
+{question: "attract his attention 彼の注意を引きつける",answer: "attract",},
+{question: "rely on their power 彼らの力に頼る",answer: "rely",},
+{question: "regrect leaving home 家を出たのを後悔する",answer: "regrect",},
+{question: "adopt a new system 新しいシステムを採用する",answer: "adopt",},
+{question: "shake the bottle well ビンをよく振る",answer: "shake",},
+{question: "hurt her feelings 彼女の気持ちを傷つける",answer: "hurt",},
+{question: "operate a computer with a mouse マウスでコンピューターを操作する",answer: "operate",},
+{question: "Exercise extends life. 運動は寿命を延ばす",answer: "extends",},
+{question: "blame others for the failure 失敗を他人のせいにする",answer: "blame",},
+{question: "The book consists of six lessons. その本は6課で構成されている",answer: "consists",},
+{question: "persuade them to go back 彼らを説得して帰らせる",answer: "persuade",},
+{question: "admire her work 彼女の仕事に感嘆する",answer: "admire",},
+{question: "be disappointed with the test results 試験の結果に失望する",answer: "disappointed",},
+{question: "expand the market 市場を拡大する",answer: "expand",},
+{question: "preserve forests 森林を保護する",answer: "preserve",},
+{question: "struggle to get free 自由になろうともがく",answer: "struggle",},
+{question: "arrange the meeting 会議の手はずを整える",answer: "arrange",},
+{question: "disturb his sleep 彼の睡眠をさまたげる",answer: "disturb",},
+{question: "employ foreign workers 外国人労働者を雇う",answer: "employ",},
+{question: "engage in volunteer activities ボランティア活動に従事する",answer: "engage",},
+{question: "an abandoned pet 捨てられたペット",answer: "abandoned",},
+{question: "display prices 価格を示す",answer: "display",},
+{question: "encounter many difficulties 数々の困難に出会う",answer: "encounter",},
+{question: "amuse students with jokes 冗談で学生を笑わせる",answer: "amuse",},
+{question: "Sorry to bother you, but … おじゃましてすいませんが…",answer: "bother",},
+{question: "concentrate on what he is saying 彼の話に集中する",answer: "concentrate",},
+{question: "adapt to a new culture 新しい文化に適応する",answer: "adapt",},
+{question: "be puzzled by the problem その問題に頭を悩ませる",answer: "puzzled",},
+{question: "appeal to his feelings 彼の感情に訴えかける",answer: "appeal",},
+{question: "combine song and dance 歌と踊りを結合させる",answer: "combine",},
+{question: "delay his arrival 彼の到着を遅らせる",answer: "delay",},
+{question: "repair the car 車を修理する",answer: "repair",},
+{question: "a fascinating story 夢中にさせる物語",answer: "fascinating",},
+{question: "Pardon me. ごめんなさい",answer: "Pardon",},
+{question: "import food from abroad 海外から食料を輸入する",answer: "import",},
+{question: "remark that he is kind 彼は親切だと述べる",answer: "remark",},
+{question: "reserve a room at a hotel ホテルの部屋を予約する",answer: "reserve",},
+{question: "at an amazing speed 驚異的な早さで",answer: "amazing",},
+{question: "frightening experiences ぞっとするような経験",answer: "frightening",},
+{question: "release him from work 仕事から彼を解放する",answer: "release",},
+{question: "rent an apartment アパートを借りる",answer: "rent",},
+{question: "recover from illness 病気から回復する",answer: "recover",},
+{question: "suspect him of being a spy 彼をスパイではないかと疑う",answer: "suspect",},
+{question: "deliver a message to a friend 友人に伝言を渡す",answer: "deliver",},
+{question: "identify people by their eyes 目で人の本人確認をする",answer: "identify",},
+{question: "The office is located in the area. オフィスはその地域にある",answer: "located",},
+{question: "a car manufacturing company 車を製造する会社",answer: "manufacturing",},
+{question: "occupy a high position 高い地位を占める",answer: "occupy",},
+{question: "own a house 家を所有する",answer: "own",},
+{question: "be exposed to danger 危険にさらされている",answer: "exposed",},
+{question: "translate a novel into English 小説を英語に翻訳する",answer: "translate",},
+{question: "cure him of his illness 彼の病気を治す",answer: "cure",},
+{question: "perceive danger 危険に気付く",answer: "perceive",},
+{question: "adjust to a new school 新しい学校に慣れる",answer: "adjust",},
+{question: "be alarmed by the noise その音にぎょっとする",answer: "alarmed",},
+{question: "assist him in his work 彼の仕事を手伝う",answer: "assist",},
+{question: "a frozen stream 凍った小川",answer: "frozen",},
+{question: "spoil the party パーティを台無しにする",answer: "spoil",},
+{question: "shift gears ギアを変える",answer: "shift",},
+{question: "be embarrassed by the mistake そのまちがいが恥ずかしい",answer: "embarrassed",},
+{question: "approve of their marriage 二人の結婚を承認する",answer: "approve",},
+{question: "weight 65 kilograms 65キログラムの重さがある",answer: "weight",},
+{question: "stretch my legs 足を広げる",answer: "stretch",},
+{question: "participate in the meeting 会議に参加する",answer: "participate",},
+{question: "exhibit Picasso's works ピカソの作品を展示する",answer: "exhibit",},
+{question: "I owe my success to you. 私の成功はあなたのおかげだ",answer: "owe",},
+{question: "celebrate his birthday 彼の誕生日を祝う",answer: "celebrate",},
+{question: "trees decorated with lights 電球で飾られた木々",answer: "decorated",},
+{question: "forgive him for being late 彼の遅刻を許す",answer: "forgive",},
+{question: "be seated on the bench ベンチで座っている",answer: "seated",},
+{question: "be injured in the accident その事故で負傷する",answer: "injured",},
+{question: "sew a wedding dress ウエディングドレスを縫う",answer: "wedding",},
+{question: "the result of the test テストの結果",answer: "result",},
+{question: "features of human language 人類の言語の特徴",answer: "features",},
+{question: "the problems of modern society 現代社会の問題",answer: "problems",},
+{question: "a water wheel 水車",answer: "wheel",},
+{question: "put a high value on education 教育に高い価値を置く",answer: "value",},
+{question: "the greenhouse effect of CO2 二酸化炭素の温室効果",answer: "effect",},
+{question: "individuals in society 社会の中の個人",answer: "individuals",},
+{question: "have a bad influence on children 子供に悪い影響を与える",answer: "influence",},
+{question: "charge a fee for service サービス料を請求する",answer: "fee",},
+{question: "at the rate of 40% a year 年40％の割合で",answer: "rate",},
+{question: "a sign of spring 春のきざし",answer: "sign",},
+{question: "water and gas service 水道とガスの事業",answer: "service",},
+{question: "advances in technology 科学技術の進歩",answer: "technology",},
+{question: "Laughter is the best medicine 笑いは最高の良薬だ",answer: "Laughter",},
+{question: "produce new materials 新しい物質をつくる",answer: "materials",},
+{question: "a center of heavy industry 重工業の中心地",answer: "industry",},
+{question: "an attempt to break the record 記録を破ろうとする試み",answer: "attempt",},
+{question: "US trade with France アメリカとフランスの貿易",answer: "trade",},
+{question: "You've made progress in English 君の英語は進歩した",answer: "progress",},
+{question: "make an excuse to leave early 早く帰るための言い訳をする",answer: "excuse",},
+{question: "the custom of tipping チップを払う習慣",answer: "custom",},
+{question: "Read the following passage 次の一説を読みなさい",answer: "passage",},
+{question: "the market economy 市場経済",answer: "economy",},
+{question: "the track of a lion ライオンの足跡",answer: "track",},
+{question: "use public transportation 公共交通機関を使う",answer: "transportation",},
+{question: "a government official 政府の役人",answer: "official",},
 {
          question: "love at first sight/一目ぼれ",
          answer: "sight",
@@ -885,23 +1110,234 @@ button:hover {
     question: "the Cold War period/冷戦時代",
     answer: "period",
          },
+{question: "population growth 人口の増加",answer: "population",},
+{question: "for peaceful purposes 平和的な目的で",answer: "purposes",},
+{question: "study human behavior 人間の行動を研究する",answer: "behavior",},
+{question: "lack of food 食糧不足",answer: "lack",},
+{question: "learn basic skills 基本的な技術を学ぶ",answer: "skills",},
+{question: "the sound quality of the CD CDの音質",answer: "quality",},
+{question: "the natural environment 自然環境",answer: "environment",},
+{question: "play an important role 重要な役割を果たす",answer: "role",},
+{question: "a positive attitude toward life 人生に対する前向きな態度",answer: "attitude",},
+{question: "the author of this passage この文章の筆者",answer: "author",},
+{question: "scientific research 科学的な研究",answer: "research",},
+{question: "an opportunity to talk to her 彼女と話す機会",answer: "opportunity",},
+{question: "a source of information 情報源",answer: "source",},
+{question: "carbon dioxide 二酸化炭素",answer: "carbon",},
+{question: "the shape of her nose 彼女の鼻の形",answer: "shape",},
+{question: "the advantage of membership 会員の利点",answer: "advantage",},
+{question: "a method of teaching English 英語を教える方法",answer: "method",},
+{question: "be in the habit of reading in bed ベッドで本を読む習慣がある",answer: "habit",},
+{question: "remember the details of the story 話を細部まで覚えている",answer: "details",},
+{question: "within walking distance of my house 私の家から歩ける距離で",answer: "distance",},
+{question: "A large crowd gathered. 大群衆が集まった",answer: "crowd",},
+{question: "the best known instance 最もよく知られた例",answer: "instance",},
+{question: "a strong desire to be a singer 歌手になりたいと思う強い願望",answer: "desire",},
+{question: "the standard of living 生活水準",answer: "standard",},
+{question: "a difficult task 難しい仕事",answer: "task",},
+{question: "for future generations 未来の世代のため",answer: "generations",},
+{question: "take responsibility for the accident 事故の責任を取る",answer: "responsibility",},
+{question: "experiments with animals 動物を用いる実験",answer: "experiments",},
+{question: "a professional athlete プロの運動選手",answer: "athlete",},
+{question: "only a decade ago ほんの10年前に",answer: "decade",},
+{question: "a loss of $5,000 5,000ドルの損失",answer: "loss",},
+{question: "have a high fever 高熱を出している",answer: "fever",},
+{question: "the theory of relativity 相対性理論",answer: "theory",},
+{question: "read the following statement 次の記述を読む",answer: "statement",},
+{question: "a professor at Boston University ボストン大学の教授",answer: "professor",},
+{question: "the basic functions of a computer コンピュータの基本的機能",answer: "functions",},
+{question: "the surface of the earth 地球の表面",answer: "surface",},
+{question: "put the letter in a pink envelop ピンクの封筒に手紙を入れる",answer: "envelop",},
+{question: "an international organization 国際的な組織",answer: "organization",},
+{question: "Japan's foreign policy 日本の外交政策",answer: "policy",},
+{question: "natural resources 天然資源",answer: "resources",},
+{question: "the contrast between light and shadow 光と影の対比",answer: "contrast",},
+{question: "a flood of information 情報の洪水",answer: "flood",},
+{question: "look for a mate 連れ合いを探す",answer: "mate",},
+{question: "buying and selling goods 商品の売り買い",answer: "goods",},
+{question: "humans and other creatures 人間と他の動物",answer: "creatures",},
+{question: "changes in social structure 社会構造の変化",answer: "structure",},
+{question: "history and tradition 歴史と伝統",answer: "tradition",},
+{question: "lose weight 体重を減らす",answer: "weight",},
+{question: "give money to charity 慈善のために寄付する",answer: "charity",},
+{question: "the average American citizen 平均的アメリカ市民",answer: "citizen",},
+{question: "make a good impression on him 彼に良い印象を与える",answer: "impression",},
+{question: "a popular cartoon character 人気のマンガのキャラクター",answer: "cartoon",},
+{question: "a long career as an actress 女優としての長い経歴",answer: "career",},
+{question: "a site for a new hotel 新しいホテルの用地",answer: "site",},
+{question: "train passengers 列車の乗客",answer: "passengers",},
+{question: "violence on TV テレビにおける暴力",answer: "violence",},
+{question: "low-income families 低所得の家族",answer: "income",},
+{question: "the average temperature in Paris パリの平均気温",answer: "temperature",},
+{question: "the majority of students 大多数の学生",answer: "majority",},
+{question: "the origin of language 言語の起源",answer: "origin",},
+{question: "study English literature 英文学を研究する",answer: "literature",},
+{question: "official equipment オフィスの設備",answer: "equipment",},
+{question: "talk to a stranger 見知らぬ人に話しかける",answer: "stranger",},
+{question: "strength and weakness 強さと弱さ",answer: "strength",},
+{question: "the planet Earth 地球という惑星",answer: "planet",},
+{question: "Truth is stranger than fiction 事実は小説よりも奇なり",answer: "fiction",},
+{question: "science and religion 科学と宗教",answer: "religion",},
+{question: "environmental pollution 環境汚染",answer: "pollution",},
+{question: "wealth and power 富と権力",answer: "wealth",},
+{question: "sign an official document 公文書にサインする",answer: "document",},
+{question: "make a $2 million profit 200万ドルのもうけを得る",answer: "profit",},
+{question: "the technique of film-making 映画作りの技術",answer: "technique",},
+{question: "express emotions 感情を表現する",answer: "emotions",},
+{question: "a natural phenomenon 自然現象",answer: "phenomenon",},
+{question: "a horror movie 恐怖映画",answer: "horror",},
+{question: "climb a ladder はしごを登る",answer: "ladder",},
+{question: "8 billion people 八十億の人々",answer: "billion",},
+{question: "the social status of women 女性の社会的地位",answer: "status",},
+{question: "modern youth 現代の若者",answer: "youth",},
+{question: "have confidence in my ability 自分の能力に自信がある",answer: "confidence",},
+{question: "the edge of the Pacific Ocean 太平洋の周辺",answer: "edge",},
+{question: "household goods 家庭用品",answer: "household",},
+{question: "a great scholar 偉大な学者",answer: "scholar",},
+{question: "according to a new survey 新しい調査によると",answer: "survey",},
+{question: "a vocabulary of 5,000 words 5,000語の語彙",answer: "vocabulary",},
+{question: "a natural enemy 天敵",answer: "enemy",},
+{question: "a bridge under construction 建設中の橋",answer: "construction",},
+{question: "a lecture on history 歴史に関する講義",answer: "lecture",},
+{question: "follow his instructions 彼の指示に従う",answer: "instructions",},
+{question: "get over the economic crisis 経済危機を乗り越える",answer: "crisis",},
+{question: "a dentist's instrument 歯医者の道具",answer: "instrument",},
+{question: "grow various crops さまざまな作物を育てる",answer: "crops",},
+{question: "a laser weapon レーザー兵器",answer: "weapon",},
+{question: "an electronic device 電子装置",answer: "device",},
+{question: "the path to victory 勝利への道",answer: "path",},
+{question: "predict earthquakes 地震を予知する",answer: "earthquakes",},
+{question: "a clear mountain stream きれいな山の小川",answer: "stream",},
+{question: "the notion of freedom 自由の概念",answer: "notion",},
+{question: "a tree in the yard 庭の木",answer: "yard",},
+{question: "victims of the war 戦争の犠牲者",answer: "victims",},
+{question: "run out of fuel 燃料を使い果たす",answer: "fuel",},
+{question: "the common ancestors of all humans すべての人類の共通の祖先",answer: "ancestors",},
+{question: "the rich soil of the Nile River ナイル川の豊かな土壌",answer: "soil",},
+{question: "a debate on education 教育についての討論",answer: "debate",},
+{question: "a violent crime 凶悪犯罪",answer: "crime",},
+{question: "my friends and colleagues 私の友人と同僚",answer: "colleagues",},
+{question: "take a book from the shelf たなから本を取る",answer: "shelf",},
+{question: "analysis of DNA DNAの分析",answer: "analysis",},
+{question: "stars in the universe 宇宙の星",answer: "universe",},
+{question: "a machine run by electricity 電気で動く機械",answer: "electricity",},
+{question: "social insects like ants アリのような社会性昆虫",answer: "insects",},
+{question: "be caught in a spider's web クモの巣にかかる",answer: "web",},
+{question: "a heavy storm 激しい嵐",answer: "storm",},
+{question: "have plenty of time 十分な時間がある",answer: "plenty",},
+{question: "land suitable for agriculture 農業に向いた土地",answer: "agriculture",},
+{question: "the gene for eye color 目の色を決める遺伝子",answer: "gene",},
+{question: "evidence of life on Mars 火星に生物がいるという証拠",answer: "evidence",},
+{question: "have serious consequences 重大な結果をまねく",answer: "consequences",},
+{question: "the mother-infant relationship 母親と幼児の関係",answer: "infant",},
+{question: "have no leisure time for sports スポーツをする暇がない",answer: "leisure",},
+{question: "the gray cells of the brain 灰色の脳細胞",answer: "cells",},
+{question: "have musical talent 音楽の才能がある",answer: "talent",},
+{question: "newspaper advertising 新聞広告",answer: "advertising",},
+{question: "increase to some extent ある程度まで増える",answer: "increase",},
+{question: "take out garbage ゴミを出す",answer: "garbage",},
+{question: "the general public 一般大衆",answer: "general",},
+{question: "various kinds of flowers さまざまな種類の花",answer: "various",},
+{question: "be similar to each other お互いに似ている",answer: "similar",},
+{question: "a complete failure 完全な失敗",answer: "complete",},
+{question: "a sharp rise in prices 物価の急激な上昇",answer: "sharp",},
+{question: "an expensive restaurant 高価なレストラン",answer: "expensive",},
+{question: "a political leader 政治的な指導者",answer: "political",},
+{question: "be aware of the danger 危険に気づいている",answer: "aware",},
+{question: "ancient Greece and Rome 古代のギリシャとローマ",answer: "ancient",},
+{question: "a medical study 医学の研究",answer: "medical",},
+{question: "Water is essential to life. 水は生命に不可欠だ",answer: "essential",},
+{question: "a huge city 巨大な都市",answer: "huge",},
+{question: "a terrible accident ひどい事故",answer: "terrible",},
+{question: "practical English 実用的な英語",answer: "practical",},
+{question: "the entire world 全世界",answer: "entire",},
+{question: "my favorite food 私のいちばん好きな食べ物",answer: "favorite",},
+{question: "enjoy a comfortable life 快適な生活を楽しむ",answer: "comfortable",},
+{question: "a minor problem 小さい問題",answer: "minor",},
+{question: "a typical American family 典型的なアメリカの家族",answer: "typical",},
+{question: "an ideal place to live 生活するのに理想的な土地",answer: "ideal",},
+{question: "the principal cities of Europe ヨーロッパの主要な都市",answer: "principal",},
+{question: "the most appropriate word 最も適切な単語",answer: "appropriate",},
+{question: "an empty bottle からのビン",answer: "empty",},
+{question: "rapid economic growth 急速な経済成長",answer: "rapid",},
+{question: "a mental illness 精神の病",answer: "mental",},
+{question: "an excellent idea すばらしいアイディア",answer: "excellent",},
+{question: "when it's convenient for you 君の都合がいいときに",answer: "convenient",},
+{question: "potential danger 潜在的な危険",answer: "potential",},
+{question: "financial support from the US アメリカからの財政的援助",answer: "financial",},
+{question: "an enormous amount of damage ばく大な額の損害",answer: "enormous",},
+{question: "a rare stamp 珍しい切手",answer: "rare",},
+{question: "artificial intelligence 人工知能（AI）",answer: "artificial",},
+{question: "a tiny kitten ちっちゃな子猫",answer: "tiny",},
+{question: "spend considerable time かなりの時間を費やす",answer: "considerable",},
+{question: "Her skin is sensitive to sunlight. 彼女の肌は日光に敏感だ",answer: "sensitive",},
+{question: "high intellectual ability 高度な知的能力",answer: "intellectual",},
+{question: "Salty food makes you thirsty 塩分の多い食事でのどが渇く",answer: "thirsty",},
+{question: "be polite to ladies 女性に対して礼儀正しい",answer: "polite",},
+{question: "accurate information 正確な情報",answer: "accurate",},
+{question: "rude behavior 失礼な振る舞い",answer: "rude",},
+{question: "pay sufficient attention 十分な注意を払う",answer: "sufficient",},
+{question: "urban life 都会の暮らし",answer: "urban",},
+{question: "temporary loss of memory 一時的な記憶喪失",answer: "temporary",},
+{question: "a primitive society 原始的な社会",answer: "primitive",},
+{question: "permanent teeth 永久歯",answer: "permanent",},
+{question: "the care of elderly people 高齢者のケア",answer: "elderly",},
+{question: "severe winter weather 厳しい冬の天候",answer: "severe",},
+{question: "a brief explanation 簡潔な説明",answer: "brief",},
+{question: "a mobile society 流動的な社会",answer: "mobile",},
+{question: "the latest news from China 中国からの最新のニュース",answer: "latest",},
+{question: "military aid to Israel イスラエルへの軍事的援助",answer: "military",},
+{question: "strict rules 厳しい規則",answer: "strict",},
+{question: "a solid state 固体の状態",answer: "solid",},
+{question: "say stupid things ばかなことを言う",answer: "stupid",},
+{question: "biological weapons 生物兵器",answer: "biological",},
+{question: "Probably he won't come. おそらく彼は来ないだろう",answer: "Probably",},
+{question: "I hardly know Bill. ビルのことはほとんど知らない",answer: "hardly",},
+{question: "leave immediately after lunch 昼食後すぐに出発する",answer: "immediately",},
+{question: "He eventually became President. ついに彼は大統領になった",answer: "eventually",},
+{question: "a frequently used word しばしば使われる言葉",answer: "frequently",},
+{question: "an extremely difficult problem 非常に難しい問題",answer: "extremely",},
+{question: "gradually become colder だんだん冷たくなる",answer: "gradually",},
+{question: "instantly recognaizable songs すぐにそれとわかる歌",answer: "instantly",},
+{question: "He is rich; nevertheless he is unhappy. 彼は金持ちだが、それにもかかわらず、不幸だ",answer: "nevertheless",},
+{question: "He's kind; moreover, he's strong. 彼は親切で、その上強い",answer: "moreover",},
+{question: "relatively few people 比較的少数の人々",answer: "relatively",},
+{question: "an apparently simple question 一見簡単な問題",answer: "apparently",},
+{question: "I will definitely not marry you 絶対あなたとは結婚しない",answer: "definitely",},
+{question: "largely because of the problem 主にその問題のせいで",answer: "largely",},
+{question: "The class is mostly Japanese. クラスの大部分は日本人だ",answer: "mostly",},
+{question: "approximately 10,000 years ago およそ１万年前",answer: "approximately",},
+{question: "stay overnight in his house 彼の家で一晩泊まる",answer: "overnight",},
+{question: "accidentally discover an island 偶然島を発見する",answer: "accidentally",},
+{question: "He lost despite his efforts. 努力にもかかわらず彼は負けた",answer: "despite",},
   ];
-  
+
   let results = [];
   let currentProblems = [];
 
-  function monsu() {
- const numQuestions = parseInt(document.getElementById("numQuestions").value);
+   function populateQuestionDropdowns() {
+    const startSelect = document.getElementById("startQuestion");
+    const endSelect = document.getElementById("endQuestion");
+    problems.forEach((problem, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = index + 1;
+      startSelect.appendChild(option);
+      endSelect.appendChild(option.cloneNode(true));
+    });
+  }
+   
+   function monsu() {
+    const startIndex = parseInt(document.getElementById("startQuestion").value);
+    const endIndex = parseInt(document.getElementById("endQuestion").value);
     const isRandom = document.getElementById("order").value === "random";
-    currentProblems = isRandom ? problems.slice().sort(() => 0.5 - Math.random()).slice(0, numQuestions) : problems.slice(0, numQuestions);
- if (currentProblems.length === 0) {
-        return;
+    currentProblems = problems.slice(startIndex, endIndex + 1);
+    if (isRandom) {
+      currentProblems.sort(() => 0.5 - Math.random());
     }
-
-
     showNextProblem();
   }
-
+   
   function checkAnswer() {
    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
    const currentProblem = currentProblems[0];
@@ -945,7 +1381,7 @@ button:hover {
       resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
       showResults();
      }
-    }, 3000); // 3秒後に実行
+    }, 2500); // 2.5秒後に実行
    }
   }
 
@@ -964,8 +1400,8 @@ button:hover {
    const table = document.getElementById("resultTable");
    table.innerHTML = ''; // 結果テーブルを初期化する
    // 間違えた問題のみを表示
-  for (let i = 0; i < results.length; i++) {
-        if (!results[i].isCorrect) {
+   for (let i = 0; i < results.length; i++) {
+    if (results[i].userAnswer !== results[i].answer) {
      const tr = document.createElement('tr');
      const tdQuestion = document.createElement('td');
      const tdAnswer = document.createElement('td');
