@@ -1424,10 +1424,13 @@ button:hover {
    } else {
     // 不正解の場合
     resultElement.textContent = "不正解です。";
+    resultElement.style.fontSize = '21px';
     // 正解を表示
     const correctAnswerElement = document.createElement('span');
     correctAnswerElement.textContent = `正解: ${correctAnswer}`;
     correctAnswerElement.style.color = 'red';
+    correctAnswerElement.style.fontSize = '21px';
+    correctAnswerElement.style.size = 10
     resultElement.appendChild(correctAnswerElement);
 
     // 2秒後に自動的に次の問題へ進む
