@@ -1335,15 +1335,17 @@ button:hover {
   }
    
    function monsu() {
-    const startIndex = parseInt(document.getElementById("startQuestion").value);
-    const endIndex = parseInt(document.getElementById("endQuestion").value);
-    const isRandom = document.getElementById("order").value === "random";
-    currentProblems = problems.slice(startIndex, endIndex + 1);
-    if (isRandom) {
-      currentProblems.sort(() => 0.5 - Math.random());
-    }
-    showNextProblem();
+  const startIndex = parseInt(document.getElementById("startQuestion").value);
+  const endIndex = parseInt(document.getElementById("endQuestion").value);
+  const numQuestions = parseInt(document.getElementById("numQuestions").value);
+  const isRandom = document.getElementById("order").value === "random";
+  currentProblems = problems.slice(startIndex, endIndex + 1);
+  if (isRandom) {
+    currentProblems.sort(() => 0.5 - Math.random());
   }
+  currentProblems = currentProblems.slice(0, numQuestions);
+  showNextProblem();
+}
    
   function checkAnswer() {
    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
