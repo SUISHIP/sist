@@ -40,7 +40,7 @@ input[type="text"] {
 }
 
 select {
-  width: 200px;
+  width: 100px;
   height: 40px;
   padding: 5px;
   border: 1px solid #ccc;
@@ -96,20 +96,6 @@ h2 {
   background-color: #4CAF50;
   color: white;
 }
-
-/* 縦画面（ポートレートモード） */
-        @media screen and (orientation: portrait) {
-            .br-enabled {
-                display: inline;
-            }
-        }
-
-        /* 横画面（ランドスケープモード） */
-        @media screen and (orientation: landscape) {
-            .br-enabled {
-                display: none;
-            }
-        }
  </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
 </head>
@@ -137,7 +123,7 @@ h2 {
    <option value="499">500</option>
    <option value="549">550</option>
 </select>
-<br class="br-enabled">
+
 <label for="endQuestion">終了点:</label>
 <select id="endQuestion">
    <option value="49">50</option>
