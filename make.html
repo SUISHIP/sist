@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>みにまるメーカー</title>
+</head>
+<body>
+    <h1>みにまるメーカー</h1>
+  <p>ここで独自の問題集を作成し、</p>
+  <p><a href="https://suiship.github.io/sist/">みにまるスペリング</a>でオリジナル問題集を読み込めます！</p>
+    <p>問題/答え　となるよう書き込み、ダウンロードしよう</p>
+    <textarea id="inputText" rows="6" cols="60" placeholder="問題/答え&#10;例: tend to get angry 腹を立てがちである/tend&#10;remain silent 黙ったままでいる/remain"></textarea><br>
+    
+    <label for="fileName">ファイル名:</label>
+    <input type="text" id="fileName" placeholder="問題集の名前を入力">
+    <button onclick="convertAndDownload()">.txtダウンロード</button>
+
+    <script>
+        function convertAndDownload() {
+            let inputText = document.getElementById('inputText').value;
+            let fileName = document.getElementById('fileName').value || 'ミニマル.txt';
+
+            let convertedText = inputText.replace(/\//g, "\t");
+
+            let blob = new Blob([convertedText], { type: 'text/plain' });
+            let link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+        }
+    </script>
+</body>
+</html>
