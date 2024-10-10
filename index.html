@@ -117,6 +117,12 @@ h2 {
         .custom-file-label:hover {
             background-color: black;
         }
+           .toggle-button {
+            display: none; /* 初期状態は非表示 */
+        }
+.toggle-text {
+            display: none; /* 初期状態は非表示 */
+        }
  </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
 </head>
@@ -128,8 +134,10 @@ h2 {
       </ul>
     </nav>
   </header>
- <h1>みにまるスペリング v1.3.1 β </h1>
-<label for="fileInput" class="custom-file-label">問題をセット</label>
+  <h1>みにまるスペリング v1.3.1</h1><label>
+        <input type="checkbox" id="toggleCheckbox"> 実験的機能を有効化
+    </label><br>
+  <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をセット</label></span>
 <input type="file" id="fileInput" accept=".txt"><br>
   <label for="startQuestion">開始点:</label>
 <select id="startQuestion">
@@ -190,11 +198,11 @@ button:hover {
   <tr>
   </tr>
  </table>
-  <button onclick="download()" 
+  <span class="toggle-button"><button onclick="download()" 
           style="
             padding: 3px 30px;background-color: gray;color: white;
             cursor: pointer;
-            border-radius: 3px;">ミスし単語.txt</button>
+                 border-radius: 3px;">ミスし単語.txt</button></span>
  <script>
    window.onload = function() {
             populateQuestionDropdowns();
@@ -1584,15 +1592,16 @@ button:hover {
     document.body.insertBefore(container, document.getElementById("question-container"));
   }
 
-  startTest();
-  
-  function download() {
+startTest();
+
+   function download() {
   let table = document.getElementById("resultTable");
   let rows = table.getElementsByTagName("tr");
   if (rows.length === 0 || (rows.length === 1 && rows[0].cells.length === 0)) {
-  alert("ダウンロードする単語がありません");
+  alert("ダウンロードするミスし単語がありません。");
   return;
-  }
+}
+
   let textData = "";
 
   for (let i = 0; i < rows.length; i++) {
@@ -1645,7 +1654,19 @@ function setProblemsFromFile(content) {
             const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'ファイルをアップロード';
             label.textContent = fileName;
         });
- 
+   
+   const checkbox = document.getElementById('toggleCheckbox');
+        const toggleButtons = document.querySelectorAll('.toggle-button'); // すべてのボタンを取得
+
+        checkbox.addEventListener('change', function() {
+            toggleButtons.forEach(function(button) {
+                if (checkbox.checked) {
+                    button.style.display = 'inline'; // チェックされている場合は表示
+                } else {
+                    button.style.display = 'none'; // チェックされていない場合は非表示
+                }
+            });
+        });
  </script>
 </body>
 </html>
