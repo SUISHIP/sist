@@ -97,6 +97,26 @@ h2 {
   background-color: #4CAF50;
   color: white;
 }
+
+        /* 隠す */
+        #fileInput {
+            display: none;
+        }
+
+        /* カスタムボタンのスタイル */
+        .custom-file-label {
+            display: inline-block;
+            padding: 3px 30px;
+            background-color: gray;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        /* カスタムボタンにマウスホバー時の効果 */
+        .custom-file-label:hover {
+            background-color: black;
+        }
  </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
 </head>
@@ -104,11 +124,13 @@ h2 {
   <header>
     <nav>
       <ul>
-        <a href="index.html">スペリング</a> <a href="inp.html">インプット</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html">リリースノート</a></li>
+        <a href="index.html">スペリング</a> <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html">リリース</a></li>
       </ul>
     </nav>
   </header>
- <h1>みにまるスペリング v1.3.0 </h1>
+ <h1>みにまるスペリング v1.3.1 β </h1>
+<label for="fileInput" class="custom-file-label">▶️問題をセット</label>
+<input type="file" id="fileInput" accept=".txt"><br>
   <label for="startQuestion">開始点:</label>
 <select id="startQuestion">
      <option value="0">1</option>
@@ -168,6 +190,11 @@ button:hover {
   <tr>
   </tr>
  </table>
+  <button onclick="download()" 
+          style="
+            padding: 3px 30px;background-color: gray;color: white;
+            cursor: pointer;
+            border-radius: 3px;">ミスし単語.txt</button>
  <script>
    window.onload = function() {
             populateQuestionDropdowns();
@@ -1558,6 +1585,62 @@ button:hover {
   }
 
   startTest();
+  function download() {
+  let table = document.getElementById("resultTable");
+  let rows = table.getElementsByTagName("tr");
+  let textData = "";
+
+  for (let i = 0; i < rows.length; i++) {
+    let cells = rows[i].getElementsByTagName("td");
+    for (let j = 0; j < cells.length; j++) {
+      textData += cells[j].innerText + "\t"; // タブ区切りでデータを追加
+    }
+    textData += "\n"; // 各行の終わりに改行を追加
+  }
+
+  let blob = new Blob([textData], { type: "text/plain" });
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "ミスし単語.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+document.getElementById('fileInput').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const content = e.target.result;
+      setProblemsFromFile(content);
+    };
+    reader.readAsText(file);
+  }
+});
+
+function setProblemsFromFile(content) {
+  const lines = content.split('\n');
+  problems.length = 0; // 既存の問題をクリア
+  lines.forEach(line => {
+    const [question, answer] = line.split('\t');
+    if (question && answer) {
+      problems.push({ question: question.trim(), answer: answer.trim() });
+    }
+  });
+  populateQuestionDropdowns();
+  resetTest();
+}
+ // ファイルが選択されたら、そのファイル名をラベルに表示
+        const fileInput = document.getElementById('fileInput');
+        const label = document.querySelector('.custom-file-label');
+
+        fileInput.addEventListener('change', function() {
+            const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'ファイルをアップロード';
+            label.textContent = fileName;
+        });
+ 
  </script>
 </body>
 </html>
