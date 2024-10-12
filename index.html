@@ -1501,36 +1501,53 @@ button:hover {
   }
 
   function showResults() {
-   const table = document.getElementById("resultTable");
-   table.innerHTML = ''; // 結果テーブルを初期化する
-   // 間違えた問題のみを表示
-   for (let i = 0; i < results.length; i++) {
-    if (results[i].userAnswer !== results[i].answer) {
-     const tr = document.createElement('tr');
-     const tdQuestion = document.createElement('td');
-     const tdAnswer = document.createElement('td');
-     const tdUserAnswer = document.createElement('td');
-     tdQuestion.textContent = results[i].question;
-     tdAnswer.textContent = results[i].answer;
-     tdUserAnswer.textContent = results[i].userAnswer;
-     tr.appendChild(tdQuestion);
-     tr.appendChild(tdAnswer);
-     tr.appendChild(tdUserAnswer);
-     table.appendChild(tr);
-    }
-   }
-   // リセットとリトライボタンを表示
-   removeButtons();
-   const resetButton = document.createElement('button');
-   resetButton.textContent = "リセット";
-   resetButton.onclick = resetTest;
-   document.body.appendChild(resetButton);
+  const table = document.getElementById("resultTable");
+  table.innerHTML = ''; // 結果テーブルを初期化する
+  
+  let correctAnswers = 0; // 正解数をカウント
+  let totalQuestions = results.length; // 全体の問題数
+  
+  // 間違えた問題のみを表示
+  for (let i = 0; i < results.length; i++) {
+    const tr = document.createElement('tr');
+    const tdQuestion = document.createElement('td');
+    const tdAnswer = document.createElement('td');
+    const tdUserAnswer = document.createElement('td');
+    tdQuestion.textContent = results[i].question;
+    tdAnswer.textContent = results[i].answer;
+    tdUserAnswer.textContent = results[i].userAnswer;
+    tr.appendChild(tdQuestion);
+    tr.appendChild(tdAnswer);
+    tr.appendChild(tdUserAnswer);
+    table.appendChild(tr);
 
-   const retryButton = document.createElement('button');
-   retryButton.textContent = "リトライ";
-   retryButton.onclick = retryMistakes;
-   document.body.appendChild(retryButton);
+    // 正解の場合、正解数カウントを増やす
+    if (results[i].isCorrect) {
+      correctAnswers++;
+    }
   }
+
+  // 正答率の計算 (パーセンテージ)
+  const accuracy = (correctAnswers / totalQuestions) * 100;
+  
+  // 正答率の表示
+  const resultContainer = document.getElementById("result");
+  const accuracyElement = document.createElement('p');
+  accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
+  resultContainer.appendChild(accuracyElement);  // 正答率を表示
+
+  // リセットとリトライボタンを表示
+  removeButtons();
+  const resetButton = document.createElement('button');
+  resetButton.textContent = "リセット";
+  resetButton.onclick = resetTest;
+  document.body.appendChild(resetButton);
+
+  const retryButton = document.createElement('button');
+  retryButton.textContent = "リトライ";
+  retryButton.onclick = retryMistakes;
+  document.body.appendChild(retryButton);
+}
 
   function removeButtons() {
     const buttons = document.querySelectorAll('button');
