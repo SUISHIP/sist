@@ -1498,7 +1498,7 @@ function checkAnswer() {
         } else {
             resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
             showResults();
-            if (currentProblems.length === 100) { // 100問の場合のみスコアを送信
+            if (currentProblems.length === 10) { // 10問の場合のみスコアを送信
                 submitScore();
             }
         }
