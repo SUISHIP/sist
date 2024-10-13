@@ -147,7 +147,7 @@ h2 {
       </ul>
     </nav>
   </header>
-  <h1>みにまるスペリング v1.3.3</h1><label>
+  <h1>みにまるスペリング v1.3.2</h1><label>
         <input type="checkbox" id="toggleCheckbox"> 実験的機能
     </label><br>
   <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
@@ -217,7 +217,14 @@ button:hover {
             cursor: pointer;
                  border-radius: 3px;">ミスし単語.txt</button></span>
  <br>
- <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a></span>
+ <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a><br> <h3>ランキング</h3>
+<table id="rankings">
+    <tr>
+        <th>順位</th>
+        <th>ユーザー名</th>
+        <th>正答率</th>
+    </tr>
+</table></span>
  <script>
    window.onload = function() {
             populateQuestionDropdowns();
@@ -1469,61 +1476,95 @@ function fisherYatesShuffle(array) {
 });
 
 function checkAnswer() {
-   const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-   const currentProblem = currentProblems[0];
-   const correctAnswer = currentProblem.answer;
-   const resultElement = document.getElementById("result");
-   const confirmButton = document.querySelector('button[type="button"]'); // 「確定」ボタンの取得
-   document.getElementById("answer").value = "";
-   
-   // 正解の部分を _ で置き換える
-   const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${correctAnswer}\\b`, 'gi'), `${correctAnswer[0]}_____`);
-   document.getElementById("question").textContent = maskedQuestion;
-   
-   // 結果を配列に保存
-   results.push({
-    question: currentProblem.question,
-    answer: correctAnswer,
-    userAnswer: userAnswer,
-    isCorrect: userAnswer === correctAnswer
-   });
-   
-   if (userAnswer === correctAnswer) {
-    resultElement.textContent = "正解！次の問題に進んでください。";
-    currentProblems.shift();
-    if (currentProblems.length > 0) {
-     showNextProblem();
+    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+    const currentProblem = currentProblems[0];
+    const correctAnswer = currentProblem.answer;
+    const resultElement = document.getElementById("result");
+    const confirmButton = document.querySelector('button[type="button"]');
+    document.getElementById("answer").value = "";
+
+    results.push({
+        question: currentProblem.question,
+        answer: correctAnswer,
+        userAnswer: userAnswer,
+        isCorrect: userAnswer === correctAnswer
+    });
+
+    if (userAnswer === correctAnswer) {
+        resultElement.textContent = "正解！次の問題に進んでください。";
+        currentProblems.shift();
+        if (currentProblems.length > 0) {
+            showNextProblem();
+        } else {
+            resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+            showResults();
+            if (currentProblems.length === 100) { // 100問の場合のみスコアを送信
+                submitScore();
+            }
+        }
     } else {
-     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-     showResults();
+        resultElement.textContent = "不正解です。";
+        confirmButton.disabled = true;
+        setTimeout(() => {
+            currentProblems.shift();
+            if (currentProblems.length > 0) {
+                showNextProblem();
+                confirmButton.disabled = false;
+            } else {
+                resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                showResults();
+                if (currentProblems.length === 100) {
+                    submitScore();
+                }
+            }
+        }, 2500);
     }
-   } else {
-    // 不正解の場合
-    resultElement.textContent = "不正解です。";
-    resultElement.style.fontSize = '21px';
-    const correctAnswerElement = document.createElement('span');
-    correctAnswerElement.textContent = `正解: ${correctAnswer}`;
-    correctAnswerElement.style.color = 'red';
-    correctAnswerElement.style.fontSize = '21px';
-    resultElement.appendChild(correctAnswerElement);
-
-    // 「確定」ボタンを無効化
-    confirmButton.disabled = true;
-
-    // 2.5秒後に次の問題に進み、「確定」ボタンを再び有効化
-    setTimeout(() => {
-     currentProblems.shift();
-     if (currentProblems.length > 0) {
-      showNextProblem();
-      confirmButton.disabled = false; // ボタンを再有効化
-     } else {
-      resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-      showResults();
-      confirmButton.disabled = false; // ボタンを再有効化
-     }
-    }, 2500); // 2.5秒後に実行
-   }
 }
+
+// スコアを送信する関数
+function submitScore() {
+    const username = prompt("ユーザー名を入力してください:");
+    const correctAnswers = results.filter(result => result.isCorrect).length;
+    const score = (correctAnswers / 100) * 100;
+
+    fetch('/submit-score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            score: score
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Score submitted:', data);
+        fetchRankings(); // スコア送信後にランキングを取得
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// ランキングを取得して表示する関数
+function fetchRankings() {
+    fetch('/get-rankings')
+        .then(response => response.json())
+        .then(data => {
+            const rankingsTable = document.getElementById('rankings');
+            rankingsTable.innerHTML = ''; // 一度テーブルをクリア
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${index + 1}</td><td>${row.username}</td><td>${row.score}%</td>`;
+                rankingsTable.appendChild(tr);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 
   function showNextProblem() {
    const currentProblem = currentProblems[0];
@@ -1621,7 +1662,7 @@ function startTest() {
     select.id = "numQuestions";
     
     // 最初に固定のオプションを追加
-    const fixedOptions = [
+  const fixedOptions = [
   { value: 1, text: "1問" },
   { value: 3, text: "3問"},
   { value: 10, text: "10問", selected: true },
