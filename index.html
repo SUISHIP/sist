@@ -1621,22 +1621,28 @@ function startTest() {
     select.id = "numQuestions";
     
     // 最初に固定のオプションを追加
-  const fixedOptions = [
+    const fixedOptions = [
   { value: 1, text: "1問" },
-  { value: 3, text: "3問" ,selected: true },
-  { value: 10, text: "10問"},
+  { value: 3, text: "3問"},
+  { value: 10, text: "10問", selected: true },
   { value: 50, text: "50問" },
   { value: 100, text: "100問" },
   { value: problems.length, text: "ALL" }
 ];
 
     
-    fixedOptions.forEach(optionData => {
-      const option = document.createElement('option');
-      option.value = optionData.value;
-      option.textContent = optionData.text;
-      select.appendChild(option);
-    });
+  fixedOptions.forEach(optionData => {
+  const option = document.createElement('option');
+  option.value = optionData.value;
+  option.textContent = optionData.text;
+  
+  // デフォルトでselectedを選択状態にする
+  if (optionData.selected) {
+    option.selected = true;
+  }
+  
+  select.appendChild(option);
+});
 
     // 残りのオプションを1から全ての問題数まで順番に追加
     for (let i = 1; i <= problems.length; i++) {
