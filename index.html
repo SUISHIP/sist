@@ -1520,58 +1520,13 @@ function checkAnswer() {
             } else {
                 resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
                 showResults();
-                if (currentProblems.length === 100) {
-                    submitScore();
-                }
+                //if (currentProblems.length === 100) {
+                  //  submitScore();
+                //}
             }
         }, 2500);
     }
 }
-
-// スコアを送信する関数
-function submitScore() {
-    const username = prompt("ユーザー名を入力してください:");
-    const correctAnswers = results.filter(result => result.isCorrect).length;
-    const score = (correctAnswers / 100) * 100;
-
-    fetch('/submit-score', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            score: score
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Score submitted:', data);
-        fetchRankings(); // スコア送信後にランキングを取得
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-// ランキングを取得して表示する関数
-function fetchRankings() {
-    fetch('/get-rankings')
-        .then(response => response.json())
-        .then(data => {
-            const rankingsTable = document.getElementById('rankings');
-            rankingsTable.innerHTML = ''; // 一度テーブルをクリア
-            data.forEach((row, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${index + 1}</td><td>${row.username}</td><td>${row.score}%</td>`;
-                rankingsTable.appendChild(tr);
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
 
   function showNextProblem() {
    const currentProblem = currentProblems[0];
