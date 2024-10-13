@@ -147,7 +147,7 @@ h2 {
       </ul>
     </nav>
   </header>
-  <h1>みにまるスペリング v1.3.2</h1><label>
+  <h1>みにまるスペリング v1.3.3</h1><label>
         <input type="checkbox" id="toggleCheckbox"> 実験的機能
     </label><br>
   <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
@@ -185,7 +185,7 @@ h2 {
 </select>
  <div id="question-container">
   <p id="question"></p>
-  <input type="text" id="answer" placeholder="回答" onkeydown="if (event.key === 'Enter') checkAnswer()" autocomplete="off" autofocus>
+  <input type="text" id="answer" placeholder="回答"  autocomplete="off" autofocus>
   <button type="button" onclick="checkAnswer()" style="background-color: #1e90ff;
   color: white;
   padding: 15px 32px;
@@ -1455,21 +1455,31 @@ function fisherYatesShuffle(array) {
   const isRandom = document.getElementById("order").value === "random";
   currentProblems = problems.slice(startIndex, endIndex + 1);
   if (isRandom) {
-    currentProblems = fisherYatesShuffle(currentProblems); // シャッフル
+    currentProblems = fisherYatesShuffle(currentProblems); // Fisher-Yatesでシャッフル
   }
   currentProblems = currentProblems.slice(0, numQuestions);
   showNextProblem();
 }
-   
-  function checkAnswer() {
+
+ document.getElementById("answer").addEventListener("keydown", function(event) {
+    const confirmButton = document.querySelector('button[type="button"]'); // 「確定」ボタンの取得
+    if (event.key === 'Enter' && !confirmButton.disabled) {
+        checkAnswer(); // 「確定」ボタンが有効な場合のみ実行
+    }
+});
+
+function checkAnswer() {
    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
    const currentProblem = currentProblems[0];
    const correctAnswer = currentProblem.answer;
    const resultElement = document.getElementById("result");
+   const confirmButton = document.querySelector('button[type="button"]'); // 「確定」ボタンの取得
    document.getElementById("answer").value = "";
+   
    // 正解の部分を _ で置き換える
    const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${correctAnswer}\\b`, 'gi'), `${correctAnswer[0]}_____`);
    document.getElementById("question").textContent = maskedQuestion;
+   
    // 結果を配列に保存
    results.push({
     question: currentProblem.question,
@@ -1477,6 +1487,7 @@ function fisherYatesShuffle(array) {
     userAnswer: userAnswer,
     isCorrect: userAnswer === correctAnswer
    });
+   
    if (userAnswer === correctAnswer) {
     resultElement.textContent = "正解！次の問題に進んでください。";
     currentProblems.shift();
@@ -1485,38 +1496,34 @@ function fisherYatesShuffle(array) {
     } else {
      resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
      showResults();
-
-     // 全ての問題が終了したので入力フィールドをクリア
-     document.getElementById("answer").disabled = true; // 入力フィールドを無効化
     }
    } else {
     // 不正解の場合
     resultElement.textContent = "不正解です。";
     resultElement.style.fontSize = '21px';
-    // 正解を表示
     const correctAnswerElement = document.createElement('span');
     correctAnswerElement.textContent = `正解: ${correctAnswer}`;
     correctAnswerElement.style.color = 'red';
     correctAnswerElement.style.fontSize = '21px';
-    correctAnswerElement.style.size = 10;
     resultElement.appendChild(correctAnswerElement);
 
-    // 2秒後に自動的に次の問題へ進む
+    // 「確定」ボタンを無効化
+    confirmButton.disabled = true;
+
+    // 2.5秒後に次の問題に進み、「確定」ボタンを再び有効化
     setTimeout(() => {
      currentProblems.shift();
      if (currentProblems.length > 0) {
       showNextProblem();
+      confirmButton.disabled = false; // ボタンを再有効化
      } else {
       resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
       showResults();
-
-      // 全ての問題が終了したので入力フィールドをクリア
-      document.getElementById("answer").disabled = true; // 入力フィールドを無効化
+      confirmButton.disabled = false; // ボタンを再有効化
      }
     }, 2500); // 2.5秒後に実行
    }
 }
-
 
   function showNextProblem() {
    const currentProblem = currentProblems[0];
@@ -1604,7 +1611,6 @@ function fisherYatesShuffle(array) {
     showNextProblem();
   }
 
-  // テスト開始
  // テスト開始
 function startTest() {
     const container = document.createElement('div');
@@ -1614,13 +1620,16 @@ function startTest() {
     const select = document.createElement('select');
     select.id = "numQuestions";
     
-    // 最初に固定の5つのオプションを追加
-    const fixedOptions = [
-      { value: 3, text: "3問" },
-      { value: 10, text: "10問" },
-      { value: 15, text: "15問" },
-      { value: problems.length, text: "ALL" }
-    ];
+    // 最初に固定のオプションを追加
+  const fixedOptions = [
+  { value: 1, text: "1問" },
+  { value: 3, text: "3問" ,selected: true },
+  { value: 10, text: "10問"},
+  { value: 50, text: "50問" },
+  { value: 100, text: "100問" },
+  { value: problems.length, text: "ALL" }
+];
+
     
     fixedOptions.forEach(optionData => {
       const option = document.createElement('option');
