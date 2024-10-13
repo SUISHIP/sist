@@ -1438,7 +1438,14 @@ button:hover {
       endSelect.appendChild(option.cloneNode(true));
     });
   }
-   
+   // Fisher-Yatesアルゴリズムを使ってシャッフルする関数
+function fisherYatesShuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // 0 から i までのランダムなインデックスを取得
+        [array[i], array[j]] = [array[j], array[i]]; // 要素を入れ替える
+    }
+    return array;
+}
    function monsu() {
   document.getElementById("answer").disabled = false;
   document.getElementById('answer').focus();
@@ -1448,7 +1455,7 @@ button:hover {
   const isRandom = document.getElementById("order").value === "random";
   currentProblems = problems.slice(startIndex, endIndex + 1);
   if (isRandom) {
-    currentProblems.sort(() => 0.5 - Math.random());
+    currentProblems = fisherYatesShuffle(currentProblems); // シャッフル
   }
   currentProblems = currentProblems.slice(0, numQuestions);
   showNextProblem();
