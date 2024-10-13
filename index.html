@@ -1454,7 +1454,8 @@ button:hover {
 }
    
   function checkAnswer() {
-   const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+   ocument.getElementById('answer').focus();//focus
+   const userAnswer =         document.getElementById("answer").value.trim().toLowerCase();
    const currentProblem = currentProblems[0];
    const correctAnswer = currentProblem.answer;
    const resultElement = document.getElementById("result");
@@ -1581,6 +1582,7 @@ button:hover {
   }
 
   function retryMistakes() {
+    document.getElementById('answer').focus();//focus
     removeButtons();
     currentProblems = results.filter(result => !result.isCorrect);
     results = [];
@@ -1592,7 +1594,7 @@ button:hover {
   function startTest() {
     const container = document.createElement('div');
     const label = document.createElement('label');
-    label.textContent = "問題数:";
+    label.textContent = "問題数: ";
     const select = document.createElement('select');
     select.id = "numQuestions";
     for (let i = 1; i <= problems.length; i++) {
@@ -1602,7 +1604,7 @@ button:hover {
       select.appendChild(option);
     }
     const orderLabel = document.createElement('label');
-    orderLabel.textContent = "出題順:";
+    orderLabel.textContent = " 出題順: ";
     const orderSelect = document.createElement('select');
     orderSelect.id = "order";
     const optionRandom = document.createElement('option');
