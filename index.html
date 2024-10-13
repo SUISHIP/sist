@@ -1503,8 +1503,14 @@ function checkAnswer() {
             }
         }
     } else {
-        resultElement.textContent = "不正解です。";
+        resultElement.textContent = "不正解です。";//不正解の場合
         confirmButton.disabled = true;
+        resultElement.style.fontSize = '21px';
+        const correctAnswerElement = document.createElement('span');
+        correctAnswerElement.textContent = `正解: ${correctAnswer}`;
+        correctAnswerElement.style.color = 'red';
+        correctAnswerElement.style.fontSize = '21px';
+        resultElement.appendChild(correctAnswerElement);
         setTimeout(() => {
             currentProblems.shift();
             if (currentProblems.length > 0) {
