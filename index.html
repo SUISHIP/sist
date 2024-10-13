@@ -1440,6 +1440,7 @@ button:hover {
   }
    
    function monsu() {
+  document.getElementById("answer").disabled = false;
   document.getElementById('answer').focus();
   const startIndex = parseInt(document.getElementById("startQuestion").value);
   const endIndex = parseInt(document.getElementById("endQuestion").value);
@@ -1454,7 +1455,7 @@ button:hover {
 }
    
   function checkAnswer() {
-   const userAnswer =         document.getElementById("answer").value.trim().toLowerCase();
+   const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
    const currentProblem = currentProblems[0];
    const correctAnswer = currentProblem.answer;
    const resultElement = document.getElementById("result");
@@ -1477,6 +1478,9 @@ button:hover {
     } else {
      resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
      showResults();
+
+     // 全ての問題が終了したので入力フィールドをクリア
+     document.getElementById("answer").disabled = true; // 入力フィールドを無効化
     }
    } else {
     // 不正解の場合
@@ -1487,7 +1491,7 @@ button:hover {
     correctAnswerElement.textContent = `正解: ${correctAnswer}`;
     correctAnswerElement.style.color = 'red';
     correctAnswerElement.style.fontSize = '21px';
-    correctAnswerElement.style.size = 10
+    correctAnswerElement.style.size = 10;
     resultElement.appendChild(correctAnswerElement);
 
     // 2秒後に自動的に次の問題へ進む
@@ -1498,10 +1502,14 @@ button:hover {
      } else {
       resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
       showResults();
+
+      // 全ての問題が終了したので入力フィールドをクリア
+      document.getElementById("answer").disabled = true; // 入力フィールドを無効化
      }
     }, 2500); // 2.5秒後に実行
    }
-  }
+}
+
 
   function showNextProblem() {
    const currentProblem = currentProblems[0];
@@ -1580,6 +1588,7 @@ button:hover {
   }
 
   function retryMistakes() {
+    document.getElementById("answer").disabled = false;
     document.getElementById('answer').focus();//focus
     removeButtons();
     currentProblems = results.filter(result => !result.isCorrect);
@@ -1589,41 +1598,67 @@ button:hover {
   }
 
   // テスト開始
-  function startTest() {
+ // テスト開始
+function startTest() {
     const container = document.createElement('div');
     const label = document.createElement('label');
     label.textContent = "問題数: ";
+    
     const select = document.createElement('select');
     select.id = "numQuestions";
+    
+    // 最初に固定の5つのオプションを追加
+    const fixedOptions = [
+      { value: 3, text: "3問" },
+      { value: 10, text: "10問" },
+      { value: 15, text: "15問" },
+      { value: problems.length, text: "ALL" }
+    ];
+    
+    fixedOptions.forEach(optionData => {
+      const option = document.createElement('option');
+      option.value = optionData.value;
+      option.textContent = optionData.text;
+      select.appendChild(option);
+    });
+
+    // 残りのオプションを1から全ての問題数まで順番に追加
     for (let i = 1; i <= problems.length; i++) {
       const option = document.createElement('option');
       option.value = i;
       option.textContent = i;
       select.appendChild(option);
     }
+
     const orderLabel = document.createElement('label');
     orderLabel.textContent = " 出題順: ";
+    
     const orderSelect = document.createElement('select');
     orderSelect.id = "order";
+    
     const optionRandom = document.createElement('option');
     optionRandom.value = "random";
     optionRandom.textContent = "ランダム";
+    
     const optionSequential = document.createElement('option');
     optionSequential.value = "sequential";
     optionSequential.textContent = "順番どうり";
+    
     orderSelect.appendChild(optionRandom);
     orderSelect.appendChild(optionSequential);
+    
     const startButton = document.createElement('button');
     startButton.textContent = "スタート";
     startButton.onclick = monsu;
+    
     container.appendChild(label);
     container.appendChild(select);
-    //container.appendChild(document.createElement('br'));
     container.appendChild(orderLabel);
     container.appendChild(orderSelect);
     container.appendChild(startButton);
+    
     document.body.insertBefore(container, document.getElementById("question-container"));
-  }
+}
 
 startTest();
 
