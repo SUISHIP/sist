@@ -1607,13 +1607,19 @@ function checkAnswer() {
 
   function retryMistakes() {
     document.getElementById("answer").disabled = false;
-    document.getElementById('answer').focus();//focus
+    document.getElementById('answer').value = "";
+    document.getElementById('answer').focus();
     removeButtons();
     currentProblems = results.filter(result => !result.isCorrect);
     results = [];
     document.getElementById("resultTable").innerHTML = "";
-    showNextProblem();
-  }
+    if (currentProblems.length > 0) {
+        showNextProblem(); // 最初の問題を表示
+    } else {
+        document.getElementById("result").textContent = "間違えた問題がありません。";
+    }
+}
+
 
  // テスト開始
 function startTest() {
