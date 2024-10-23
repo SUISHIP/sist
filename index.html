@@ -150,7 +150,8 @@ h2 {
   <h1>みにまるスペリング v1.3.4</h1><label>
         <input type="checkbox" id="toggleCheckbox"> 実験的機能
     </label><br>
-  <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
+  <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label><br>
+  <p>新機能!正解の赤文字をクリックすると時間が止まります。もう一度クリックで次の問題へ</p></span>
 <input type="file" id="fileInput" accept=".txt"><br>
   <label for="startQuestion">開始点:</label>
 <select id="startQuestion">
@@ -1435,6 +1436,105 @@ button:hover {
   let results = [];
   let currentProblems = [];
 
+   function resetTest() {
+    results = [];
+    currentProblems = [];
+    document.getElementById("resultTable").innerHTML = '';
+    document.getElementById("result").textContent = '';
+    document.getElementById("answer").disabled = false;
+    resetConfirmButton(); // 確定ボタンを有効にする
+    monsu();
+  }
+
+  function retryMistakes() {
+    document.getElementById("answer").disabled = false;
+    document.getElementById('answer').value = "";
+    document.getElementById('answer').focus();
+    removeButtons();
+    currentProblems = results.filter(result => !result.isCorrect);
+    results = [];
+    document.getElementById("resultTable").innerHTML = "";
+    if (currentProblems.length > 0) {
+        resetConfirmButton(); // 確定ボタンを有効にする
+        showNextProblem(); // 最初の問題を表示
+    } else {
+        document.getElementById("result").textContent = "間違えた問題がありません。";
+    }
+  }
+
+  function resetConfirmButton() {
+    const confirmButton = document.querySelector('button[type="button"]');
+    confirmButton.disabled = false; // 確定ボタンを有効にする
+  }
+
+  function checkAnswer() {
+    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+    const currentProblem = currentProblems[0];
+    const correctAnswer = currentProblem.answer;
+    const resultElement = document.getElementById("result");
+    const confirmButton = document.querySelector('button[type="button"]');
+    document.getElementById("answer").value = "";
+
+    results.push({
+        question: currentProblem.question,
+        answer: correctAnswer,
+        userAnswer: userAnswer,
+        isCorrect: userAnswer === correctAnswer
+    });
+
+    if (userAnswer === correctAnswer) {
+        resultElement.textContent = "正解！次の問題に進んでください。";
+        currentProblems.shift();
+        if (currentProblems.length > 0) {
+            showNextProblem();
+        } else {
+            resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+            showResults();
+        }
+        resetConfirmButton(); // 正解の場合もボタンを有効化
+    } else {
+        resultElement.textContent = "不正解です。"; // 不正解の場合
+        confirmButton.disabled = true;
+        resultElement.style.fontSize = '21px';
+
+        const correctAnswerElement = document.createElement('span');
+        correctAnswerElement.textContent = ` 正解: ${correctAnswer}`;
+        correctAnswerElement.style.color = 'red';
+        correctAnswerElement.style.fontSize = '21px';
+        correctAnswerElement.style.cursor = 'pointer';
+        resultElement.appendChild(correctAnswerElement);
+
+        countdownTimeout = setTimeout(() => {
+            if (!isAnswerClicked) {
+                currentProblems.shift();
+                if (currentProblems.length > 0) {
+                    showNextProblem();
+                    resetConfirmButton(); // 次の問題に進む際にボタンを有効化
+                } else {
+                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                    showResults();
+                }
+            }
+        }, 2500);
+
+        correctAnswerElement.addEventListener('click', () => {
+            if (isAnswerClicked) {
+                currentProblems.shift();
+                if (currentProblems.length > 0) {
+                    showNextProblem();
+                    resetConfirmButton(); // クリック後にボタンを有効化
+                } else {
+                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                    showResults();
+                }
+            } else {
+                clearTimeout(countdownTimeout);
+                isAnswerClicked = true;
+            }
+        });
+    }
+  }
+   
    function populateQuestionDropdowns() {
     const startSelect = document.getElementById("startQuestion");
     const endSelect = document.getElementById("endQuestion");
@@ -1480,76 +1580,7 @@ function fisherYatesShuffle(array) {
 let countdownTimeout; // カウントダウンを管理するタイマー変数
 let isAnswerClicked = false; // 赤文字がクリックされたかどうかを管理するフラグ
 
-function checkAnswer() {
-    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-    const currentProblem = currentProblems[0];
-    const correctAnswer = currentProblem.answer;
-    const resultElement = document.getElementById("result");
-    const confirmButton = document.querySelector('button[type="button"]');
-    document.getElementById("answer").value = "";
 
-    results.push({
-        question: currentProblem.question,
-        answer: correctAnswer,
-        userAnswer: userAnswer,
-        isCorrect: userAnswer === correctAnswer
-    });
-
-    if (userAnswer === correctAnswer) {
-        resultElement.textContent = "正解！次の問題に進んでください。";
-        currentProblems.shift();
-        if (currentProblems.length > 0) {
-            showNextProblem();
-        } else {
-            resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-            showResults();
-        }
-    } else {
-        resultElement.textContent = "不正解です。"; // 不正解の場合
-        confirmButton.disabled = true;
-        resultElement.style.fontSize = '21px';
-
-        const correctAnswerElement = document.createElement('span');
-        correctAnswerElement.textContent = ` 正解: ${correctAnswer}`;
-        correctAnswerElement.style.color = 'red';
-        correctAnswerElement.style.fontSize = '21px';
-        correctAnswerElement.style.cursor = 'pointer'; // ポインターカーソルを追加
-        resultElement.appendChild(correctAnswerElement);
-
-        // タイマーを2.5秒で次の問題に移動する設定
-        countdownTimeout = setTimeout(() => {
-            if (!isAnswerClicked) { // クリックされていない場合のみ次の問題に進む
-                currentProblems.shift();
-                if (currentProblems.length > 0) {
-                    showNextProblem();
-                    confirmButton.disabled = false;
-                } else {
-                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                    showResults();
-                }
-            }
-        }, 2500);
-
-        // 赤文字の正解をクリックした場合、タイマーを停止し、次の問題に進む
-        correctAnswerElement.addEventListener('click', () => {
-            if (isAnswerClicked) {
-                // 2回目のクリックで次の問題に進む
-                currentProblems.shift();
-                if (currentProblems.length > 0) {
-                    showNextProblem();
-                    confirmButton.disabled = false;
-                } else {
-                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                    showResults();
-                }
-            } else {
-                // 初回のクリックでカウントダウンを停止
-                clearTimeout(countdownTimeout); // タイマーを停止
-                isAnswerClicked = true; // フラグを更新
-            }
-        });
-    }
-}
 
   function showNextProblem() {
    isAnswerClicked = false;
@@ -1620,28 +1651,7 @@ function checkAnswer() {
     });
   }
 
-  function resetTest() {
-    results = [];
-    currentProblems = [];
-    document.getElementById("resultTable").innerHTML = '';
-    document.getElementById("result").textContent = '';
-    monsu();
-  }
 
-  function retryMistakes() {
-    document.getElementById("answer").disabled = false;
-    document.getElementById('answer').value = "";
-    document.getElementById('answer').focus();
-    removeButtons();
-    currentProblems = results.filter(result => !result.isCorrect);
-    results = [];
-    document.getElementById("resultTable").innerHTML = "";
-    if (currentProblems.length > 0) {
-        showNextProblem(); // 最初の問題を表示
-    } else {
-        document.getElementById("result").textContent = "間違えた問題がありません。";
-    }
-}
 
 
  // テスト開始
