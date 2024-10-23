@@ -127,6 +127,16 @@ h2 {
 .toggle-text {
             display: none; /* 初期状態は非表示 */
         }
+  /* グラデーション背景効果 */
+    @keyframes gradientBackground {
+      0% { background-color: #DDFFBC; }
+      20% { background-color: #ADFFFF; }
+      50% { background-color: #FFFF6B; }
+      100% { background-color: #DDFFBC; }
+    }
+    #release-link {
+      animation: gradientBackground 0.5s 2;
+    }
  </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
  <!-- Google tag (gtag.js) -->
@@ -143,7 +153,7 @@ h2 {
   <header>
     <nav>
       <ul>
-        <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html">リリース</a></li>
+        <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html" id="release-link">リリース</a></li>
       </ul>
     </nav>
   </header>
