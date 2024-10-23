@@ -1477,6 +1477,9 @@ function fisherYatesShuffle(array) {
     }
 });
 
+let countdownTimeout; // カウントダウンを管理するタイマー変数
+let isAnswerClicked = false; // 赤文字がクリックされたかどうかを管理するフラグ
+
 function checkAnswer() {
     const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
     const currentProblem = currentProblems[0];
@@ -1500,36 +1503,56 @@ function checkAnswer() {
         } else {
             resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
             showResults();
-            if (currentProblems.length === 10) { // 10問の場合のみスコアを送信
-                submitScore();
-            }
         }
     } else {
-        resultElement.textContent = "不正解です。";//不正解の場合
+        resultElement.textContent = "不正解です。"; // 不正解の場合
         confirmButton.disabled = true;
         resultElement.style.fontSize = '21px';
+
         const correctAnswerElement = document.createElement('span');
-        correctAnswerElement.textContent = `正解: ${correctAnswer}`;
+        correctAnswerElement.textContent = ` 正解: ${correctAnswer}`;
         correctAnswerElement.style.color = 'red';
         correctAnswerElement.style.fontSize = '21px';
+        correctAnswerElement.style.cursor = 'pointer'; // ポインターカーソルを追加
         resultElement.appendChild(correctAnswerElement);
-        setTimeout(() => {
-            currentProblems.shift();
-            if (currentProblems.length > 0) {
-                showNextProblem();
-                confirmButton.disabled = false;
-            } else {
-                resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                showResults();
-                //if (currentProblems.length === 100) {
-                  //  submitScore();
-                //}
+
+        // タイマーを2.5秒で次の問題に移動する設定
+        countdownTimeout = setTimeout(() => {
+            if (!isAnswerClicked) { // クリックされていない場合のみ次の問題に進む
+                currentProblems.shift();
+                if (currentProblems.length > 0) {
+                    showNextProblem();
+                    confirmButton.disabled = false;
+                } else {
+                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                    showResults();
+                }
             }
         }, 2500);
+
+        // 赤文字の正解をクリックした場合、タイマーを停止し、次の問題に進む
+        correctAnswerElement.addEventListener('click', () => {
+            if (isAnswerClicked) {
+                // 2回目のクリックで次の問題に進む
+                currentProblems.shift();
+                if (currentProblems.length > 0) {
+                    showNextProblem();
+                    confirmButton.disabled = false;
+                } else {
+                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                    showResults();
+                }
+            } else {
+                // 初回のクリックでカウントダウンを停止
+                clearTimeout(countdownTimeout); // タイマーを停止
+                isAnswerClicked = true; // フラグを更新
+            }
+        });
     }
 }
 
   function showNextProblem() {
+   isAnswerClicked = false;
    const currentProblem = currentProblems[0];
    const questionElement = document.getElementById("question");
    const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `${currentProblem.answer[0]}_____`);
