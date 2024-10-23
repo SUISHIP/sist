@@ -1448,6 +1448,7 @@ button:hover {
   }
    // Fisher-Yatesアルゴリズムを使ってシャッフルする関数
 function fisherYatesShuffle(array) {
+    document.getElementById("answer").disabled = false;
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1)); // 0 から i までのランダムなインデックスを取得
         [array[i], array[j]] = [array[j], array[i]]; // 要素を入れ替える
@@ -1616,6 +1617,7 @@ function checkAnswer() {
 
  // テスト開始
 function startTest() {
+    document.getElementById("answer").disabled = false;
     const container = document.createElement('div');
     const label = document.createElement('label');
     label.textContent = "問題数: ";
