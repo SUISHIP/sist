@@ -8,7 +8,29 @@
  <style>
   
    body {
-     background-color: #FFFFFE;/* サイト背景色 */
+      background-color: white;/* サイト背景色 */
+    }
+    .dark-mode {/* DarkMode */
+      background-color: #141414;
+    }
+    .dark-mode h1, .dark-mode h2, .dark-mode p, .dark-mode label, .dark-mode input, .dark-mode select,.dark-mode span {
+      color: #C9C9C9;
+      background-color: #141414;
+    }
+   .dark-mode button, .dark-mode nav ul a, .dark-mode .custom-file-label, .dark-mode #resultTable th, #resultTable td {
+      color: #C9C9C9;
+      background-color: #424242;
+    }
+   .dark-mode ::selection {
+            background-color: #00415B;
+            color: #ddd;
+        }
+   .dark-mode .send_button{
+     background_color: #0C1959;
+     color: #ddd;
+   }
+   .dark-mode .correctAnswer {
+     color: #923436!important;
    }
 /* 選択部分の背景色と文字色を変更 */
         ::selection {
@@ -127,7 +149,24 @@ h2 {
 .toggle-text {
             display: none; /* 初期状態は非表示 */
         }
-  /* グラデーション背景効果 */
+   .send_button {
+     background-color: #1e90ff;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #191970;
+}
+   /* グラデーション背景効果 */
     @keyframes gradientBackground {
       0% { background-color: #DDFFBC; }
       20% { background-color: #ADFFFF; }
@@ -157,11 +196,10 @@ h2 {
       </ul>
     </nav>
   </header>
-  <h1>みにまるスペリング v1.3.4</h1><label>
-        <input type="checkbox" id="toggleCheckbox"> 実験的機能
-    </label><br>
-  <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label><br>
-  <p>新機能!正解の赤文字をクリックすると時間が止まります。もう一度クリックで次の問題へ</p></span>
+  <h1>みにまるスペリング v1.3.5</h1>
+  <label><input type="checkbox" id="dark-toggle">ダークモード</label>
+  <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label><br>
+  <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
 <input type="file" id="fileInput" accept=".txt"><br>
   <label for="startQuestion">開始点:</label>
 <select id="startQuestion">
@@ -197,23 +235,7 @@ h2 {
  <div id="question-container">
   <p id="question"></p>
   <input type="text" id="answer" placeholder="回答"  autocomplete="off" autofocus>
-  <button type="button" onclick="checkAnswer()" style="background-color: #1e90ff;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #191970;
-}
-">確定</button>
+  <button type="button" onclick="checkAnswer()" class="send_button">確定</button>
   <p id="result"></p>
  </div>
  <h2>結果</h2>
@@ -222,11 +244,7 @@ button:hover {
   <tr>
   </tr>
  </table>
-  <span class="toggle-button"><button onclick="download()" 
-          style="
-            padding: 3px 30px;background-color: gray;color: white;
-            cursor: pointer;
-                 border-radius: 3px;">ミスし単語.txt</button></span>
+  <span class="toggle-button"><button class="custom-file-label"onclick="download()">ミスし単語.txt</button></span>
  <br>
  <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a><br>
  <!--<h3>ランキング</h3>
@@ -1422,7 +1440,7 @@ button:hover {
 {question: "a solid state 固体の状態",answer: "solid",},
 {question: "say stupid things ばかなことを言う",answer: "stupid",},
 {question: "biological weapons 生物兵器",answer: "biological",},
-{question: "probably he won't come. おそらく彼は来ないだろう",answer: "probably",},
+{question: "Probably he won't come. おそらく彼は来ないだろう",answer: "Probably",},
 {question: "I hardly know Bill. ビルのことはほとんど知らない",answer: "hardly",},
 {question: "leave immediately after lunch 昼食後すぐに出発する",answer: "immediately",},
 {question: "He eventually became President. ついに彼は大統領になった",answer: "eventually",},
@@ -1509,7 +1527,8 @@ button:hover {
 
         const correctAnswerElement = document.createElement('span');
         correctAnswerElement.textContent = ` 正解: ${correctAnswer}`;
-        correctAnswerElement.style.color = 'red';
+        correctAnswerElement.style.color = 'red';//正解の色
+        correctAnswerElement.classList.add('correctAnswer');
         correctAnswerElement.style.fontSize = '21px';
         correctAnswerElement.style.cursor = 'pointer';
         resultElement.appendChild(correctAnswerElement);
@@ -1811,6 +1830,14 @@ function setProblemsFromFile(content) {
                 }
             });
         });
+   const darkToggle = document.getElementById('dark-toggle');//ダークモード
+    darkToggle.addEventListener('change', function() {
+      if (darkToggle.checked) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    });
  </script>
 </body>
 </html>
