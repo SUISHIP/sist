@@ -8,7 +8,7 @@
 <body>
     <h1>みにまるメーカー</h1>
     <p>ここで独自の問題集を作成し、</p>
-    <p><a href="https://suiship.github.io/sist/">みにまるスペリングv1.3「実験的機能」</a>でここで作問した問題集を読み込めます！</p>
+    <p><a href="https://suiship.github.io/sist/">みにまるスペリングv1.3「実験的機能」</a>でここで作問したMy問題集を読み込めます！</p>
     <p>問題/答え となるよう書き込み、ダウンロードしよう("/"または"・"で区切る)</p>
     <textarea id="inputText" rows="6" cols="40" placeholder="問題/答え&#10;例: remain silent 黙ったままでいる/remain&#10;こんな使い方も:北米の先住民は?/イヌイット"></textarea><br>
 
@@ -21,7 +21,7 @@
     <script>
         function convertAndDownload() {
             let inputText = document.getElementById('inputText').value.trim();
-            let fileName = document.getElementById('fileName').value || 'ミニマル.txt';
+            let fileName = document.getElementById('fileName').value || 'Myミニマル問題集.txt';
 
             // 入力が空の場合はアラートを表示して終了
             if (!inputText) {
