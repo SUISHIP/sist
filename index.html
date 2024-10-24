@@ -1838,6 +1838,32 @@ function setProblemsFromFile(content) {
         document.body.classList.remove('dark-mode');
       }
     });
+  
+   document.addEventListener('DOMContentLoaded', function() { //matchMedia API
+    const darkModeCheckbox = document.getElementById('dark-toggle');
+    
+    // ユーザーのダークモード設定を確認
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    if (prefersDarkScheme.matches) {
+        // ダークモードが有効な場合、チェックボックスをチェック状態にする
+        darkModeCheckbox.checked = true;
+        document.body.classList.add('dark-mode');
+    } else {
+        // ライトモードの場合はチェックを外す
+        darkModeCheckbox.checked = false;
+        document.body.classList.remove('dark-mode');
+    }
+
+    // OSのテーマが変更されたときに対応する
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (e.matches) {
+            darkModeCheckbox.checked = true;
+        } else {
+            darkModeCheckbox.checked = false;
+        }
+    });
+});
  </script>
 </body>
 </html>
