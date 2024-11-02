@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8">
- <meta name="description" content="英単語のフレーズをテスト形式で定着させよう！">
+ <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>みにまるスペリング</title>
  <!-- Google Tag Manager -->
@@ -208,7 +208,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     background-color: #191970;
   }
   
-   /* フィードバックリンクの色 */
+  /* フィードバックリンクの色 */
   .link_color {
     color: #00EAC3;
   }
@@ -249,7 +249,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </ul>
       </nav></b>
   </header>
-  <h1>みにまるスペリング v1.3.4</h1>
+  <h1>みにまるスペリング v1.3.5</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
   <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label><br>
   <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
@@ -311,7 +311,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </tr>
 </table></span>-->
  <script>
-     window.onload = function() {
+  window.onload = function() {
     populateQuestionDropdowns();
     
     document.getElementById("startQuestion").addEventListener("change", function() {
@@ -1614,7 +1614,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     confirmButton.disabled = false; // 確定ボタンを有効にする
   }
 
-  function checkAnswer() {
+function checkAnswer() {
     const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
     const currentProblem = currentProblems[0];
     const correctAnswer = currentProblem.answer;
@@ -1651,6 +1651,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         correctAnswerElement.style.fontSize = '21px';
         correctAnswerElement.style.cursor = 'pointer';
         resultElement.appendChild(correctAnswerElement);
+        
+        // 音声読み上げ
+        const utterance = new SpeechSynthesisUtterance(correctAnswer);
+        utterance.lang = 'en-US'; // 読み上げる言語を指定
+        speechSynthesis.speak(utterance);
 
         countdownTimeout = setTimeout(() => {
             if (!isAnswerClicked) {
@@ -1681,7 +1686,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             }
         });
     }
-  }
+}
    
    function populateQuestionDropdowns() {
     const startSelect = document.getElementById("startQuestion");
