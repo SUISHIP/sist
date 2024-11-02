@@ -320,9 +320,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </tr>
 </table></span>-->
  <script>
-   window.onload = function() {
-            populateQuestionDropdowns();
-        };
+     window.onload = function() {
+    populateQuestionDropdowns();
+    
+    document.getElementById("startQuestion").addEventListener("change", function() {
+        const startValue = parseInt(this.value);
+        const newEndValue = startValue + 50;
+        const endSelect = document.getElementById("endQuestion");
+
+        // Set the new value for the end dropdown
+        for (let i = 0; i < endSelect.options.length; i++) {
+            if (parseInt(endSelect.options[i].value) === newEndValue) {
+                endSelect.selectedIndex = i; // Select the new end value if it exists
+                break;
+            }
+        }
+    });
+};
   const problems = [
 {question: "follow her advice 彼女の助言に従う",answer: "follow",},
 {question: "consider the problem seriously 真剣にその問題を考える",answer: "consider",},
