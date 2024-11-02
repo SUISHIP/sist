@@ -1,94 +1,128 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>リリースノート</title>
-   <style>
-/* 選択部分の背景色と文字色を変更 */
-        ::selection {
-            background-color: #FFBCFF; /* 背景色 */
-            color: #000; /* 文字色 */
-        }
-/*ヘッダー*/
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
 
-nav ul a {
-  background-color: #DDFFBC;
-  color: #4DD5D5;
-  text-decoration: none;
-  padding: 5px 10px;
-  display: inline-block;
-}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>リリースノート</title>
+  <style>
+    /* 選択部分の背景色と文字色を変更 */
+    ::selection {
+      background-color: #FFBCFF;
+      /* 背景色 */
+      color: #000;
+      /* 文字色 */
+    }
 
-nav ul a:hover {
-  background-color: #ffff8e;
-}
+    /*ヘッダー*/
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
 
+    nav ul a {
+      background-color: #DDFFBC;
+      color: #4DD5D5;
+      text-decoration: none;
+      padding: 5px 10px;
+      display: inline-block;
+    }
 
+    nav ul a:hover {
+      background-color: #ffff8e;
+    }
 
- </style>
+    details {
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: 0.5em 0.5em 0;
+    }
+
+    summary {
+      font-weight: bold;
+      margin: -0.5em -0.5em 0;
+      padding: 0.5em;
+    }
+
+    details[open] {
+      padding: 0.5em;
+    }
+
+    details[open] summary {
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 0.5em;
+    }
+  </style>
 </head>
+
 <body>
   <header>
     <nav>
       <ul>
-        <a href="index.html">スペリング </a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html">リリースパッチノート</a></li>
+        <a href="index.html">スペリング </a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.make">メーカー</a></li>
       </ul>
     </nav>
   </header>
   <h1>リリースパッチノート</h1>
   <h2>みにまるスペリングv1.3.4</h2>
-    <ul style="list-style-type: square;">
-      <li>リトライ時に入力欄が無効化される重大なバグを軽減しました</li>
-      <li>ミスした時の赤文字をクリックして長時間確認できるようにしました</li>
-      <li>リリースのリンクを強調しました</li>
-      <li>指摘された問題ミスを修正しました</li>
-      <li>ダークモードを実装しました</li>
-      <li>デバイスのダークモードの自動同期機能を実装しました</li>
-      <li>デザインの乱れを修正しました</li>
-    </ul>
+  <ul style="list-style-type: square;">
+    <li>リトライ時に入力欄が無効化される重大なバグを軽減しました</li>
+    <li>ミスした時の赤文字をクリックして長時間確認できるようにしました</li>
+    <li>リリースのリンクを強調しました</li>
+    <li>指摘された問題ミスを修正しました</li>
+    <li>ダークモードを実装しました</li>
+    <li>デバイスのダークモードの自動同期機能を実装しました</li>
+  </ul>
   <p>2024/10/24</p>
+  <ul>
+    <li>デザインの乱れを修正しました</li>
+    <li>開始点を選択すると自動で終了点がセットされるようにしました</li>
+  </ul>
+
   <p>2024/11/02</p>
-    <h1>リリースパッチノート</h1>
   <h2>みにまるスペリングv1.3.3</h2>
-    <ul style="list-style-type: square;">
-      <li>Enterや確定を連打すると結果に大量に表示されるバグを修正しました</li>
-      <li>固定の問題数オプションを追加しました</li>
-    </ul>
+  <ul style="list-style-type: square;">
+    <li>Enterや確定を連打すると結果に大量に表示されるバグを修正しました</li>
+    <li>固定の問題数オプションを追加しました</li>
+  </ul>
   <h2>みにまるスペリングv1.3.2</h2>
-    <ul style="list-style-type: square;">
-      <li>選択プルダウンの微妙な列ズレを修正しました</li>
-      <li>正答率表示機能を追加しました</li>
-      <li>背景色を#FFFFFEに変更しました</li>
-      <li>自動フォーカス機能を追加しました</li>
-      <li>不要な時にフィールドが無効化されるようにしました</li>
-      <li>軽微なバグや問題を改善しました</li>
-      <li>シャッフルアルゴリズムをMath.randomからFisher-Yatesに変更しました</li>
-      <li>データ収集を開始しました ※サイトを利用するとアクセスデータが収集されます</li>
-    </ul>
+  <ul style="list-style-type: square;">
+    <li>選択プルダウンの微妙な列ズレを修正しました</li>
+    <li>正答率表示機能を追加しました</li>
+    <li>背景色を#FFFFFEに変更しました</li>
+    <li>自動フォーカス機能を追加しました</li>
+    <li>不要な時にフィールドが無効化されるようにしました</li>
+    <li>軽微なバグや問題を改善しました</li>
+    <li>シャッフルアルゴリズムをMath.randomからFisher-Yatesに変更しました</li>
+    <li>データ収集を開始しました ※サイトを利用するとアクセスデータが収集されます</li>
+  </ul>
   <h2>みにまるスペリングv1.3.1</h2>
-    <ul style="list-style-type: square;">
-      <li>間違えた問題リストを保存できるようにしました</li>
-      <li>問題リストを読み込めるようにしました</li>
-      <li>みにまるメーカーサービスから、オリジナル問題を作れるようにしました</li>
-      <li>ベータ機能をオンオフできるようにしました</li>
-      <li>みにまるインプットへのジャンプリンクを削除しました</li>
-      <li>>>>このベータ版にご意見ご感想があればフィードバックして下さい。</li>
-    </ul>
-    <h2>みにまるスペリングv1.3.0</h2>
-    <ul style="list-style-type: square;">
-      <li>「リリース」ページを追加しました</li>
-      <li>問題数選択を有効化しました</li>
-      <li>デザインを一部変更しました</li>
-      <li>フィードバックフォームを追加しました</li>
-      <li>指摘されたミスを修正しました</li>
-      <li>赤文字を大きくしました</li>
-    </ul>
-  
-    <footer><p>created by sui</p></footer>
-  </body>
+  <ul style="list-style-type: square;">
+    <li>間違えた問題リストを保存できるようにしました</li>
+    <li>問題リストを読み込めるようにしました</li>
+    <li>みにまるメーカーサービスから、オリジナル問題を作れるようにしました</li>
+    <li>ベータ機能をオンオフできるようにしました</li>
+    <li>みにまるインプットへのジャンプリンクを削除しました</li>
+  </ul>
+  <h2>みにまるスペリングv1.3.0</h2>
+  <ul style="list-style-type: square;">
+    <li>「リリース」ページを追加しました</li>
+    <li>問題数選択を有効化しました</li>
+    <li>デザインを一部変更しました</li>
+    <li>フィードバックフォームを追加しました</li>
+    <li>指摘されたミスを修正しました</li>
+    <li>赤文字を大きくしました</li>
+  </ul>
+
+  <h2>About</h2>
+  <details>
+    <summary>みにまるスペリングについて</summary>
+    最新の電子辞書にはシステム英単語を暗記するアプリが付属しているっぽいのですが、私は古い電子辞書しか持っていません。だから、人力でそれを再現してより自分に合った機能を追加してやろうということで誕生しました。ちなみに最も古いバージョンであるv1.1.1は<a href="https://codepen.io/SUISHIP/full/gOVKKyv">こちら</a>にアーカイブとして残しておきます。気になったらみてください。<br>
+    テスト対策として、みにまるスペリングをご活用ください。
+  </details>
+  <footer>
+    <p>Created By SUI</p>
+  </footer>
+</body>
+
 </html>
