@@ -12,168 +12,203 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
 <!-- End Google Tag Manager -->
- <style>
-  
-   body {
-      background-color: white;/* サイト背景色 */
-    }
-    .dark-mode {/* DarkMode */
-      background-color: #141414;
-    }
-    .dark-mode h1, .dark-mode h2, .dark-mode p, .dark-mode label, .dark-mode input, .dark-mode select,.dark-mode span {
-      color: #C9C9C9;
-      background-color: #141414;
-    }
-   .dark-mode button, .dark-mode nav ul a, .dark-mode .custom-file-label, .dark-mode #resultTable th, .dark-mode #resultTable td {
-      color: #C9C9C9;
-      background-color: #424242;
-    }
-   .dark-mode ::selection {
-            background-color: #00415B;
-            color: #ddd;
-        }
-   .dark-mode .send_button{
-     background_color: #0C1959;
-     color: #ddd;
-   }
-   .dark-mode .correctAnswer {
-     color: #923436!important;
-   }
-/* 選択部分の背景色と文字色を変更 */
-        ::selection {
-            background-color: #FFBCFF; /* 背景色 */
-            color: #000; /* 文字色 */
-        }
+<style>
+  body {
+    background-color: white;
+    /* サイト背景色 */
+  }
+
+  /* 結果セクションのスタイル */
+  h2 {
+    color: #333;
+  }
+
+  #resultTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #resultTable,
+  #resultTable th,
+  #resultTable td {
+    border: 1px solid #ddd;
+  }
+
+  #resultTable th,
+  #resultTable td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  #resultTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #resultTable tr:hover {
+    background-color: #ddd;
+  }
+
+  #resultTable th {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .dark-mode {
+    /* DarkMode */
+    background-color: #141414 !important;
+  }
+
+  .dark-mode h1,
+  .dark-mode h2,
+  .dark-mode p,
+  .dark-mode label,
+  .dark-mode input,
+  .dark-mode select,
+  .dark-mode span {
+    color: #C9C9C9;
+    background-color: #141414;
+  }
+
+  .dark-mode button,
+  .dark-mode nav ul a,
+  .dark-mode .custom-file-label {
+    color: #C9C9C9;
+    background-color: #424242;
+  }
+
+  .dark-mode #resultTable th,
+  .dark-mode #resultTable td {
+    color: #C9C9C9;
+    background-color: #424242;
+  }
+
+  .dark-mode ::selection {
+    background-color: #00415B;
+    color: #ddd;
+  }
+
+  .dark-mode .send_button {
+    background_color: #0C1959;
+    color: #ddd;
+  }
+
+  .dark-mode .correctAnswer {
+    color: #923436 !important;
+  }
+
+  /* 選択部分の背景色と文字色を変更 */
+  ::selection {
+    background-color: #FFF499;
+    /* 背景色 */
+    color: #000;
+    /* 文字色 */
+  }
+
   /* 確定ボタンのスタイル */
-button {
-  background-color: #000000; /* 水色 */
-  color: white;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
+  button {
+    background-color: #000000;
+    /* 水色 */
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
 
-/* ホバー時のスタイル (任意) */
-button:hover {
-  background-color: #191970;
-}
+  /* ホバー時のスタイル (任意) */
+  button:hover {
+    background-color: #191970;
+  }
 
-input[type="text"] {
-  width: 200px;
-  height: 40px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 18px;
-}
+  input[type="text"] {
+    width: 200px;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+  }
 
-select {
-  width: 110px;
-  height: 40px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 18px;
-}
+  select {
+    width: 110px;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+  }
 
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-nav ul a {
-  background-color: #D1FF97;
-  color: blue;
-  text-decoration: none;
-  padding: 5px 10px;
-  display: inline-block;
-}
+  nav ul a {
+    background-color: #70EFC2;
+    color: #1A7593;
+    text-decoration: none;
+    padding: 5px 10px;
+    display: inline-block;
+  }
 
-nav ul a:hover {
-  background-color: #ffff8e;
-}
+  nav ul a:hover {
+    background-color: #ffff8e;
+  }
 
- /* 結果セクションのスタイル */
-h2 {
-  color: #333;
-}
+  /* 隠す */
+  #fileInput {
+    display: none;
+  }
 
-#resultTable {
-  width: 100%;
-  border-collapse: collapse;
-}
+  /* カスタムボタンのスタイル */
+  .custom-file-label {
+    display: inline-block;
+    padding: 3px 30px;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+  }
 
-#resultTable, #resultTable th, #resultTable td {
-  border: 1px solid #ddd;
-}
+  /* カスタムボタンにマウスホバー時の効果 */
+  .custom-file-label:hover {
+    background-color: black;
+  }
 
-#resultTable th, #resultTable td {
-  padding: 8px;
-  text-align: left;
-}
+  .toggle-button {
+    display: none;
+    /* 初期状態は非表示 */
+  }
 
-#resultTable tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+  .toggle-text {
+    display: none;
+    /* 初期状態は非表示 */
+  }
 
-#resultTable tr:hover {
-  background-color: #ddd;
-}
+  .send_button {
+    background-color: #1e90ff;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
 
-#resultTable th {
-  background-color: #4CAF50;
-  color: white;
-}
+  button:hover {
+    background-color: #191970;
+  }
 
-        /* 隠す */
-        #fileInput {
-            display: none;
-        }
-
-        /* カスタムボタンのスタイル */
-        .custom-file-label {
-            display: inline-block;
-            padding: 3px 30px;
-            background-color: gray;
-            color: white;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        /* カスタムボタンにマウスホバー時の効果 */
-        .custom-file-label:hover {
-            background-color: black;
-        }
-           .toggle-button {
-            display: none; /* 初期状態は非表示 */
-        }
-.toggle-text {
-            display: none; /* 初期状態は非表示 */
-        }
-   .send_button {
-     background-color: #1e90ff;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #191970;
-}
-   /* グラデーション背景効果 */
+  /* グラデーション背景効果 */
     @keyframes gradientBackground {
       0% { background-color: #DDFFBC; }
       20% { background-color: #ADFFFF; }
@@ -183,7 +218,7 @@ button:hover {
     #release-link {
       animation: gradientBackground 0.5s 2;
     }
- </style>
+</style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZM63KK99L"></script>
@@ -210,11 +245,11 @@ button:hover {
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <header>
-    <nav>
+    <b><nav>
       <ul>
         <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html" id="release-link">リリース</a></li>
       </ul>
-    </nav>
+      </nav></b>
   </header>
   <h1>みにまるスペリング v1.3.4</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
@@ -1936,6 +1971,6 @@ function setProblemsFromFile(content) {
         }
     });
 });
- </script>
+</script>
 </body>
 </html>
