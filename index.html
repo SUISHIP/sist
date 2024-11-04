@@ -5,6 +5,13 @@
  <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>みにまるスペリング</title>
+ <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
+<!-- End Google Tag Manager -->
 <style>
   body {
     background-color: white;
@@ -231,6 +238,10 @@
 </script>
 </head>
 <body>
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTHSXR8K"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
   <header>
     <b><nav>
       <ul>
@@ -1651,10 +1662,11 @@
     }
   }
 
-  function resetConfirmButton() {
-    const confirmButton = document.querySelector('button[type="button"]');
-    confirmButton.disabled = false; // 確定ボタンを有効にする
-  }
+// 確定ボタンをリセットする関数
+function resetConfirmButton() {
+    const confirmButton = document.querySelector('button.send_button');
+    confirmButton.disabled = false;
+}
 
 function checkAnswer() {
     const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
@@ -1752,8 +1764,11 @@ function fisherYatesShuffle(array) {
     }
     return array;
 }
+   
+   
    function monsu() {
-  document.getElementById("answer").disabled = false;
+  document.getElementById("answer").disabled = false
+  document.getElementById("answer").value = "";
   document.getElementById('answer').focus();
   const startIndex = parseInt(document.getElementById("startQuestion").value);
   const endIndex = parseInt(document.getElementById("endQuestion").value);
@@ -1765,6 +1780,7 @@ function fisherYatesShuffle(array) {
   }
   currentProblems = currentProblems.slice(0, numQuestions);
   showNextProblem();
+  resetConfirmButton();
 }
 
  document.getElementById("answer").addEventListener("keydown", function(event) {
