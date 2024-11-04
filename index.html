@@ -1716,6 +1716,7 @@ function checkAnswer() {
                 if (currentProblems.length > 0) {
                     showNextProblem();
                     resetConfirmButton(); // 次の問題に進む際にボタンを有効化
+                    document.getElementById('answer').focus();
                 } else {
                     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
                     showResults();
@@ -1728,6 +1729,7 @@ function checkAnswer() {
                 currentProblems.shift();
                 if (currentProblems.length > 0) {
                     showNextProblem();
+                    document.getElementById('answer').focus();//forcus
                     resetConfirmButton(); // クリック後にボタンを有効化
                 } else {
                     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
