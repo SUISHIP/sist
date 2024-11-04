@@ -252,8 +252,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h1>みにまるスペリング v1.3.5</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
   <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label><br>
-  <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
-<input type="file" id="fileInput" accept=".txt"><br>
+  <span class="toggle-button"><button onclick="loadMistakes()">ミスたんをロード</button></span>
+<br>
   <label for="startQuestion">開始点:</label>
 <select id="startQuestion">
      <option value="0">1</option>
@@ -301,7 +301,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <tr>
   </tr>
  </table>
-  <span class="toggle-button"><button class="custom-file-label"onclick="download()">ミスし単語.txt</button></span>
+  <span class="toggle-button"><button onclick="saveMistakes()">ミスたんをセーブ</button><button onclick="displayMistakes()">ミスし単語を表示</button></span>
  <br>
  <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br>
  <!--<h3>ランキング</h3>
@@ -1690,7 +1690,7 @@ function checkAnswer() {
             showNextProblem();
         } else {
             resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-            showResults();
+            showResults(0);
         }
         resetConfirmButton(); // 正解の場合もボタンを有効化
     } else {
@@ -1720,7 +1720,7 @@ function checkAnswer() {
                     document.getElementById('answer').focus();
                 } else {
                     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                    showResults();
+                    showResults(0);
                 }
             }
         }, 2500);
@@ -1734,7 +1734,7 @@ function checkAnswer() {
                     resetConfirmButton(); // クリック後にボタンを有効化
                 } else {
                     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                    showResults();
+                    showResults(0);
                 }
             } else {
                 clearTimeout(countdownTimeout);
@@ -1806,14 +1806,13 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
    const resultElement = document.getElementById("result");
    resultElement.textContent = '';
   }
-
-  function showResults() {
+  
+  function showResults(isMistanload) {
   const table = document.getElementById("resultTable");
   table.innerHTML = ''; // 結果テーブルを初期化する
 
   let correctAnswers = 0; // 正解数をカウント
   let totalQuestions = results.length; // 全体の問題数
-
   // 間違えた問題のみを表示
   for (let i = 0; i < results.length; i++) {
     if (!results[i].isCorrect) { // 不正解の問題のみを表示
@@ -1832,16 +1831,20 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
       correctAnswers++; // 正解の場合、正解数カウントを増やす
     }
   }
-
+    
+  if (isMistanload === 0){
   // 正答率の計算 (パーセンテージ)
   const accuracy = (correctAnswers / totalQuestions) * 100;
 
   // 正答率の表示
+  
   const resultContainer = document.getElementById("result");
   const accuracyElement = document.createElement('p');
   accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
   resultContainer.appendChild(accuracyElement);  // 正答率を表示
-
+  } else {
+    let isMistanload = 0; 
+  }
   // リセットとリトライボタンを表示
   removeButtons();
   const resetButton = document.createElement('button');
@@ -1941,66 +1944,39 @@ function startTest() {
 
 startTest();
 
-   function download() {
-  let table = document.getElementById("resultTable");
-  let rows = table.getElementsByTagName("tr");
-  if (rows.length === 0 || (rows.length === 1 && rows[0].cells.length === 0)) {
-  alert("ダウンロードするミスし単語がありません。");
-  return;
-}
 
-  let textData = "";
-
-  for (let i = 0; i < rows.length; i++) {
-    let cells = rows[i].getElementsByTagName("td");
-    for (let j = 0; j < cells.length; j++) {
-      textData += cells[j].innerText + "\t"; // タブ区切りでデータを追加
+  // ミスした単語をlocalStorageに保存する関数
+  function saveMistakes() {
+    localStorage.setItem('mistakes', JSON.stringify(results));
+    alert('ミスした単語が保存されました。');
+  }
+   
+  // localStorageからミスした単語をロードする関数
+  function loadMistakes() {
+    const savedMistakes = localStorage.getItem('mistakes');
+    if (savedMistakes) {
+      results = JSON.parse(savedMistakes);
+      let isMistanload = 1;
+      showResults(1);
+    } else {
+      alert('保存されたミスした単語がありません ><');
     }
-    textData += "\n"; // 各行の終わりに改行を追加
   }
 
-  let blob = new Blob([textData], { type: "text/plain" });
-  let url = URL.createObjectURL(blob);
-  let a = document.createElement("a");
-  a.href = url;
-  a.download = "ミスし単語.txt";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-document.getElementById('fileInput').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const content = e.target.result;
-      setProblemsFromFile(content);
-    };
-    reader.readAsText(file);
-  }
-});
-
-function setProblemsFromFile(content) {
-  const lines = content.split('\n');
-  problems.length = 0; // 既存の問題をクリア
-  lines.forEach(line => {
-    const [question, answer] = line.split('\t');
-    if (question && answer) {
-      problems.push({ question: question.trim(), answer: answer.trim() });
+  // ダウンロードボタンの代わりに表示するための関数
+  function displayMistakes() {
+    const savedMistakes = localStorage.getItem('mistakes');
+    if (savedMistakes) {
+      const mistakesList = JSON.parse(savedMistakes);
+      let output = 'ミスした単語リスト:\n';
+      mistakesList.forEach((mistake, index) => {
+        output += `${index + 1}. 問題: ${mistake.question}\n  正解: ${mistake.answer}\n`;
+      });
+      alert(output);
+    } else {
+      alert('保存されたミスした単語がありません。');
     }
-  });
-  populateQuestionDropdowns();
-  resetTest();
-}
- // ファイルが選択されたら、そのファイル名をラベルに表示
-        const fileInput = document.getElementById('fileInput');
-        const label = document.querySelector('.custom-file-label');
-
-        fileInput.addEventListener('change', function() {
-            const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'ファイルをアップロード';
-            label.textContent = fileName;
-        });
+  }
    
    const checkbox = document.getElementById('toggleCheckbox');
         const toggleButtons = document.querySelectorAll('.toggle-button'); // すべてのボタンを取得
