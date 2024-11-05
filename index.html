@@ -225,6 +225,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     #release-link {
       animation: gradientBackground 0.5s 2;
     }
+  
 </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
  <!-- Google tag (gtag.js) -->
@@ -301,7 +302,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <tr>
   </tr>
  </table>
-  <span class="toggle-button"><button onclick="saveMistakes()">ミスたんをセーブ</button><button onclick="displayMistakes()">ミスし単語を表示</button></span>
+  <span class="toggle-button"><button onclick="saveMistakes()">ミスたんをセーブ</button><button onclick="displayMistakes()">保存済み問題表示</button></span>
  <br>
  <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br>
  <!--<h3>ランキング</h3>
@@ -1708,9 +1709,18 @@ function checkAnswer() {
         resultElement.appendChild(correctAnswerElement);
         
         // 音声読み上げ
-        const utterance = new SpeechSynthesisUtterance(correctAnswer);
-        utterance.lang = 'en-US'; // 読み上げる言語を指定
-        speechSynthesis.speak(utterance);
+const voices = window.speechSynthesis.getVoices();
+const alexVoice = voices.find(voice => voice.name === 'Alex');
+
+const utterance = new SpeechSynthesisUtterance(correctAnswer);
+utterance.lang = 'en-US';
+
+// Alexの音声が見つかったら設定
+if (alexVoice) {
+    utterance.voice = alexVoice;
+}
+speechSynthesis.speak(utterance);
+
 
         countdownTimeout = setTimeout(() => {
             if (!isAnswerClicked) {
@@ -1947,10 +1957,17 @@ startTest();
 
 
   // ミスした単語をlocalStorageに保存する関数
-  function saveMistakes() {
-    localStorage.setItem('mistakes', JSON.stringify(results));
+function saveMistakes() {
+    const mistakes = results.filter(result => !result.isCorrect);
+
+    if (mistakes.length === 0) {
+        alert('ミスした単語はありません！');
+        return; 
+    }
+
+    localStorage.setItem('mistakes', JSON.stringify(mistakes));
     alert('ミスした単語が保存されました。');
-  }
+}
    
   // localStorageからミスした単語をロードする関数
   function loadMistakes() {
