@@ -11,7 +11,6 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
-<!-- End Google Tag Manager -->
 <style>
   body {
     background-color: white;
@@ -1709,17 +1708,23 @@ function checkAnswer() {
         resultElement.appendChild(correctAnswerElement);
         
         // 音声読み上げ
+// 利用可能な音声のリストを取得
 const voices = window.speechSynthesis.getVoices();
-const alexVoice = voices.find(voice => voice.name === 'Alex');
 
+// 英語の声をフィルタリングして選択
+const englishVoice = voices.find(voice => voice.lang === 'en-US');
+
+// 文章を読み上げる
 const utterance = new SpeechSynthesisUtterance(correctAnswer);
-utterance.lang = 'en-US';
+utterance.lang = 'en-US'; // 言語を指定
 
-// Alexの音声が見つかったら設定
-if (alexVoice) {
-    utterance.voice = alexVoice;
+// 英語の声が見つかったら設定
+if (englishVoice) {
+    utterance.voice = englishVoice;
 }
+
 speechSynthesis.speak(utterance);
+
 
 
         countdownTimeout = setTimeout(() => {
