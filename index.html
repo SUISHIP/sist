@@ -2048,71 +2048,71 @@ function saveMistakes() {
     });
 });
   //サーバー機能
-  function showResults(isMistanload) {
-    const table = document.getElementById("resultTable");
-    table.innerHTML = ''; // 結果テーブルを初期化する
+  //function showResults(isMistanload) {
+    //const table = document.getElementById("resultTable");
+    //table.innerHTML = ''; // 結果テーブルを初期化する
 
-    let correctAnswers = 0; // 正解数をカウント
-    let totalQuestions = results.length; // 全体の問題数
-    for (let i = 0; i < results.length; i++) {
-        if (!results[i].isCorrect) { 
-            const tr = document.createElement('tr');
-            const tdQuestion = document.createElement('td');
-            const tdAnswer = document.createElement('td');
-            const tdUserAnswer = document.createElement('td');
-            tdQuestion.textContent = results[i].question;
-            tdAnswer.textContent = results[i].answer;
-            tdUserAnswer.textContent = results[i].userAnswer;
-            tr.appendChild(tdQuestion);
-            tr.appendChild(tdAnswer);
-            tr.appendChild(tdUserAnswer);
-            table.appendChild(tr);
-        } else {
-            correctAnswers++;
-        }
-    }
+    //let correctAnswers = 0; // 正解数をカウント
+    //let totalQuestions = results.length; // 全体の問題数
+    //for (let i = 0; i < results.length; i++) {
+        //if (!results[i].isCorrect) { 
+            //const tr = document.createElement('tr');
+            //const tdQuestion = document.createElement('td');
+            //const tdAnswer = document.createElement('td');
+            //const tdUserAnswer = document.createElement('td');
+            //tdQuestion.textContent = results[i].question;
+            //tdAnswer.textContent = results[i].answer;
+            //tdUserAnswer.textContent = results[i].userAnswer;
+            //tr.appendChild(tdQuestion);
+            //tr.appendChild(tdAnswer);
+            //tr.appendChild(tdUserAnswer);
+            //table.appendChild(tr);
+        //} else {
+            //correctAnswers++;
+        //}
+    //}
 
     // 正答率を計算
-    const accuracy = (correctAnswers / totalQuestions) * 100;
-    const resultContainer = document.getElementById("result");
-    const accuracyElement = document.createElement('p');
-    accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
-    resultContainer.appendChild(accuracyElement);
+    //const accuracy = (correctAnswers / totalQuestions) * 100;
+    //const resultContainer = document.getElementById("result");
+    //const accuracyElement = document.createElement('p');
+    //accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
+    //resultContainer.appendChild(accuracyElement);
 
     // ランキングデータをサーバーに送信
-    const username = prompt('ユーザー名を入力してください:');
-    fetch('http://localhost:3000/rankings', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, correctRate: accuracy }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('ランキングに追加しました:', data);
-    })
-    .catch(error => {
-        console.error('ランキングの送信に失敗しました:', error);
-    });
+    //const username = prompt('ユーザー名を入力してください:');
+    //fetch('http://localhost:3000/rankings', {
+        //method: 'POST',
+        //headers: {
+            //'Content-Type': 'application/json',
+        //},
+        //body: JSON.stringify({ username, correctRate: accuracy }),
+    //})
+    //.then(response => response.json())
+    //.then(data => {
+        //console.log('ランキングに追加しました:', data);
+    //})
+    //.catch(error => {
+        //console.error('ランキングの送信に失敗しました:', error);
+    //});
     
     // ランキングを表示する
-    fetch('http://localhost:3000/rankings')
-        .then(response => response.json())
-        .then(rankings => {
-            const rankingTable = document.getElementById("rankings");
-            rankingTable.innerHTML = ''; // ランキングテーブルをリセット
-            rankings.forEach((ranking, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${ranking.username}</td>
-                    <td>${ranking.correctRate.toFixed(2)}%</td>
-                `;
-                rankingTable.appendChild(row);
-            });
-        });
-}
+    //fetch('http://localhost:3000/rankings')
+        //.then(response => response.json())
+        //.then(rankings => {
+            //const rankingTable = document.getElementById("rankings");
+            //rankingTable.innerHTML = ''; // ランキングテーブルをリセット
+            //rankings.forEach((ranking, index) => {
+                //const row = document.createElement('tr');
+                //row.innerHTML = `
+                    //<td>${index + 1}</td>
+                    //<td>${ranking.username}</td>
+                    //<td>${ranking.correctRate.toFixed(2)}%</td>
+                //`;
+                //rankingTable.appendChild(row);
+            //});
+        //});
+//}
 </script>
 </body>
 </html>
