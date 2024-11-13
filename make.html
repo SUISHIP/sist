@@ -1,77 +1,124 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>みにまるメーカー</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>みにまるメーカー</title>
 </head>
+
 <body>
-    <h1>みにまるメーカー</h1>
-  <p>オリジナルの問題集を作成して保存し、<a href=https://suiship.github.io/sist/>みにまるスペリング</a>で読み込むことができます。</p>
-    <p>問題/答え　または　問題・答え　と入力して保存</p>
-    
-    <textarea id="inputText" rows="10" cols="50" placeholder="問題/答え&#10;例: remain silent/remain&#10;北米の先住民の名称は？/イヌイット"></textarea><br>
-    
-    <button onclick="saveToLocalStorage()">問題集を保存</button>
-    
-    <h2>保存されている問題集</h2>
-    <button onclick="loadFromLocalStorage()">保存済み問題集を展開</button>
-    <button onclick="deleteData()">削除</button>
-<p>保存すると最後に保存されたミスし単語や問題集が上書きされます。</p>
-<p>削除するとミスし単語や問題集が消えます</p>
-    <pre id="savedData"></pre>
-    
-    <script>
-        function saveToLocalStorage() {
-            const inputText = document.getElementById('inputText').value.trim();
-            
-            if (!inputText) {
-                alert("テキストが空です。内容を入力してください。\n例:Write your contents like this/contents");
-                return;
-            }
+  <h1>みにまるメーカー</h1>
+  <p>オリジナルの問題集を作成して保存し、<a href="https://suiship.github.io/sist/">みにまるスペリング</a>で読み込むことができます。</p>
+  <p>問題/答え　または　問題・答え　と入力して保存</p>
 
-            const lines = inputText.split('\n');
-            const questions = lines.map(line => {
-                const [question, answer] = line.split('/');
-                return { question: question.trim(), answer: answer.trim() };
-            });
+  <textarea id="inputText" rows="10" cols="50" placeholder="問題/答え&#10;例: remain silent/remain&#10;北米の先住民の名称は？/イヌイット"></textarea><br>
 
-            localStorage.setItem('mistakes', JSON.stringify(questions));
-            copyToClipboard(inputText);
-            alert("問題集が保存され、クリップボードにコピーされました。別のデバイスにGoogleKeepなどでコピーしたものを共有して、そのデバイスのみにまるメーカーで保存すると別デバイスに引き継げます");
-            document.getElementById('inputText').value = '';
-        }
+  <button onclick="saveToLocalStorage()" style="background-color:#FF4CC6;">問題集をセット</button>
+  <button onclick="downloadToFile()" style="background-color:#4CFFDE;">永久保存.txt</button>
+  <input type="file" id="fileInput" style="display:none;" onchange="loadFromFile(event)">
+  <button onclick="document.getElementById('fileInput').click()" style="background-color:#FFDE4C;">ファイル読み込み&セット</button>
+  <button onclick="loadFromLocalStorage()" style="background-color:#6DFF4C;">セット中問題集を表示</button>
+  <button onclick="deleteData()" style="background-color:#FF4C4C;">セット中問題集を削除</button>
 
-        function loadFromLocalStorage() {
-            const savedText = localStorage.getItem('mistakes');
-            
-            if (savedText) {
-                const questions = JSON.parse(savedText);
-                const formattedText = questions.map(q => `${q.question} / ${q.answer}`).join('\n');
-                document.getElementById('savedData').innerText = formattedText;
-            } else {
-                alert("保存された問題集がありません。");
-                document.getElementById('savedData').innerText = '';
-            }
-        }
+  <p>⚠️セットすると最後にセットされたミスし単語や問題集が上書きされます</p>
+  
+  <h2>セット中のテキスト</h2>
+  <pre id="savedData"></pre>
+ 
+  <script>
+    function saveToLocalStorage() {
+      const inputText = document.getElementById('inputText').value.trim();
+      if (!inputText) {
+        alert("テキストが空です。内容を入力してください。\n例: Write your contents like this/contents");
+        return;
+      }
+      const lines = inputText.split('\n');
+      const questions = lines.map(line => {
+        const [question, answer] = line.split('/');
+        return {
+          question: question.trim(),
+          answer: answer.trim()
+        };
+      });
+      localStorage.setItem('mistakes', JSON.stringify(questions));
+      copyToClipboard(inputText);
+      alert("問題集が保存され、クリップボードにコピーされました。別のデバイスにGoogleKeepなどでコピーしたものを共有して、そのデバイスのみにまるメーカーで保存すると別デバイスに引き継げます");
+      document.getElementById('inputText').value = '';
+    }
 
-        function deleteData() {
-            localStorage.removeItem('mistakes');
-            alert('データを削除しました！');
-            document.getElementById('savedData').innerText = '';
-        }
+    function loadFromLocalStorage() {
+      const savedText = localStorage.getItem('mistakes');
+      if (savedText) {
+        const questions = JSON.parse(savedText);
+        const formattedText = questions.map(q => `${q.question} / ${q.answer}`).join('\n');
+        document.getElementById('savedData').innerText = formattedText;
+      } else {
+        alert("保存された問題集がありません。");
+        document.getElementById('savedData').innerText = '';
+      }
+    }
 
-        function copyToClipboard(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-        }
+    function deleteData() {
+      localStorage.removeItem('mistakes');
+      alert('データを削除しました！');
+      document.getElementById('savedData').innerText = '';
+    }
 
-        // ページが読み込まれたときに保存されたデータのリストを更新する
-        window.onload = loadFromLocalStorage;
-    </script>
+    function copyToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    }
+
+    function downloadToFile() {
+    const savedText = localStorage.getItem('mistakes');
+    if (!savedText || savedText === '[]') {
+        alert("ダウンロードする内容がありません。");
+        return;
+    }
+
+    const fileName = prompt("保存するファイル名を入力してください:", "My問題集");
+    if (!fileName) {
+        alert("ファイル名が入力されていません。");
+        return;
+    }
+
+    const questions = JSON.parse(savedText);
+    const formattedText = questions.map(q => `${q.question} / ${q.answer}`).join('\n');
+    const blob = new Blob([formattedText], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${fileName}.txt`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
+    function loadFromFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const content = e.target.result;
+        const lines = content.trim().split('\n');
+        const questions = lines.map(line => {
+          const [question, answer] = line.split('/');
+          return {
+            question: question.trim(),
+            answer: answer.trim()
+          };
+        });
+        localStorage.setItem('mistakes', JSON.stringify(questions));
+        alert("ファイルから問題集を読み込み、ローカルストレージにセットしました。");
+        loadFromLocalStorage();
+      };
+      reader.readAsText(file);
+    }
+    window.onload = loadFromLocalStorage;
+  </script>
 </body>
+
 </html>
