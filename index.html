@@ -11,6 +11,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
+<!-- End Google Tag Manager -->
 <style>
   body {
     background-color: white;
@@ -21,7 +22,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   h2 {
     color: #333;
   }
-
+  
+  #result {
+    font-size: 21px;
+  }
+  
   #resultTable {
     width: 100%;
     border-collapse: collapse;
@@ -311,7 +316,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <th>ユーザー名</th>
         <th>正答率</th>
     </tr>
-</table>-->
+</table></span>-->
  <script>
   window.onload = function() {
     populateQuestionDropdowns();
@@ -330,9 +335,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
     });
 };
-  window.addEventListener('beforeunload', e => {
-   e.preventDefault();
-  })
+ function handleBeforeUnload(e) {
+    e.preventDefault();
+    e.returnValue = '';  // ブラウザで確認ダイアログが表示される
+}
   const problems = [
 {question: "follow her advice 彼女の助言に従う",answer: "follow",},
 {question: "consider the problem seriously 真剣にその問題を考える",answer: "consider",},
@@ -1815,6 +1821,7 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
 
 
   function showNextProblem() {
+   window.addEventListener('beforeunload', handleBeforeUnload);
    isAnswerClicked = false;
    const currentProblem = currentProblems[0];
    const questionElement = document.getElementById("question");
@@ -1861,9 +1868,14 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
   const accuracyElement = document.createElement('p');
   accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
   resultContainer.appendChild(accuracyElement);  // 正答率を表示
+    if (accuracy === 100) {
+        window.removeEventListener('beforeunload', handleBeforeUnload); //ミス0の時遷移警告オフ
+    }
+  
   } else {
     let isMistanload = 0; 
   }
+    
   // リセットとリトライボタンを表示
   removeButtons();
   const resetButton = document.createElement('button');
@@ -1885,7 +1897,6 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
       }
     });
   }
-
 
 
 
