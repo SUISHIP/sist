@@ -256,7 +256,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </header>
   <h1>みにまるスペリング v1.3.6</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
-  <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label><br>
+  <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label>
+  <label><input type="checkbox" id="checkbox3">頭文字非表示</label><br>
   <span class="toggle-button"><button onclick="loadMistakes()">ミスたんをロード</button></span>
 <br>
   <label for="startQuestion">開始点:</label>
@@ -320,6 +321,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </tr>
 </table></span>-->
  <script>
+  const checkbox3 = document.getElementById("hide_head");
+
   window.onload = function() {
     populateQuestionDropdowns();
     
@@ -1873,13 +1876,21 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
 
 
 
-  function showNextProblem() {
-   window.addEventListener('beforeunload', handleBeforeUnload);
-   isAnswerClicked = false;
-   const currentProblem = currentProblems[0];
-   const questionElement = document.getElementById("question");
-   const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `${currentProblem.answer[0]}_____`);
-   questionElement.textContent = maskedQuestion;
+ function showNextProblem() {
+  window.addEventListener('beforeunload', handleBeforeUnload);
+  isAnswerClicked = false;
+  const currentProblem = currentProblems[0];
+  const questionElement = document.getElementById("question");
+  const checkbox3 = document.getElementById("checkbox3");
+  let maskedQuestion;
+
+  if (checkbox3.checked) {
+    maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `?_____`);
+  } else {
+    maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `${currentProblem.answer[0]}_____`);
+  }
+
+  questionElement.textContent = maskedQuestion;
 
    // 結果表示をクリア
    const resultElement = document.getElementById("result");
