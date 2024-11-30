@@ -1780,22 +1780,18 @@ function checkAnswer() {
         resultElement.appendChild(correctAnswerElement);
         
         // 音声読み上げ
-// 利用可能な音声のリストを取得
-const voices = window.speechSynthesis.getVoices();
+   // 言語判定と音声読み上げ
+        const utterance = new SpeechSynthesisUtterance(correctAnswer);
+        
+        // 言語判定: ひらがな、カタカナ、漢字のいずれかが含まれているか
+        const isJapanese = /[ぁ-んァ-ン一-龥]/.test(correctAnswer);
+        utterance.lang = isJapanese ? 'ja-JP' : 'en-US';
 
-// 英語の声をフィルタリングして選択
-const englishVoice = voices.find(voice => voice.lang === 'en-US');
-
-// 文章を読み上げる
-const utterance = new SpeechSynthesisUtterance(correctAnswer);
-utterance.lang = 'en-US'; // 言語を指定
-
-// 英語の声が見つかったら設定
-if (englishVoice) {
-    utterance.voice = englishVoice;
-}
-
-speechSynthesis.speak(utterance);
+        // 利用可能な音声を取得し、適切な声を選択
+        const voices = window.speechSynthesis.getVoices();
+        utterance.voice = voices.find(voice => voice.lang === utterance.lang);
+        
+        speechSynthesis.speak(utterance);
 
 
 
