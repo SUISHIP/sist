@@ -230,6 +230,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       animation: gradientBackground 0.5s 2;
     }
   
+  .playable-answer {
+    position: relative;
+    padding-left: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.playable-answer:hover {
+    background-color: #f0f8ff; /* 背景を淡い青色に変更 */
+    color: #007BFF; /* 文字色を強調 */
+    text-decoration: underline; /* 下線を追加 */
+}
+
+.playable-answer::before {
+    content: '♪'; /* 音声アイコン */
+    position: absolute;
+    left: -20px;
+    top: 0;
+    font-size: 18px;
+    color: #007BFF;
+    transition: transform 0.2s;
+}
+
+.playable-answer:hover::before {
+    transform: scale(1.2); /* アイコンを拡大 */
+}
+
 </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
  <!-- Google tag (gtag.js) -->
@@ -254,7 +280,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </ul>
       </nav></b>
   </header>
-  <h1>みにまるスペリング v1.3.8</h1>
+  <h1>みにまるスペリング v1.3.7</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
   <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label>
   <label><input type="checkbox" id="checkbox3">頭文字非表示</label><br>
@@ -1735,6 +1761,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 }
 
+
 // 確定ボタンをリセットする関数
 function resetConfirmButton() {
     const confirmButton = document.querySelector('button.send_button');
@@ -1779,8 +1806,7 @@ function checkAnswer() {
         correctAnswerElement.style.cursor = 'pointer';
         resultElement.appendChild(correctAnswerElement);
         
-        // 音声読み上げ
-   // 言語判定と音声読み上げ
+        // 言語判定と音声読み上げ
         const utterance = new SpeechSynthesisUtterance(correctAnswer);
         
         // 言語判定: ひらがな、カタカナ、漢字のいずれかが含まれているか
@@ -1900,16 +1926,15 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
    resultElement.textContent = '';
   }
   
-  function showResults(isMistanload) {
+function showResults(isMistanload) {
     const table = document.getElementById("resultTable");
     table.innerHTML = ''; // 結果テーブルを初期化する
 
     let correctAnswers = 0; // 正解数をカウント
     let totalQuestions = results.length; // 全体の問題数
 
-    // 間違えた問題のみを表示
     for (let i = 0; i < results.length; i++) {
-        if (!results[i].isCorrect) { // 不正解の問題のみを表示
+        if (!results[i].isCorrect) {
             const tr = document.createElement('tr');
             const tdQuestion = document.createElement('td');
             const tdAnswer = document.createElement('td');
@@ -1918,17 +1943,17 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
             tdQuestion.textContent = results[i].question;
 
             // 答えをクリック可能にする
-            tdAnswer.textContent = results[i].answer;
-            tdAnswer.style.cursor = 'pointer'; // クリック可能に見せるスタイル
+            tdAnswer.innerHTML = ` ${results[i].answer}`;
+            tdAnswer.style.cursor = 'pointer'; 
+            tdAnswer.classList.add('playable-answer'); // クラスを追加
+
             tdAnswer.addEventListener('click', () => {
                 const utterance = new SpeechSynthesisUtterance(results[i].answer);
-                utterance.lang = 'en-US';
+                const isJapanese = /[ぁ-んァ-ン一-龥]/.test(results[i].answer);
+                utterance.lang = isJapanese ? 'ja-JP' : 'en-US';
                 const voices = window.speechSynthesis.getVoices();
-                const englishVoice = voices.find(voice => voice.lang === 'en-US');
-                if (englishVoice) {
-                    utterance.voice = englishVoice;
-                }
-                speechSynthesis.speak(utterance); // 発音
+                utterance.voice = voices.find(voice => voice.lang === utterance.lang);
+                speechSynthesis.speak(utterance);
             });
 
             tdUserAnswer.textContent = results[i].userAnswer;
@@ -1938,39 +1963,36 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
             tr.appendChild(tdUserAnswer);
             table.appendChild(tr);
         } else {
-            correctAnswers++; // 正解数をカウント
+            correctAnswers++;
         }
     }
-    
-  if (isMistanload === 0){
-  // 正答率の計算 (パーセンテージ)
-  const accuracy = (correctAnswers / totalQuestions) * 100;
 
-  // 正答率の表示
-  
-  const resultContainer = document.getElementById("result");
-  const accuracyElement = document.createElement('p');
-  accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
-  resultContainer.appendChild(accuracyElement);  // 正答率を表示
-    if (accuracy === 100) {
-        window.removeEventListener('beforeunload', handleBeforeUnload); //ミス0の時遷移警告オフ
+    if (isMistanload === 0) {
+        const accuracy = (correctAnswers / totalQuestions) * 100;
+        const resultContainer = document.getElementById("result");
+        const accuracyElement = document.createElement('p');
+        accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
+        resultContainer.appendChild(accuracyElement);
+        if (accuracy === 100) {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        }
+    } else {
+        isMistanload = 0;
     }
-  
-  } else {
-    let isMistanload = 0; 
-  } 
-  // リセットとリトライボタンを表示
-  removeButtons();
-  const resetButton = document.createElement('button');
-  resetButton.textContent = "リセット";
-  resetButton.onclick = resetTest;
-  document.body.appendChild(resetButton);
 
-  const retryButton = document.createElement('button');
-  retryButton.textContent = "リトライ";
-  retryButton.onclick = retryMistakes;
-  document.body.appendChild(retryButton);
+    removeButtons();
+    const resetButton = document.createElement('button');
+    resetButton.textContent = "リセット";
+    resetButton.onclick = resetTest;
+    document.body.appendChild(resetButton);
+
+    const retryButton = document.createElement('button');
+    retryButton.textContent = "リトライ";
+    retryButton.onclick = retryMistakes;
+    document.body.appendChild(retryButton);
 }
+
+
 
   function removeButtons() {
     const buttons = document.querySelectorAll('button');
