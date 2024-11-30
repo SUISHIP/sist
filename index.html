@@ -1905,29 +1905,46 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
   }
   
   function showResults(isMistanload) {
-  const table = document.getElementById("resultTable");
-  table.innerHTML = ''; // 結果テーブルを初期化する
+    const table = document.getElementById("resultTable");
+    table.innerHTML = ''; // 結果テーブルを初期化する
 
-  let correctAnswers = 0; // 正解数をカウント
-  let totalQuestions = results.length; // 全体の問題数
-  // 間違えた問題のみを表示
-  for (let i = 0; i < results.length; i++) {
-    if (!results[i].isCorrect) { // 不正解の問題のみを表示
-      const tr = document.createElement('tr');
-      const tdQuestion = document.createElement('td');
-      const tdAnswer = document.createElement('td');
-      const tdUserAnswer = document.createElement('td');
-      tdQuestion.textContent = results[i].question;
-      tdAnswer.textContent = results[i].answer;
-      tdUserAnswer.textContent = results[i].userAnswer;
-      tr.appendChild(tdQuestion);
-      tr.appendChild(tdAnswer);
-      tr.appendChild(tdUserAnswer);
-      table.appendChild(tr);
-    } else {
-      correctAnswers++; // 正解の場合、正解数カウントを増やす
+    let correctAnswers = 0; // 正解数をカウント
+    let totalQuestions = results.length; // 全体の問題数
+
+    // 間違えた問題のみを表示
+    for (let i = 0; i < results.length; i++) {
+        if (!results[i].isCorrect) { // 不正解の問題のみを表示
+            const tr = document.createElement('tr');
+            const tdQuestion = document.createElement('td');
+            const tdAnswer = document.createElement('td');
+            const tdUserAnswer = document.createElement('td');
+
+            tdQuestion.textContent = results[i].question;
+
+            // 答えをクリック可能にする
+            tdAnswer.textContent = results[i].answer;
+            tdAnswer.style.cursor = 'pointer'; // クリック可能に見せるスタイル
+            tdAnswer.addEventListener('click', () => {
+                const utterance = new SpeechSynthesisUtterance(results[i].answer);
+                utterance.lang = 'en-US';
+                const voices = window.speechSynthesis.getVoices();
+                const englishVoice = voices.find(voice => voice.lang === 'en-US');
+                if (englishVoice) {
+                    utterance.voice = englishVoice;
+                }
+                speechSynthesis.speak(utterance); // 発音
+            });
+
+            tdUserAnswer.textContent = results[i].userAnswer;
+
+            tr.appendChild(tdQuestion);
+            tr.appendChild(tdAnswer);
+            tr.appendChild(tdUserAnswer);
+            table.appendChild(tr);
+        } else {
+            correctAnswers++; // 正解数をカウント
+        }
     }
-  }
     
   if (isMistanload === 0){
   // 正答率の計算 (パーセンテージ)
@@ -1945,8 +1962,7 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
   
   } else {
     let isMistanload = 0; 
-  }
-    
+  } 
   // リセットとリトライボタンを表示
   removeButtons();
   const resetButton = document.createElement('button');
