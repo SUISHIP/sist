@@ -1720,13 +1720,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     currentProblems = results.filter(result => !result.isCorrect);
     results = [];
     document.getElementById("resultTable").innerHTML = "";
+
+    // ランダム/順番のプルダウンの状態を取得
+    const isRandom = document.getElementById("order").value === "random";
+    if (isRandom) {
+        currentProblems = fisherYatesShuffle(currentProblems); // Fisher-Yatesでシャッフル
+    }
+
     if (currentProblems.length > 0) {
         resetConfirmButton(); // 確定ボタンを有効にする
         showNextProblem(); // 最初の問題を表示
     } else {
         document.getElementById("result").textContent = "間違えた問題がありません。";
     }
-  }
+}
 
 // 確定ボタンをリセットする関数
 function resetConfirmButton() {
