@@ -1919,12 +1919,17 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
     maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `${currentProblem.answer[0]}_____`);
   }
 
-  questionElement.textContent = maskedQuestion;
+  // 改行を <br> に置き換え
+  maskedQuestion = maskedQuestion.replace(/\n/g, '<br>');
 
-   // 結果表示をクリア
-   const resultElement = document.getElementById("result");
-   resultElement.textContent = '';
-  }
+  // innerHTML を使って改行を反映
+  questionElement.innerHTML = maskedQuestion;
+
+  // 結果表示をクリア
+  const resultElement = document.getElementById("result");
+  resultElement.textContent = '';
+}
+
   
 function showResults(isMistanload) {
     const table = document.getElementById("resultTable");
