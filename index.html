@@ -297,7 +297,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </ul>
       </nav></b>
   </header>
-  <h1>みにまるスペリング v1.3.8</h1>
+  <h1>みにまるスペリング v1.3.9</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
   <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label>
   <label><input type="checkbox" id="checkbox3">頭文字非表示</label><br>
@@ -355,9 +355,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="toggle-button"><button onclick="saveMistakes()">ミスたんをセーブ</button><button onclick="displayMistakes()">保存済み問題表示</button></span>
  <br>
  <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br></span>
-   <h2>世界ランキング</h2>
+  <font color=#14A7A7><details>
+  <summary>世界ランキング</summary>
    <p>問題数<b>「50問」</b>で解答するとランキングに載ります</p>
    <ul id="scoreList"></ul>
+</details>
+  </font>
  <script>
   const sheetDBUrl = "https://sheetdb.io/api/v1/7bswo5mdihq14";//DB
   const checkbox3 = document.getElementById("hide_head");
