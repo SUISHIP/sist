@@ -256,6 +256,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     transform: scale(1.2); /* アイコンを拡大 */
 }
 
+   .rank {
+    display: inline-block;
+    width: 30px; /* RANK の幅 */
+  }
+  .name {
+    display: inline-block;
+    width: 150px; /* NAME の幅 */
+    text-align: left;
+  }
+  .score {
+    display: inline-block;
+    width: 60px; /* SCORE の幅 */
+  }
+  .date {
+    display: inline-block;
+    width: 200px; /* DATE の幅 */
+  }
 </style>
  <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
  <!-- Google tag (gtag.js) -->
@@ -338,15 +355,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="toggle-button"><button onclick="saveMistakes()">ミスたんをセーブ</button><button onclick="displayMistakes()">保存済み問題表示</button></span>
  <br>
  <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br>
- <!--<h3>ランキング</h3>
-<table id="rankings">
-    <tr>
-        <th>順位</th>
-        <th>ユーザー名</th>
-        <th>正答率</th>
-    </tr>
-</table></span>-->
+   <h2>世界ランキング</h2>
+   <p>リセットしてから「50問」で解答するとランキングに載ります</p>
+   <ul id="scoreList"></ul>
  <script>
+  const sheetDBUrl = "https://sheetdb.io/api/v1/7bswo5mdihq14";//DB
   const checkbox3 = document.getElementById("hide_head");
 
   window.onload = function() {
@@ -1971,7 +1984,7 @@ function showResults(isMistanload) {
             correctAnswers++;
         }
     }
-
+    //正答率表示
     if (isMistanload === 0) {
         const accuracy = (correctAnswers / totalQuestions) * 100;
         const resultContainer = document.getElementById("result");
@@ -1980,6 +1993,12 @@ function showResults(isMistanload) {
         resultContainer.appendChild(accuracyElement);
         if (accuracy === 100) {
             window.removeEventListener('beforeunload', handleBeforeUnload);
+        }
+        
+        if (totalQuestions === 50) {　//データ送信
+            setTimeout(() => {
+                sendScore(accuracy,results);
+            }, 1500); // 1秒たいき
         }
     } else {
         isMistanload = 0;
@@ -2171,6 +2190,73 @@ function saveMistakes() {
         }
     });
 });
+   
+   
+      // スコア送信関数
+    async function sendScore(accuracy,results) {
+      // 名前をアラートで入力
+      const name = prompt("ユーザーネームを入力:");
+      const sendresults = results
+      // 名前が入力されなかった場合、処理を中止
+      if (!name) {
+        alert("名前が入力されていません。");
+        return;
+      }
+
+      // 現在の日付と時刻を取得
+      const now = new Date();
+      const formattedDate = now.toISOString().split('T')[0];
+      const formattedTime = now.toTimeString().split(' ')[0];
+      const dateTime = `${formattedDate} ${formattedTime}`;
+
+      const data = {
+        "data": {
+          "NAME": name,
+          "SCORE": accuracy,
+          "DATE": dateTime,
+          "RESULTS": sendresults,
+        }
+      };
+
+      try {
+        const response = await fetch(sheetDBUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          document.getElementById("responseMessage").innerText = "データ送信に成功しました！";
+          fetchScores(); // 新しいデータを反映するため再取得
+        } else {
+          document.getElementById("responseMessage").innerText = "データ送信に失敗しました。";
+        }
+      } catch (error) {
+        document.getElementById("responseMessage").innerText = "エラーが発生しました: " + error.message;
+      }
+    }
+   
+   // データ取得と表示
+    async function fetchScores() {
+      try {
+        const response = await fetch(sheetDBUrl);
+        const data = await response.json();
+        const scoreList = document.getElementById("scoreList");
+        scoreList.innerHTML = ""; // 既存のリストをクリア
+        data.forEach(row => {
+          scoreList.innerHTML += `<li><span class="rank">${row.RANK}</span>
+  <span class="name">${row.NAME} さん</span>
+  <span class="score">${row.SCORE}%</span>
+  <span class="date">${row.DATE}</span></li>`;
+        });
+      } catch (error) {
+        document.getElementById("scoreList").innerText = "データの取得に失敗しました。";
+      }
+    }
+    // 初回データ取得
+    fetchScores();
 </script>
 </body>
 </html>
