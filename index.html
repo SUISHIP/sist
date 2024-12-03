@@ -355,7 +355,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="toggle-button"><button onclick="saveMistakes()">ミスたんをセーブ</button><button onclick="displayMistakes()">保存済み問題表示</button></span>
  <br>
  <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br></span>
-   <h2>👑世界ランキング</h2>
+   <h2>世界ランキング</h2>
    <p>問題数<b>「50問」</b>で解答するとランキングに載ります</p>
    <ul id="scoreList"></ul>
  <script>
@@ -2248,8 +2248,7 @@ function saveMistakes() {
         data.forEach(row => {
           scoreList.innerHTML += `<li><span class="rank">${row.RANK}</span>
   <span class="name">${row.NAME} さん</span>
-  <span class="score">${row.SCORE}%</span>
-  <span class="date">${row.DATE}</span></li>`;
+  <span class="score">${row.SCORE}%</span></li>`;
         });
       } catch (error) {
         document.getElementById("scoreList").innerText = "データの取得に失敗しました。";
