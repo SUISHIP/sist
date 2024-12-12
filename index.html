@@ -1946,19 +1946,20 @@ function fisherYatesShuffle(array) {
 }
 
   function search(correctAnswer) {
-            const searchQuery = correctAnswer;
-            
-            const existingLink = document.getElementById('searchLink');
-            if (existingLink) {
-                existingLink.remove();
-            }
-
-            const searchLink = document.createElement('a');
-            searchLink.id = 'searchLink';
-            searchLink.href = 'https://www.bing.com/search?q=' + encodeURIComponent(searchQuery);
-            searchLink.innerText = searchQuery + ' を検索';
-            document.body.appendChild(searchLink);
+        var searchQuery = correctAnswer;
+        var existingLink = document.getElementById('searchLink');
+        if (existingLink) {
+          existingLink.remove();
         }
+        var searchLink = document.createElement('a');
+        searchLink.id = 'searchLink';
+        searchLink.href = '#';
+        searchLink.innerText = searchQuery + ' を検索';
+        searchLink.onclick = function() {
+          window.open('https://www.bing.com/search?q=' + encodeURIComponent(searchQuery), '_blank');
+        };
+        document.body.appendChild(searchLink);
+      }
    
    function monsu() {
   document.getElementById("answer").disabled = false
