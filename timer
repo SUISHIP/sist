@@ -1,0 +1,77 @@
+RTA<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTAタイマー</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            font-family: 'DotGothic16', sans-serif;
+            text-align: center;
+            cursor: pointer;
+            user-select: none; /* テキスト選択を無効化 */
+            overflow: hidden; /* はみ出し部分を非表示 */
+        }
+
+        #timer {
+            font-size: 10vw; /* ビューポート幅の10% */
+            background: linear-gradient(90deg, #00f, #0ff); /* 青から水色のグラデーション */
+            -webkit-background-clip: text; /* テキスト部分のみグラデーションを適用 */
+            -webkit-text-fill-color: transparent; /* テキストの中身を透明化 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 少し立体感を追加 */
+            white-space: nowrap; /* テキストが折り返されないように設定 */
+            line-height: 1; /* 行間を調整して余白を削減 */
+        }
+
+        /* 画面幅に応じて文字サイズを調整 */
+        @media screen and (max-aspect-ratio: 1/1) {
+            #timer {
+                font-size: 15vh; /* 縦長の場合は高さ基準 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">00:00:000</div>
+    <script>
+        let startTime = 0; // タイマー開始時刻
+        let elapsedTime = 0; // 経過時間
+        let timerInterval = null; // setIntervalのID
+
+        function updateTimer() {
+            const currentTime = Date.now();
+            const totalElapsed = elapsedTime + (currentTime - startTime);
+
+            const minutes = String(Math.floor(totalElapsed / 60000)).padStart(2, '0');
+            const seconds = String(Math.floor((totalElapsed % 60000) / 1000)).padStart(2, '0');
+            const milliseconds = String(totalElapsed % 1000).padStart(3, '0');
+
+            document.getElementById('timer').textContent = `${minutes}:${seconds}:${milliseconds}`;
+        }
+
+        function toggleTimer() {
+            if (timerInterval) {
+                // タイマーが動作中なら停止
+                clearInterval(timerInterval);
+                timerInterval = null;
+                elapsedTime += Date.now() - startTime; // 経過時間を保存
+            } else {
+                // タイマーが停止中なら開始
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 10);
+            }
+        }
+
+        // 画面をクリックでスタート/ストップ
+        document.body.addEventListener('click', toggleTimer);
+    </script>
+</body>
+</html>
