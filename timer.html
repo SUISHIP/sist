@@ -23,26 +23,27 @@
         }
 
         .timer-container {
-            display: flex; /* 横並び */
-            justify-content: center;
+            display: flex; /* ラベルとタイマーを横並びに */
             align-items: center;
             white-space: nowrap; /* 折り返しを防止 */
-            overflow: hidden; /* はみ出しを防止 */
-            width: 100%; /* 全幅 */
+            margin: 10px 0; /* 上下の余白を追加 */
         }
 
-        .timer-wrapper {
-            display: inline-block;
-            font-size: 1em; /* 初期値 */
+        .label {
+            font-size: calc(100vw / 15); /* ラベルの文字サイズ */
+            margin-right: 10px; /* タイマーとの間に少し間隔を追加 */
+        }
+
+        .timer {
+            font-size: calc(100vw / 10); /* 横幅基準でレスポンシブな文字サイズ */
             line-height: 1; /* 行間を削除 */
-            color: #fff; /* 初期色 */
         }
 
-        #global-timer-wrapper {
+        #global-label, #global-timer {
             color: #0ff; /* 水色 */
         }
 
-        #interactive-timer-wrapper {
+        #interactive-label, #interactive-timer {
             color: #ff0; /* 黄色 */
         }
     </style>
@@ -50,12 +51,14 @@
 <body>
     <!-- グローバルタイマー -->
     <div class="timer-container">
-        <div id="global-timer-wrapper" class="timer-wrapper">RTA: 00:00:000</div>
+        <div id="global-label" class="label">RTA:</div>
+        <div id="global-timer" class="timer">00:00:000</div>
     </div>
     
     <!-- インタラクティブタイマー -->
     <div class="timer-container">
-        <div id="interactive-timer-wrapper" class="timer-wrapper">IGT: 00:00:000</div>
+        <div id="interactive-label" class="label">IGT:</div>
+        <div id="interactive-timer" class="timer">00:00:000</div>
     </div>
 
     <script>
@@ -77,7 +80,7 @@
             const seconds = String(Math.floor((totalElapsed % 60000) / 1000)).padStart(2, '0');
             const milliseconds = String(totalElapsed % 1000).padStart(3, '0');
 
-            document.getElementById('global-timer-wrapper').textContent = `RTA: ${minutes}:${seconds}:${milliseconds}`;
+            document.getElementById('global-timer').textContent = `${minutes}:${seconds}:${milliseconds}`;
         }
 
         // インタラクティブタイマーの更新
@@ -89,7 +92,7 @@
             const seconds = String(Math.floor((totalElapsed % 60000) / 1000)).padStart(2, '0');
             const milliseconds = String(totalElapsed % 1000).padStart(3, '0');
 
-            document.getElementById('interactive-timer-wrapper').textContent = `IGT: ${minutes}:${seconds}:${milliseconds}`;
+            document.getElementById('interactive-timer').textContent = `${minutes}:${seconds}:${milliseconds}`;
         }
 
         // インタラクティブタイマーのスタート/ストップ切り替え
@@ -116,30 +119,8 @@
             toggleInteractiveTimer(); // インタラクティブタイマーも切り替える
         }
 
-        // レスポンシブなフォントサイズの調整
-        function adjustFontSize() {
-            const containers = document.querySelectorAll('.timer-container');
-            const margin = 10; // 画面端からの余白
-            containers.forEach(container => {
-                const wrapper = container.querySelector('.timer-wrapper');
-                
-                let fontSize = 100; // 初期フォントサイズ
-                wrapper.style.fontSize = `${fontSize}px`;
-
-                // フォントサイズを調整して横幅に収める
-                while (wrapper.offsetWidth > window.innerWidth - margin) {
-                    fontSize -= 1;
-                    wrapper.style.fontSize = `${fontSize}px`;
-                }
-            });
-        }
-
-        // ウィンドウのリサイズ時にフォントサイズを調整
-        window.addEventListener('resize', adjustFontSize);
-
-        // 初期設定
+        // 最初のクリック時にイベントを処理
         document.body.addEventListener('click', handleFirstClick);
-        adjustFontSize(); // 初回読み込み時にもフォントサイズを調整
     </script>
 </body>
 </html>
