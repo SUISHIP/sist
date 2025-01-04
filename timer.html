@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ドットフォントタイマー</title>
+    <title>二行タイマー</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
         body {
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000;
+            background-color: #000; /* 背景を黒に設定 */
             font-family: 'DotGothic16', sans-serif;
             text-align: center;
             cursor: pointer;
@@ -21,63 +22,105 @@
             overflow: hidden; /* はみ出し部分を非表示 */
         }
 
-        #timer {
-            display: inline-block;
-            white-space: nowrap; /* テキストの折り返しを防ぐ */
+        .timer-container {
+            display: flex; /* ラベルとタイマーを横並びに */
+            align-items: center;
+            white-space: nowrap; /* 折り返しを防止 */
+            margin: 10px 0; /* 上下の余白を追加 */
+        }
+
+        .label {
+            font-size: calc(100vw / 15); /* ラベルの文字サイズ */
+            margin-right: 10px; /* タイマーとの間に少し間隔を追加 */
+        }
+
+        .timer {
+            font-size: calc(100vw / 10); /* 横幅基準でレスポンシブな文字サイズ */
             line-height: 1; /* 行間を削除 */
-            background: linear-gradient(90deg, #00f, #0ff); /* 青から水色のグラデーション */
-            -webkit-background-clip: text; /* テキスト部分のみグラデーションを適用 */
-            -webkit-text-fill-color: transparent; /* テキストの中身を透明化 */
-            font-size: 10vw; /* 初期値として幅基準で設定 */
         }
 
-        /* 画面幅に合わせて文字サイズを動的に調整 */
-        @media (min-aspect-ratio: 2/1) {
-            #timer {
-                font-size: calc(100vw / 10); /* 横幅基準の計算 */
-            }
+        #global-label, #global-timer {
+            color: #0ff; /* 水色 */
         }
 
-        @media (max-aspect-ratio: 2/1) {
-            #timer {
-                font-size: calc(100vh / 1.5); /* 縦幅基準の計算 */
-            }
+        #interactive-label, #interactive-timer {
+            color: #ff0; /* 黄色 */
         }
     </style>
 </head>
 <body>
-    <div id="timer">00:00:000</div>
-    <script>
-        let startTime = 0; // タイマー開始時刻
-        let elapsedTime = 0; // 経過時間
-        let timerInterval = null; // setIntervalのID
+    <!-- グローバルタイマー -->
+    <div class="timer-container">
+        <div id="global-label" class="label">RTA:</div>
+        <div id="global-timer" class="timer">00:00:000</div>
+    </div>
+    
+    <!-- インタラクティブタイマー -->
+    <div class="timer-container">
+        <div id="interactive-label" class="label">IGT:</div>
+        <div id="interactive-timer" class="timer">00:00:000</div>
+    </div>
 
-        function updateTimer() {
+    <script>
+        let globalStartTime = null; // グローバルタイマーの開始時刻
+        let globalTimerInterval = null; // グローバルタイマーのsetInterval ID
+
+        let interactiveStartTime = 0; // インタラクティブタイマーの開始時刻
+        let interactiveElapsedTime = 0; // インタラクティブタイマー経過時間
+        let interactiveTimerInterval = null; // インタラクティブタイマーのsetInterval ID
+
+        let isFirstClick = true; // 最初のクリックかどうかを判定
+
+        // グローバルタイマーの更新
+        function updateGlobalTimer() {
             const currentTime = Date.now();
-            const totalElapsed = elapsedTime + (currentTime - startTime);
+            const totalElapsed = currentTime - globalStartTime;
 
             const minutes = String(Math.floor(totalElapsed / 60000)).padStart(2, '0');
             const seconds = String(Math.floor((totalElapsed % 60000) / 1000)).padStart(2, '0');
             const milliseconds = String(totalElapsed % 1000).padStart(3, '0');
 
-            document.getElementById('timer').textContent = `${minutes}:${seconds}:${milliseconds}`;
+            document.getElementById('global-timer').textContent = `${minutes}:${seconds}:${milliseconds}`;
         }
 
-        function toggleTimer() {
-            if (timerInterval) {
+        // インタラクティブタイマーの更新
+        function updateInteractiveTimer() {
+            const currentTime = Date.now();
+            const totalElapsed = interactiveElapsedTime + (currentTime - interactiveStartTime);
+
+            const minutes = String(Math.floor(totalElapsed / 60000)).padStart(2, '0');
+            const seconds = String(Math.floor((totalElapsed % 60000) / 1000)).padStart(2, '0');
+            const milliseconds = String(totalElapsed % 1000).padStart(3, '0');
+
+            document.getElementById('interactive-timer').textContent = `${minutes}:${seconds}:${milliseconds}`;
+        }
+
+        // インタラクティブタイマーのスタート/ストップ切り替え
+        function toggleInteractiveTimer() {
+            if (interactiveTimerInterval) {
                 // タイマーが動作中なら停止
-                clearInterval(timerInterval);
-                timerInterval = null;
-                elapsedTime += Date.now() - startTime; // 経過時間を保存
+                clearInterval(interactiveTimerInterval);
+                interactiveTimerInterval = null;
+                interactiveElapsedTime += Date.now() - interactiveStartTime; // 経過時間を保存
             } else {
                 // タイマーが停止中なら開始
-                startTime = Date.now();
-                timerInterval = setInterval(updateTimer, 10);
+                interactiveStartTime = Date.now();
+                interactiveTimerInterval = setInterval(updateInteractiveTimer, 10);
             }
         }
 
-        // 画面をクリックでスタート/ストップ
-        document.body.addEventListener('click', toggleTimer);
+        // 最初のクリックでRTAタイマーを開始
+        function handleFirstClick() {
+            if (isFirstClick) {
+                globalStartTime = Date.now(); // RTAタイマー開始時刻を記録
+                globalTimerInterval = setInterval(updateGlobalTimer, 10); // RTAタイマーの更新を開始
+                isFirstClick = false; // 最初のクリックフラグを解除
+            }
+            toggleInteractiveTimer(); // インタラクティブタイマーも切り替える
+        }
+
+        // 最初のクリック時にイベントを処理
+        document.body.addEventListener('click', handleFirstClick);
     </script>
 </body>
 </html>
