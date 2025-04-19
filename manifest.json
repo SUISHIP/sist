@@ -1,0 +1,15 @@
+{
+  "name": "みにまるスペリング",
+  "short_name": "みにスペ",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "https://sui.rf.gd/images/mnsp.PNG",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#ffffff",
+  "theme_color": "#14A7A7"
+}
