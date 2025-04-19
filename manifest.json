@@ -1,7 +1,7 @@
 {
   "name": "みにまるスペリング",
   "short_name": "みにスペ",
-  "start_url": "/",
+  "start_url": "https://sui.rf.gd",
   "display": "standalone",
   "icons": [
     {
