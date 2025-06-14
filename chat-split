@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>チャットスプリット</title>
+  <style>
+    textarea {
+      width: 90%;
+      margin: 1em auto;
+      display: block;
+      font-family: monospace;
+    }
+    .chunk {
+      width: 90%;
+      margin: 1em auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .chunk button {
+      padding: 0.3em 0.7em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center;">チャットスプリット</h2>
+    <p>ChatGPTに長文を読み込ませるために長文を適当に分割します</p>
+
+  <textarea id="input" rows="20" placeholder="ここにテキストを貼り付けてください"></textarea>
+  <button onclick="splitText()">分割する</button>
+  <div id="output"></div>
+
+  <script>
+    function splitText() {
+      const input = document.getElementById("input").value;
+      const lines = input.split('\n');
+      const maxChars = 10000;
+      let chunks = [];
+      let currentChunk = '';
+
+      for (let line of lines) {
+        if ((currentChunk + line + '\n').length > maxChars) {
+          chunks.push(currentChunk.trim());
+          currentChunk = '';
+        }
+        currentChunk += line + '\n';
+      }
+      if (currentChunk.trim() !== '') {
+        chunks.push(currentChunk.trim());
+      }
+
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = "";
+      chunks.forEach((chunk, i) => {
+        const container = document.createElement("div");
+        container.className = "chunk";
+
+        const label = document.createElement("span");
+        label.textContent = `第${i + 1}部`;
+
+        const button = document.createElement("button");
+        button.textContent = "コピー";
+        button.onclick = () => {
+          navigator.clipboard.writeText(chunk).then(() => {
+            button.textContent = "コピー済み";
+            setTimeout(() => button.textContent = "コピー", 1500);
+          });
+        };
+
+        container.appendChild(label);
+        container.appendChild(button);
+        outputDiv.appendChild(container);
+      });
+    }
+  </script>
+</body>
+</html>
