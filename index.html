@@ -70,7 +70,6 @@ const problems = [
 ];
 
 let results = [];
-
 function checkAnswer() {
   if (problems.length === 0) return;
 
@@ -80,24 +79,30 @@ function checkAnswer() {
   const resultElement = document.getElementById("result");
   document.getElementById("answer").value = "";
 
+  let delay;
+
   if (userAnswer === correctAnswer) {
     resultElement.textContent = "正解！次の問題に進んでください。";
+    delay = 300; // 正解時の待機時間
   } else {
     resultElement.textContent = "不正解です。";
     const correctAnswerElement = document.createElement('span');
     correctAnswerElement.textContent = ` 正解: ${currentProblem.answer}`;
     correctAnswerElement.style.color = 'red';
     resultElement.appendChild(correctAnswerElement);
+    delay = 1000; // 不正解時の待機時間
   }
 
   results.push({ question: currentProblem.question, answer: currentProblem.answer, userAnswer });
   problems.shift();
 
   if (problems.length > 0) {
-    setTimeout(showNextProblem, 1000);
+    setTimeout(showNextProblem, delay);
   } else {
-    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-    showResults();
+    setTimeout(() => {
+      resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+      showResults();
+    }, delay);
   }
 }
 
