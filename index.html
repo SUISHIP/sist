@@ -1,697 +1,656 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>みにまるスペリング【ReTUNED】</title>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
+    <meta charset="UTF-8">
+    <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>みにまるスペリング【ReTUNED】</title>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
 <style>
- body {
- background-color: white;
- }
+    body {
+        background-color: white;
+    }
 
- h2 {
- color: #333;
- }
+    h2 {
+        color: #333;
+    }
 
- #resultTable {
- width: 100%;
- border-collapse: collapse;
- }
+    #resultTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
- #resultTable,
- #resultTable th,
- #resultTable td {
- border: 1px solid #ddd;
- }
+    #resultTable,
+    #resultTable th,
+    #resultTable td {
+        border: 1px solid #ddd;
+    }
 
- #resultTable th,
- #resultTable td {
- padding: 8px;
- text-align: left;
- }
+    #resultTable th,
+    #resultTable td {
+        padding: 8px;
+        text-align: left;
+    }
 
- #resultTable tr:nth-child(even) {
- background-color: #f2f2f2;
- }
+    #resultTable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
- #resultTable tr:hover {
- background-color: #ddd;
- }
+    #resultTable tr:hover {
+        background-color: #ddd;
+    }
 
- #resultTable th {
- background-color: #4CAF50;
- color: white;
- }
+    #resultTable th {
+        background-color: #4CAF50;
+        color: white;
+    }
 
- .dark-mode {
- background-color: #141414 !important;
- }
+    .dark-mode {
+        background-color: #141414 !important;
+    }
 
- .dark-mode h1,
- .dark-mode h2,
- .dark-mode p,
- .dark-mode label,
- .dark-mode input,
- .dark-mode select,
- .dark-mode span {
- color: #C9C9C9;
- background-color: #141414;
- }
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode p,
+    .dark-mode label,
+    .dark-mode input,
+    .dark-mode select,
+    .dark-mode span {
+        color: #C9C9C9;
+        background-color: #141414;
+    }
 
- .dark-mode button,
- .dark-mode nav ul a,
- .dark-mode .custom-file-label {
- color: #C9C9C9;
- background-color: #424242;
- }
+    .dark-mode button,
+    .dark-mode nav ul a,
+    .dark-mode .custom-file-label {
+        color: #C9C9C9;
+        background-color: #424242;
+    }
 
- .dark-mode #resultTable th,
- .dark-mode #resultTable td {
- color: #C9C9C9;
- background-color: #424242;
- }
+    .dark-mode #resultTable th,
+    .dark-mode #resultTable td {
+        color: #C9C9C9;
+        background-color: #424242;
+    }
 
- .dark-mode ::selection {
- background-color: #00415B;
- color: #ddd;
- }
+    .dark-mode ::selection {
+        background-color: #00415B;
+        color: #ddd;
+    }
 
- .dark-mode .send_button {
- background_color: #0C1959;
- color: #ddd;
- }
+    .dark-mode .send_button {
+        background-color: #0C1959;
+        color: #ddd;
+    }
 
- .dark-mode .correctAnswer {
- color: #923436 !important;
- }
+    .dark-mode .correctAnswer {
+        color: #923436 !important;
+    }
 
- ::selection {
- background-color: #FFF499;
- color: #000;
- }
+    ::selection {
+        background-color: #FFF499;
+        color: #000;
+    }
 
- button {
- background-color: #000000;
- color: white;
- padding: 8px 10px;
- text-align: center;
- text-decoration: none;
- display: inline-block;
- font-size: 16px;
- margin: 4px 2px;
- cursor: pointer;
- border: none;
- border-radius: 4px;
- }
+    button {
+        background-color: #000000;
+        color: white;
+        padding: 8px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+    }
 
- button:hover {
- background-color: #191970;
- }
+    button:hover {
+        background-color: #191970;
+    }
 
- input[type="text"] {
- width: 200px;
- height: 40px;
- padding: 5px;
- border: 1px solid #ccc;
- border-radius: 5px;
- font-size: 18px;
- }
+    input[type="text"] {
+        width: 200px;
+        height: 40px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 18px;
+    }
 
- select {
- width: 110px;
- height: 40px;
- padding: 5px;
- border: 1px solid #ccc;
- border-radius: 5px;
- font-size: 18px;
- }
+    select {
+        width: 110px;
+        height: 40px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 18px;
+    }
 
- nav ul {
- list-style-type: none;
- padding: 0;
- }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
- nav ul a {
- background-color: #70EFC2;
- color: #1A7593;
- text-decoration: none;
- padding: 5px 10px;
- display: inline-block;
- }
+    nav ul a {
+        background-color: #70EFC2;
+        color: #1A7593;
+        text-decoration: none;
+        padding: 5px 10px;
+        display: inline-block;
+    }
 
- nav ul a:hover {
- background-color: #ffff8e;
- }
+    nav ul a:hover {
+        background-color: #ffff8e;
+    }
 
- #fileInput {
- display: none;
- }
+    #fileInput {
+        display: none;
+    }
 
- .custom-file-label {
- display: inline-block;
- padding: 3px 30px;
- background-color: gray;
- color: white;
- cursor: pointer;
- border-radius: 3px;
- }
+    .custom-file-label {
+        display: inline-block;
+        padding: 3px 30px;
+        background-color: gray;
+        color: white;
+        cursor: pointer;
+        border-radius: 3px;
+    }
 
- .custom-file-label:hover {
- background-color: black;
- }
+    .custom-file-label:hover {
+        background-color: black;
+    }
 
- .toggle-button {
- display: none;
- }
+    .toggle-button {
+        display: inline;
+    }
 
- .toggle-text {
- display: none;
- }
+    .toggle-text {
+        display: none;
+    }
 
- .send_button {
- background-color: #1e90ff;
- color: white;
- padding: 15px 32px;
- text-align: center;
- text-decoration: none;
- display: inline-block;
- font-size: 16px;
- margin: 4px 2px;
- cursor: pointer;
- border: none;
- border-radius: 4px;
- }
+    .send_button {
+        background-color: #1e90ff;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+    }
 
- button:hover {
- background-color: #191970;
- }
- 
- .link_color {
- color: #00EAC3;
- }
- .dark-mode .link_color {
- color: red;
- }
- @keyframes gradientBackground {
- 0% { background-color: #DDFFBC; }
- 20% { background-color: #ADFFFF; }
- 50% { background-color: #FFFF6B; }
- 100% { background-color: #DDFFBC; }
- }
- #release-link {
- animation: gradientBackground 0.5s 2;
- }
+    .link_color {
+        color: #00EAC3;
+    }
+    .dark-mode .link_color {
+        color: red;
+    }
+    @keyframes gradientBackground {
+        0% { background-color: #DDFFBC; }
+        20% { background-color: #ADFFFF; }
+        50% { background-color: #FFFF6B; }
+        100% { background-color: #DDFFBC; }
+    }
+    #release-link {
+        animation: gradientBackground 0.5s 2;
+    }
+    #question-container {
+        display: none;
+    }
+    #result {
+        display: none;
+    }
+    #mistakes-title {
+        display: none;
+    }
 </style>
- <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZM63KK99L"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
+    <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZM63KK99L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
- gtag('config', 'G-SZM63KK99L');
-</script>
+        gtag('config', 'G-SZM63KK99L');
+    </script>
 </head>
-<body>
+<body class="dark-mode">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTHSXR8K"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
- <header>
- <b><nav>
- <ul>
- <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html" id="release-link">リリース</a></li>
- </ul>
- </nav></b>
- </header>
- <h1>みにスペ-ReTUNED</h1>
- <label><input type="checkbox" id="dark-toggle">mode</label>
- <label><input type="checkbox" id="toggleCheckbox"> β</label><br>
- <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
-<input type="file" id="fileInput" accept=".txt"><br>
- <div id="question-container">
- <p id="question"></p>
- <input type="text" id="answer" placeholder="回答" autocomplete="off" autofocus>
- <button type="button" onclick="checkAnswer()" class="send_button">確定</button>
- <p id="result"></p>
- </div>
- <h2>結果</h2>
- <p>ミスし単語</p>
- <table id="resultTable">
- <tr>
- </tr>
-</table>
- <span class="toggle-button"><button class="custom-file-label"onclick="download()">ミスし単語.txt</button></span>
-<br>
-<span class="toggle-button">ベータ版の機能です<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br>
- <script>
- window.onload = function() {
- startTest();
- };
-const problems = [
- { question: "名所/landmarks", answer: "landmarks" },
- { question: "認知症/dementia", answer: "dementia" },
- { question: "肉/flesh", answer: "flesh" },
- { question: "衝突/collision", answer: "collision" },
- { question: "危険なもの/hazard", answer: "hazard" },
- { question: "墓/tomb", answer: "tomb" },
- { question: "注射/injections", answer: "injections" },
- { question: "飛躍的進歩/breakthrough", answer: "breakthrough" },
- { question: "革/leather", answer: "leather" },
- { question: "宝石/jewelry", answer: "jewelry" },
- { question: "合図/cues", answer: "cues" },
- { question: "救急車/ambulance", answer: "ambulance" },
- { question: "不動産/estate", answer: "estate" },
- { question: "商品/commodity", answer: "commodity" },
- { question: "出発(時刻)/departure", answer: "departure" },
- { question: "段階/phase", answer: "phase" },
- { question: "泥棒/thief", answer: "thief" },
- { question: "聖/Saint", answer: "Saint" },
- { question: "彫刻/sculpture", answer: "sculpture" },
- { question: "悲しみ/grief", answer: "grief" },
- { question: "車線/lane", answer: "lane" },
- { question: "捕食動物/predators", answer: "predators" },
- { question: "流体/fluids", answer: "fluids" },
- { question: "はげみ/incentive", answer: "incentive" },
- { question: "花嫁/bride", answer: "bride" },
- { question: "介入/intervention", answer: "intervention" },
- { question: "(大)差/margin", answer: "margin" },
- { question: "伝記/biography", answer: "biography" },
- { question: "同意/consent", answer: "consent" },
- { question: "火山/volcano", answer: "volcano" },
- { question: "反逆者/rebels", answer: "rebels" },
- { question: "比喩/metaphor", answer: "metaphor" },
- { question: "法律/legislation", answer: "legislation" },
- { question: "雷/lightning", answer: "lightning" },
- { question: "殺虫剤/pesticides", answer: "pesticides" },
- { question: "コラム/column", answer: "column" },
- { question: "うわさ/rumor", answer: "rumor" },
- { question: "ほこり/dust", answer: "dust" },
- { question: "対話/dialogue", answer: "dialogue" },
- { question: "幼稚園/kindergarten", answer: "kindergarten" },
- { question: "糖尿病/diabetes", answer: "diabetes" },
- { question: "肥満/obesity", answer: "obesity" },
- { question: "特許/patent", answer: "patent" },
- { question: "章/chapter", answer: "chapter" },
- { question: "宮殿/Palace", answer: "Palace" },
- { question: "洗濯/laundry", answer: "laundry" },
- { question: "病棟/ward", answer: "ward" },
- { question: "ぼっ発/outbreak", answer: "outbreak" },
- { question: "方程式/equation", answer: "equation" },
- { question: "考古学者/archaeologist", answer: "archaeologist" }
-];
+    <header>
+        <b><nav>
+            <ul>
+                <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html" id="release-link">リリース</a>
+            </ul>
+        </nav></b>
+    </header>
+    <h1>みにスペ-ReTUNED</h1>
 
- let results = [];
- let currentProblems = [];
+    <div id="question-container">
+        <p id="question"></p>
+        <input type="text" id="answer" placeholder="回答" autocomplete="off" autofocus>
+        <button type="button" onclick="checkAnswer()" class="send_button">確定</button>
+        <p id="result"></p>
+    </div>
+    <h2 id="mistakes-title">ミスし単語</h2>
+    <table id="resultTable">
+        <thead>
+            <tr></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <br>
+    <label for="fileInput" class="custom-file-label">ロード</label><input type="file" id="fileInput" accept=".txt">
+    <button class="custom-file-label" onclick="download()">セーブ</button>
+<script>
+    window.onload = function() {
+        startTest();
+    };
+    const problems = [
+        { question: "名所/landmarks", answer: "landmarks" },
+        { question: "認知症/dementia", answer: "dementia" },
+        { question: "肉/flesh", answer: "flesh" },
+        { question: "衝突/collision", answer: "collision" },
+        { question: "危険なもの/hazard", answer: "hazard" },
+        { question: "墓/tomb", answer: "tomb" },
+        { question: "注射/injections", answer: "injections" },
+        { question: "飛躍的進歩/breakthrough", answer: "breakthrough" },
+        { question: "革/leather", answer: "leather" },
+        { question: "宝石/jewelry", answer: "jewelry" },
+        { question: "合図/cues", answer: "cues" },
+        { question: "救急車/ambulance", answer: "ambulance" },
+        { question: "不動産/estate", answer: "estate" },
+        { question: "商品/commodity", answer: "commodity" },
+        { question: "出発(時刻)/departure", answer: "departure" },
+        { question: "段階/phase", answer: "phase" },
+        { question: "泥棒/thief", answer: "thief" },
+        { question: "聖/Saint", answer: "Saint" },
+        { question: "彫刻/sculpture", answer: "sculpture" },
+        { question: "悲しみ/grief", answer: "grief" },
+        { question: "車線/lane", answer: "lane" },
+        { question: "捕食動物/predators", answer: "predators" },
+        { question: "流体/fluids", answer: "fluids" },
+        { question: "はげみ/incentive", answer: "incentive" },
+        { question: "花嫁/bride", answer: "bride" },
+        { question: "介入/intervention", answer: "intervention" },
+        { question: "(大)差/margin", answer: "margin" },
+        { question: "伝記/biography", answer: "biography" },
+        { question: "同意/consent", answer: "consent" },
+        { question: "火山/volcano", answer: "volcano" },
+        { question: "反逆者/rebels", answer: "rebels" },
+        { question: "比喩/metaphor", answer: "metaphor" },
+        { question: "法律/legislation", answer: "legislation" },
+        { question: "雷/lightning", answer: "lightning" },
+        { question: "殺虫剤/pesticides", answer: "pesticides" },
+        { question: "コラム/column", answer: "column" },
+        { question: "うわさ/rumor", answer: "rumor" },
+        { question: "ほこり/dust", answer: "dust" },
+        { question: "対話/dialogue", answer: "dialogue" },
+        { question: "幼稚園/kindergarten", answer: "kindergarten" },
+        { question: "糖尿病/diabetes", answer: "diabetes" },
+        { question: "肥満/obesity", answer: "obesity" },
+        { question: "特許/patent", answer: "patent" },
+        { question: "章/chapter", answer: "chapter" },
+        { question: "宮殿/Palace", answer: "Palace" },
+        { question: "洗濯/laundry", answer: "laundry" },
+        { question: "病棟/ward", answer: "ward" },
+        { question: "ぼっ発/outbreak", answer: "outbreak" },
+        { question: "方程式/equation", answer: "equation" },
+        { question: "考古学者/archaeologist", answer: "archaeologist" }
+    ];
 
- function resetTest() {
- results = [];
- currentProblems = [];
- document.getElementById("resultTable").innerHTML = '';
- document.getElementById("result").textContent = '';
- document.getElementById("answer").disabled = false;
- resetConfirmButton();
- monsu();
- }
+    let results = [];
+    let currentProblems = [];
 
- function retryMistakes() {
- document.getElementById("answer").disabled = false;
- document.getElementById('answer').value = "";
- document.getElementById('answer').focus();
- removeButtons();
- currentProblems = results.filter(result => !result.isCorrect);
- results = [];
- document.getElementById("resultTable").innerHTML = "";
- if (currentProblems.length > 0) {
- resetConfirmButton();
- showNextProblem();
- } else {
- document.getElementById("result").textContent = "間違えた問題がありません。";
- }
- }
+    function resetTest() {
+        results = [];
+        currentProblems = [];
+        document.getElementById("resultTable").querySelector('tbody').innerHTML = '';
+        document.getElementById("result").textContent = '';
+        document.getElementById("question-container").style.display = 'block';
+        document.getElementById("result").style.display = 'none';
+        document.getElementById("mistakes-title").style.display = 'none';
+        document.getElementById("answer").disabled = false;
+        removeButtons(); // Remove old reset/retry buttons
+        monsu();
+    }
 
-function resetConfirmButton() {
- const confirmButton = document.querySelector('button.send_button');
- confirmButton.disabled = false;
-}
+    function retryMistakes() {
+        document.getElementById("answer").disabled = false;
+        document.getElementById('answer').value = "";
+        document.getElementById('answer').focus();
+        removeButtons();
+        currentProblems = results.filter(result => !result.isCorrect);
+        results = [];
+        document.getElementById("resultTable").querySelector('tbody').innerHTML = "";
+        document.getElementById("question-container").style.display = 'block';
+        document.getElementById("result").style.display = 'none';
+        document.getElementById("mistakes-title").style.display = 'none';
+        if (currentProblems.length > 0) {
+            resetConfirmButton();
+            showNextProblem();
+        } else {
+            document.getElementById("result").textContent = "間違えた問題がありません。";
+            document.getElementById("result").style.display = 'block';
+        }
+    }
 
-function checkAnswer() {
- const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
- const currentProblem = currentProblems[0];
- const correctAnswer = currentProblem.answer;
- const resultElement = document.getElementById("result");
- const confirmButton = document.querySelector('button[type="button"]');
- document.getElementById("answer").value = "";
+    function resetConfirmButton() {
+        const confirmButton = document.querySelector('button.send_button');
+        confirmButton.disabled = false;
+    }
 
- results.push({
- question: currentProblem.question,
- answer: correctAnswer,
- userAnswer: userAnswer,
- isCorrect: userAnswer === correctAnswer
- });
+    function checkAnswer() {
+        const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+        const currentProblem = currentProblems[0];
+        const correctAnswer = currentProblem.answer.toLowerCase();
+        const resultElement = document.getElementById("result");
+        const confirmButton = document.querySelector('button.send_button');
+        document.getElementById("answer").value = "";
 
- if (userAnswer === correctAnswer) {
- resultElement.textContent = "正解！次の問題に進んでください。";
- currentProblems.shift();
- if (currentProblems.length > 0) {
- showNextProblem();
- } else {
- resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
- showResults();
- }
- resetConfirmButton();
- } else {
- resultElement.textContent = "不正解です。";
- confirmButton.disabled = true;
- resultElement.style.fontSize = '21px';
+        results.push({
+            question: currentProblem.question,
+            answer: currentProblem.answer,
+            userAnswer: userAnswer,
+            isCorrect: userAnswer === correctAnswer
+        });
 
- const correctAnswerElement = document.createElement('span');
- correctAnswerElement.textContent = ` 正解: ${correctAnswer}`;
- correctAnswerElement.style.color = 'red';
- correctAnswerElement.classList.add('correctAnswer');
- correctAnswerElement.style.fontSize = '21px';
- correctAnswerElement.style.cursor = 'pointer';
- resultElement.appendChild(correctAnswerElement);
- 
- const utterance = new SpeechSynthesisUtterance(correctAnswer);
- utterance.lang = 'en-US';
- speechSynthesis.speak(utterance);
+        if (userAnswer === correctAnswer) {
+            resultElement.textContent = "正解！次の問題に進んでください。";
+            resultElement.style.display = 'block';
+            currentProblems.shift();
+            if (currentProblems.length > 0) {
+                setTimeout(showNextProblem, 500); // Give user time to see "Correct"
+            } else {
+                resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                showResults();
+            }
+            resetConfirmButton();
+        } else {
+            resultElement.textContent = "不正解です。";
+            confirmButton.disabled = true;
+            resultElement.style.fontSize = '21px';
+            resultElement.style.display = 'block';
 
- countdownTimeout = setTimeout(() => {
- if (!isAnswerClicked) {
- currentProblems.shift();
- if (currentProblems.length > 0) {
- showNextProblem();
- resetConfirmButton();
- document.getElementById('answer').focus();
- } else {
- resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
- showResults();
- }
- }
- }, 2500);
+            const correctAnswerElement = document.createElement('span');
+            correctAnswerElement.textContent = ` 正解: ${currentProblem.answer}`;
+            correctAnswerElement.style.color = 'red';
+            correctAnswerElement.classList.add('correctAnswer');
+            correctAnswerElement.style.fontSize = '21px';
+            resultElement.appendChild(correctAnswerElement);
+            
+            const utterance = new SpeechSynthesisUtterance(currentProblem.answer);
+            utterance.lang = 'en-US';
+            speechSynthesis.speak(utterance);
 
- correctAnswerElement.addEventListener('click', () => {
- if (isAnswerClicked) {
- currentProblems.shift();
- if (currentProblems.length > 0) {
- showNextProblem();
- document.getElementById('answer').focus();
- resetConfirmButton();
- } else {
- resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
- showResults();
- }
- } else {
- clearTimeout(countdownTimeout);
- isAnswerClicked = true;
- }
- });
- }
-}
- 
-function fisherYatesShuffle(array) {
- document.getElementById("answer").disabled = false;
- for (let i = array.length - 1; i > 0; i--) {
- const j = Math.floor(Math.random() * (i + 1));
- [array[i], array[j]] = [array[j], array[i]];
- }
- return array;
-}
- 
- 
-function monsu() {
- document.getElementById("answer").disabled = false
- document.getElementById("answer").value = "";
- document.getElementById('answer').focus();
- const numQuestions = parseInt(document.getElementById("numQuestions").value);
- const isRandom = document.getElementById("order").value === "random";
- currentProblems = problems.slice();
- if (isRandom) {
- currentProblems = fisherYatesShuffle(currentProblems);
- }
- currentProblems = currentProblems.slice(0, numQuestions);
- showNextProblem();
- resetConfirmButton();
-}
+            setTimeout(() => {
+                currentProblems.shift();
+                if (currentProblems.length > 0) {
+                    showNextProblem();
+                    resetConfirmButton();
+                    document.getElementById('answer').focus();
+                } else {
+                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+                    showResults();
+                }
+            }, 2500);
+        }
+    }
+    
+    function fisherYatesShuffle(array) {
+        document.getElementById("answer").disabled = false;
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+    
+    function monsu() {
+        document.getElementById("answer").disabled = false;
+        document.getElementById("answer").value = "";
+        document.getElementById('answer').focus();
+        const numQuestions = parseInt(document.getElementById("numQuestions").value);
+        const isRandom = document.getElementById("order").value === "random";
+        currentProblems = problems.slice();
+        if (isRandom) {
+            currentProblems = fisherYatesShuffle(currentProblems);
+        }
+        currentProblems = currentProblems.slice(0, numQuestions);
+        document.getElementById("question-container").style.display = 'block';
+        showNextProblem();
+        resetConfirmButton();
+    }
 
-document.getElementById("answer").addEventListener("keydown", function(event) {
- const confirmButton = document.querySelector('button[type="button"]');
- if (event.key === 'Enter' && !confirmButton.disabled) {
- checkAnswer();
- }
-});
+    document.getElementById("answer").addEventListener("keydown", function(event) {
+        const confirmButton = document.querySelector('button.send_button');
+        if (event.key === 'Enter' && !confirmButton.disabled) {
+            checkAnswer();
+        }
+    });
 
-let countdownTimeout;
-let isAnswerClicked = false;
+    function showNextProblem() {
+        const currentProblem = currentProblems[0];
+        const questionElement = document.getElementById("question");
+        const maskedQuestion = currentProblem.question.replace(new RegExp(currentProblem.answer, 'gi'), `${currentProblem.answer[0]}_____`);
+        questionElement.textContent = maskedQuestion;
 
+        const resultElement = document.getElementById("result");
+        resultElement.textContent = '';
+        resultElement.style.display = 'none';
+        document.getElementById('answer').focus();
+    }
 
- function showNextProblem() {
- isAnswerClicked = false;
- const currentProblem = currentProblems[0];
- const questionElement = document.getElementById("question");
- const maskedQuestion = currentProblem.question.replace(new RegExp(`\\b${currentProblem.answer}\\b`, 'gi'), `${currentProblem.answer[0]}_____`);
- questionElement.textContent = maskedQuestion;
+    function showResults() {
+        const tableBody = document.getElementById("resultTable").querySelector('tbody');
+        tableBody.innerHTML = '';
 
- const resultElement = document.getElementById("result");
- resultElement.textContent = '';
- }
+        let correctAnswers = 0;
+        let totalQuestions = results.length;
+        let hasMistakes = false;
 
- function showResults() {
- const table = document.getElementById("resultTable");
- table.innerHTML = '';
+        for (let i = 0; i < results.length; i++) {
+            if (!results[i].isCorrect) {
+                hasMistakes = true;
+                const tr = document.createElement('tr');
+                const tdQuestion = document.createElement('td');
+                const tdAnswer = document.createElement('td');
+                const tdUserAnswer = document.createElement('td');
+                tdQuestion.textContent = results[i].question;
+                tdAnswer.textContent = results[i].answer;
+                tdUserAnswer.textContent = results[i].userAnswer || '(未回答)';
+                tr.appendChild(tdQuestion);
+                tr.appendChild(tdAnswer);
+                tr.appendChild(tdUserAnswer);
+                tableBody.appendChild(tr);
+            } else {
+                correctAnswers++;
+            }
+        }
 
- let correctAnswers = 0;
- let totalQuestions = results.length;
+        if (hasMistakes) {
+            document.getElementById('mistakes-title').style.display = 'block';
+        } else {
+            document.getElementById('mistakes-title').style.display = 'none';
+        }
 
- for (let i = 0; i < results.length; i++) {
- if (!results[i].isCorrect) {
- const tr = document.createElement('tr');
- const tdQuestion = document.createElement('td');
- const tdAnswer = document.createElement('td');
- const tdUserAnswer = document.createElement('td');
- tdQuestion.textContent = results[i].question;
- tdAnswer.textContent = results[i].answer;
- tdUserAnswer.textContent = results[i].userAnswer;
- tr.appendChild(tdQuestion);
- tr.appendChild(tdAnswer);
- tr.appendChild(tdUserAnswer);
- table.appendChild(tr);
- } else {
- correctAnswers++;
- }
- }
+        const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
 
- const accuracy = (correctAnswers / totalQuestions) * 100;
+        const resultContainer = document.getElementById("result");
+        const accuracyElement = document.createElement('p');
+        accuracyElement.textContent = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${totalQuestions})`;
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(accuracyElement);
+        resultContainer.style.display = 'block';
 
- const resultContainer = document.getElementById("result");
- const accuracyElement = document.createElement('p');
- accuracyElement.textContent = `正答率: ${accuracy.toFixed(2)}%`;
- resultContainer.appendChild(accuracyElement);
+        document.getElementById("question-container").style.display = 'none';
 
- removeButtons();
- const resetButton = document.createElement('button');
- resetButton.textContent = "リセット";
- resetButton.onclick = resetTest;
- document.body.appendChild(resetButton);
+        removeButtons();
+        const buttonContainer = document.createElement('div');
+        const resetButton = document.createElement('button');
+        resetButton.textContent = "リセット";
+        resetButton.onclick = resetTest;
+        buttonContainer.appendChild(resetButton);
 
- const retryButton = document.createElement('button');
- retryButton.textContent = "リトライ";
- retryButton.onclick = retryMistakes;
- document.body.appendChild(retryButton);
-}
+        if (hasMistakes) {
+            const retryButton = document.createElement('button');
+            retryButton.textContent = "リトライ";
+            retryButton.onclick = retryMistakes;
+            buttonContainer.appendChild(retryButton);
+        }
+        document.body.insertBefore(buttonContainer, document.getElementById('mistakes-title'));
+    }
 
- function removeButtons() {
- const buttons = document.querySelectorAll('button');
- buttons.forEach(button => {
- if (button.textContent === "リセット" || button.textContent === "リトライ") {
- button.remove();
- }
- });
- }
+    function removeButtons() {
+        const oldContainer = document.querySelector('button[onclick="resetTest()"]')?.parentNode;
+        if (oldContainer) {
+            oldContainer.remove();
+        }
+    }
 
-function startTest() {
- document.getElementById("answer").disabled = false;
- const container = document.createElement('div');
- const select = document.createElement('select');
- select.id = "numQuestions";
- 
- const fixedOptions = [
- { value: 1, text: "1問" },
- { value: 3, text: "3問"},
- { value: 10, text: "10問"},
- { value: 25, text: "25問",selected: true},
- { value: problems.length, text: "ALL"}
-];
+    function startTest() {
+        document.getElementById("answer").disabled = false;
+        const container = document.createElement('div');
+        const select = document.createElement('select');
+        select.id = "numQuestions";
+        
+        const fixedOptions = [
+            { value: 1, text: "1問" },
+            { value: 3, text: "3問"},
+            { value: 10, text: "10問"},
+            { value: 25, text: "25問", selected: true},
+            { value: problems.length, text: "ALL"}
+        ];
 
- 
- fixedOptions.forEach(optionData => {
- const option = document.createElement('option');
- option.value = optionData.value;
- option.textContent = optionData.text;
- 
- if (optionData.selected) {
- option.selected = true;
- }
- 
- select.appendChild(option);
-});
+        fixedOptions.forEach(optionData => {
+            const option = document.createElement('option');
+            option.value = optionData.value;
+            option.textContent = optionData.text;
+            if (optionData.selected) {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        });
+        
+        const orderSelect = document.createElement('select');
+        orderSelect.id = "order";
+        
+        const optionRandom = document.createElement('option');
+        optionRandom.value = "random";
+        optionRandom.textContent = "ランダム";
+        
+        const optionSequential = document.createElement('option');
+        optionSequential.value = "sequential";
+        optionSequential.textContent = "順番どうり";
+        
+        orderSelect.appendChild(optionRandom);
+        orderSelect.appendChild(optionSequential);
+        
+        const startButton = document.createElement('button');
+        startButton.textContent = "スタート";
+        startButton.onclick = () => {
+            monsu();
+            container.style.display = 'none'; // Hide settings after start
+        };
+        
+        container.appendChild(select);
+        container.appendChild(orderSelect);
+        container.appendChild(startButton);
+        
+        document.body.insertBefore(container, document.getElementById("question-container"));
+    }
 
- for (let i = 1; i <= problems.length; i++) {
- const option = document.createElement('option');
- option.value = i;
- option.textContent = i;
- select.appendChild(option);
- }
- 
- const orderSelect = document.createElement('select');
- orderSelect.id = "order";
- 
- const optionRandom = document.createElement('option');
- optionRandom.value = "random";
- optionRandom.textContent = "ランダム";
- 
- const optionSequential = document.createElement('option');
- optionSequential.value = "sequential";
- optionSequential.textContent = "順番どうり";
- 
- orderSelect.appendChild(optionRandom);
- orderSelect.appendChild(optionSequential);
- 
- const startButton = document.createElement('button');
- startButton.textContent = "スタート";
- startButton.onclick = monsu;
- 
- container.appendChild(select);
- container.appendChild(orderSelect);
- container.appendChild(startButton);
- 
- document.body.insertBefore(container, document.getElementById("question-container"));
-}
+    function download() {
+        let table = document.getElementById("resultTable");
+        let rows = table.querySelectorAll("tbody tr");
+        if (rows.length === 0) {
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background-color: #333; color: white; border: 1px solid #ccc; padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 1000; border-radius: 8px;
+            `;
+            messageBox.innerHTML = `
+                <p>ダウンロードするミスした単語がありません。</p>
+                <button onclick="this.parentNode.remove()" style="margin-top: 10px;">閉じる</button>
+            `;
+            document.body.appendChild(messageBox);
+            return;
+        }
 
+        let textData = "Question\tAnswer\tYour Answer\n";
+        for (let i = 0; i < rows.length; i++) {
+            let cells = rows[i].getElementsByTagName("td");
+            let rowData = [];
+            for (let j = 0; j < cells.length; j++) {
+                rowData.push(cells[j].innerText);
+            }
+            textData += rowData.join("\t") + "\n";
+        }
 
- function download() {
- let table = document.getElementById("resultTable");
- let rows = table.getElementsByTagName("tr");
- if (rows.length === 0 || (rows.length === 1 && rows[0].cells.length === 0)) {
- const messageBox = document.createElement('div');
- messageBox.style.cssText = `
- position: fixed;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- background-color: #fff;
- border: 1px solid #ccc;
- padding: 20px;
- box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
- z-index: 1000;
- `;
- messageBox.innerHTML = `
- <p>ダウンロードするミスし単語がありません。</p>
- <button onclick="this.parentNode.remove()">閉じる</button>
- `;
- document.body.appendChild(messageBox);
- return;
-}
+        let blob = new Blob([textData], { type: "text/plain;charset=utf-8" });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "ミスした単語.txt";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
 
- let textData = "";
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                setProblemsFromFile(content);
+            };
+            reader.readAsText(file);
+        }
+    });
 
- for (let i = 0; i < rows.length; i++) {
- let cells = rows[i].getElementsByTagName("td");
- for (let j = 0; j < cells.length; j++) {
- textData += cells[j].innerText + "\t";
- }
- textData += "\n";
- }
+    function setProblemsFromFile(content) {
+        const lines = content.split('\n').filter(line => line.trim() !== '');
+        const newProblems = [];
+        lines.forEach(line => {
+            const parts = line.split('\t');
+            // Expecting format: "Japanese/English<tab>English"
+            if (parts.length >= 2 && parts[0] && parts[1]) {
+                 newProblems.push({ question: parts[0].trim(), answer: parts[1].trim() });
+            }
+        });
+        if(newProblems.length > 0) {
+            problems.length = 0;
+            problems.push(...newProblems);
+            // Refresh the start screen
+            document.querySelector('button[onclick^="monsu"]')?.parentNode.remove();
+            removeButtons();
+            startTest();
+            alert(`${newProblems.length}問をロードしました。`);
+        } else {
+            alert('ファイル形式が正しくないか、問題が含まれていません。');
+        }
+    }
+    
+    const fileInput = document.getElementById('fileInput');
+    const fileLabel = document.querySelector('.custom-file-label');
 
- let blob = new Blob([textData], { type: "text/plain" });
- let url = URL.createObjectURL(blob);
- let a = document.createElement("a");
- a.href = url;
- a.download = "ミスし単語.txt";
- document.body.appendChild(a);
- a.click();
- document.body.removeChild(a);
- URL.revokeObjectURL(url);
-}
-document.getElementById('fileInput').addEventListener('change', function(event) {
- const file = event.target.files[0];
- if (file) {
- const reader = new FileReader();
- reader.onload = function(e) {
- const content = e.target.result;
- setProblemsFromFile(content);
- };
- reader.readAsText(file);
- }
-});
-
-function setProblemsFromFile(content) {
- const lines = content.split('\n');
- problems.length = 0;
- lines.forEach(line => {
- const [question, answer] = line.split('\t');
- if (question && answer) {
- problems.push({ question: question.trim(), answer: answer.trim() });
- }
- });
- resetTest();
-}
- 
- const fileInput = document.getElementById('fileInput');
- const fileLabel = document.querySelector('.custom-file-label');
-
- fileInput.addEventListener('change', function() {
- const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'ファイルをアップロード';
- fileLabel.textContent = fileName;
- });
- 
- const checkbox = document.getElementById('toggleCheckbox');
- const toggleButtons = document.querySelectorAll('.toggle-button');
-
- checkbox.addEventListener('change', function() {
- toggleButtons.forEach(function(button) {
- if (checkbox.checked) {
- button.style.display = 'inline';
- } else {
- button.style.display = 'none';
- }
- });
- });
- const darkToggle = document.getElementById('dark-toggle');
- darkToggle.addEventListener('change', function() {
- if (darkToggle.checked) {
- document.body.classList.add('dark-mode');
- } else {
- document.body.classList.remove('dark-mode');
- }
- });
- 
- document.addEventListener('DOMContentLoaded', function() {
- const darkModeCheckbox = document.getElementById('dark-toggle');
- 
- const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
- 
- if (prefersDarkScheme.matches) {
- darkModeCheckbox.checked = true;
- document.body.classList.add('dark-mode');
- } else {
- darkModeCheckbox.checked = false;
- document.body.classList.remove('dark-mode');
- }
-
- prefersDarkScheme.addEventListener('change', (e) => {
- if (e.matches) {
- darkModeCheckbox.checked = true;
- } else {
- darkModeCheckbox.checked = false;
- }
- });
-});
+    fileInput.addEventListener('change', function() {
+        const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'ファイルをアップロード';
+        fileLabel.textContent = fileName;
+    });
 </script>
 </body>
 </html>
