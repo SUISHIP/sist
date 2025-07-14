@@ -403,7 +403,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
                     showResults();
                 }
-            }, 2500);
+            }, 1500);
         }
     }
     
@@ -560,7 +560,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         startButton.textContent = "スタート";
         startButton.onclick = () => {
             monsu();
-            container.style.display = 'none'; // Hide settings after start
         };
         
         container.appendChild(select);
