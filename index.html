@@ -250,8 +250,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </nav></b>
   </header>
   <h1>みにスペ-ReTUNED</h1>
-  <label><input type="checkbox" id="dark-toggle">ダークモード</label>
-  <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label><br>
+  <label><input type="checkbox" id="dark-toggle">mode</label>
+  <label><input type="checkbox" id="toggleCheckbox"> β</label><br>
   <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
 <input type="file" id="fileInput" accept=".txt"><br>
  <div id="question-container">
@@ -268,15 +268,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  </table>
   <span class="toggle-button"><button class="custom-file-label"onclick="download()">ミスし単語.txt</button></span>
  <br>
- <span class="toggle-button">ベータ版の機能です。<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br>
- <!--<h3>ランキング</h3>
-<table id="rankings">
-    <tr>
-        <th>順位</th>
-        <th>ユーザー名</th>
-        <th>正答率</th>
-    </tr>
-</table></span>-->
+ <span class="toggle-button">ベータ版の機能です<a href="https://forms.gle/9QSQrSGTYJXfuzG77" class="link_color">フィードバック</a><br>
  <script>
   window.onload = function() {
     populateQuestionDropdowns();
@@ -586,9 +578,6 @@ let isAnswerClicked = false; // 赤文字がクリックされたかどうかを
 function startTest() {
     document.getElementById("answer").disabled = false;
     const container = document.createElement('div');
-    const label = document.createElement('label');
-    label.textContent = "問題数: ";
-    
     const select = document.createElement('select');
     select.id = "numQuestions";
     
@@ -596,10 +585,9 @@ function startTest() {
   const fixedOptions = [
   { value: 1, text: "1問" },
   { value: 3, text: "3問"},
-  { value: 10, text: "10問", selected: true },
-  { value: 50, text: "50問" },
-  { value: 100, text: "100問" },
-  { value: problems.length, text: "ALL" }
+  { value: 10, text: "10問",},
+  { value: 25, text: "25問" },
+  { value: problems.length, text: "ALL" selected: true}
 ];
 
     
@@ -623,9 +611,6 @@ function startTest() {
       option.textContent = i;
       select.appendChild(option);
     }
-
-    const orderLabel = document.createElement('label');
-    orderLabel.textContent = " 出題順: ";
     
     const orderSelect = document.createElement('select');
     orderSelect.id = "order";
