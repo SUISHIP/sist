@@ -272,20 +272,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  <script>
   window.onload = function() {
     populateQuestionDropdowns();
-    
-    document.getElementById("startQuestion").addEventListener("change", function() {
-        const startValue = parseInt(this.value);
-        const newEndValue = startValue + 50;
-        const endSelect = document.getElementById("endQuestion");
-
-        // Set the new value for the end dropdown
-        for (let i = 0; i < endSelect.options.length; i++) {
-            if (parseInt(endSelect.options[i].value) === newEndValue) {
-                endSelect.selectedIndex = i; // Select the new end value if it exists
-                break;
-            }
-        }
-    });
 };
 const problems = [
   { question: "名所/landmarks", answer: "landmarks" },
@@ -452,14 +438,10 @@ function checkAnswer() {
 }
    
    function populateQuestionDropdowns() {
-    const startSelect = document.getElementById("startQuestion");
-    const endSelect = document.getElementById("endQuestion");
     problems.forEach((problem, index) => {
       const option = document.createElement("option");
       option.value = index;
       option.textContent = index + 1;
-      startSelect.appendChild(option);
-      endSelect.appendChild(option.cloneNode(true));
     });
   }
    // Fisher-Yatesアルゴリズムを使ってシャッフルする関数
@@ -477,8 +459,6 @@ function fisherYatesShuffle(array) {
   document.getElementById("answer").disabled = false
   document.getElementById("answer").value = "";
   document.getElementById('answer').focus();
-  const startIndex = parseInt(document.getElementById("startQuestion").value);
-  const endIndex = parseInt(document.getElementById("endQuestion").value);
   const numQuestions = parseInt(document.getElementById("numQuestions").value);
   const isRandom = document.getElementById("order").value === "random";
   currentProblems = problems.slice(startIndex, endIndex + 1);
@@ -585,9 +565,9 @@ function startTest() {
   const fixedOptions = [
   { value: 1, text: "1問" },
   { value: 3, text: "3問"},
-  { value: 10, text: "10問",},
-  { value: 25, text: "25問" },
-  { value: problems.length, text: "ALL" selected: true}
+  { value: 10, text: "10問"},
+  { value: 25, text: "25問",selected: true},
+  { value: problems.length, text: "ALL"}
 ];
 
     
