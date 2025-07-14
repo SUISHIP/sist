@@ -1,11 +1,152 @@
-<!DOCTYPE html> 
-<html lang="ja"> <head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>みにまるスペリング(旧)</title>
-     <meta http-equiv="refresh" content="1;https://sui.rf.gd/"> 
-</head> 
-<body> 
-    <p>みにまるスペリングは、<a href="https://sui.rf.gd/">https://sui.rf.gd/</a>に移動しました。自動リダイレクト</p> 
-</body> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>みにまるスペリング【ReTuned】</title>
+<style>
+button {
+  background-color: #1e90ff;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #191970;
+}
+
+input[type="text"] {
+  width: 200px;
+  height: 40px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+}
+</style>
+</head>
+<body>
+<h1>みにまるスペリング-ReTuned</h1>
+<p>次の空欄に当てはまる語句を入力</p>
+<div id="question-container">
+  <p id="question"></p>
+  <input type="text" id="answer" placeholder="回答">
+  <button type="button" onclick="checkAnswer()">確定</button>
+  <p id="result"></p>
+</div>
+
+<h2>結果</h2>
+<p>ミスした単語</p>
+<table id="resultTable">
+  <tr>
+    <th>問題</th>
+    <th>あなたの回答</th>
+    <th>正解</th>
+  </tr>
+</table>
+
+<script>
+const problems = [
+  {
+    question: "follow her advice/彼女の助言に従う",
+    answer: "follow",
+  },
+  {
+    question: "consider the problem seriously/真剣にその問題を考える",
+    answer: "consider",
+  },
+  {
+    question: "increase by 20%/20%増加する",
+    answer: "increase",
+  },
+];
+
+let results = [];
+
+function checkAnswer() {
+  if (problems.length === 0) return;
+
+  const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+  const currentProblem = problems[0];
+  const correctAnswer = currentProblem.answer.toLowerCase();
+  const resultElement = document.getElementById("result");
+  document.getElementById("answer").value = "";
+
+  if (userAnswer === correctAnswer) {
+    resultElement.textContent = "正解！次の問題に進んでください。";
+  } else {
+    resultElement.textContent = "不正解です。";
+    const correctAnswerElement = document.createElement('span');
+    correctAnswerElement.textContent = ` 正解: ${currentProblem.answer}`;
+    correctAnswerElement.style.color = 'red';
+    resultElement.appendChild(correctAnswerElement);
+  }
+
+  results.push({ question: currentProblem.question, answer: currentProblem.answer, userAnswer });
+  problems.shift();
+
+  if (problems.length > 0) {
+    setTimeout(showNextProblem, 1000);
+  } else {
+    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+    showResults();
+  }
+}
+
+function showNextProblem() {
+  const currentProblem = problems[0];
+  const questionElement = document.getElementById("question");
+  const maskedQuestion = currentProblem.question.replace(
+    new RegExp(`\b${currentProblem.answer}\b`, 'gi'),
+    (match) => `${match[0]}_`
+  );
+  questionElement.textContent = maskedQuestion;
+
+  document.getElementById("result").textContent = "";
+  document.getElementById("answer").focus();
+}
+
+function showResults() {
+  const table = document.getElementById("resultTable");
+
+  // 間違えた問題のみ表示
+  for (let i = 0; i < results.length; i++) {
+    if (results[i].userAnswer !== results[i].answer) {
+      const tr = document.createElement('tr');
+      const tdQuestion = document.createElement('td');
+      const tdUserAnswer = document.createElement('td');
+      const tdAnswer = document.createElement('td');
+
+      tdQuestion.textContent = results[i].question;
+      tdUserAnswer.textContent = results[i].userAnswer;
+      tdAnswer.textContent = results[i].answer;
+
+      tr.appendChild(tdQuestion);
+      tr.appendChild(tdUserAnswer);
+      tr.appendChild(tdAnswer);
+
+      table.appendChild(tr);
+    }
+  }
+}
+
+// 最初の問題を表示
+showNextProblem();
+
+// Enterキーで確定
+document.getElementById("answer").addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    checkAnswer();
+  }
+});
+</script>
+</body>
 </html>
