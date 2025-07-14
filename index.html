@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
  <meta charset="UTF-8">
- <meta name="description" content="英単語を最短経路で定着させよう">
+ <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>みにまるスペリング【ReTuned】</title>
+ <title>みにまるスペリング【ReTUNED】</title>
  <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -249,11 +249,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </ul>
       </nav></b>
   </header>
-  <h1>みにスペ-ReTuned</h1>
+  <h1>みにスペ-ReTUNED</h1>
   <label><input type="checkbox" id="dark-toggle">ダークモード</label>
-  <label><input type="checkbox" id="toggleCheckbox"> BETA</label><br>
+  <label><input type="checkbox" id="toggleCheckbox"> 実験的機能</label><br>
   <span class="toggle-button"><label for="fileInput" class="custom-file-label">問題をロード</label></span>
 <input type="file" id="fileInput" accept=".txt"><br>
+  <label for="startQuestion">開始点:</label>
+<select id="startQuestion">
+     <option value="0">1</option>
+   <option value="49">50</option>
+   <option value="99">100</option>
+   <option value="149">150</option>
+   <option value="199">200</option>
+   <option value="249">250</option>
+   <option value="299">300</option>
+   <option value="349">350</option>
+   <option value="399">400</option>
+   <option value="449">450</option>
+   <option value="499">500</option>
+   <option value="549">550</option>
+   <option value="599">600</option>
+   <option value="649">650</option>
+</select>
+
+<label for="endQuestion">終了点:</label>
+<select id="endQuestion">
+   <option value="49">50</option>
+   <option value="99">100</option>
+   <option value="149">150</option>
+   <option value="199">200</option>
+   <option value="249">250</option>
+   <option value="299">300</option>
+   <option value="349">350</option>
+   <option value="399">400</option>
+   <option value="449">450</option>
+   <option value="499">500</option>
+   <option value="549">550</option>
+   <option value="599">600</option>
+   <option value="649">650</option>
+   <option value="699">700</option>
+</select>
  <div id="question-container">
   <p id="question"></p>
   <input type="text" id="answer" placeholder="回答"  autocomplete="off" autofocus>
@@ -280,8 +315,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  <script>
   window.onload = function() {
     populateQuestionDropdowns();
+    
+    document.getElementById("startQuestion").addEventListener("change", function() {
+        const startValue = parseInt(this.value);
+        const newEndValue = startValue + 50;
+        const endSelect = document.getElementById("endQuestion");
+
+        // Set the new value for the end dropdown
+        for (let i = 0; i < endSelect.options.length; i++) {
+            if (parseInt(endSelect.options[i].value) === newEndValue) {
+                endSelect.selectedIndex = i; // Select the new end value if it exists
+                break;
+            }
+        }
+    });
 };
-  const problems = [
 const problems = [
   { question: "名所/landmarks", answer: "landmarks" },
   { question: "認知症/dementia", answer: "dementia" },
@@ -334,9 +382,6 @@ const problems = [
   { question: "方程式/equation", answer: "equation" },
   { question: "考古学者/archaeologist", answer: "archaeologist" }
 ];
-
-
-  ];
 
   let results = [];
   let currentProblems = [];
@@ -450,10 +495,14 @@ function checkAnswer() {
 }
    
    function populateQuestionDropdowns() {
+    const startSelect = document.getElementById("startQuestion");
+    const endSelect = document.getElementById("endQuestion");
     problems.forEach((problem, index) => {
       const option = document.createElement("option");
       option.value = index;
       option.textContent = index + 1;
+      startSelect.appendChild(option);
+      endSelect.appendChild(option.cloneNode(true));
     });
   }
    // Fisher-Yatesアルゴリズムを使ってシャッフルする関数
@@ -471,6 +520,8 @@ function fisherYatesShuffle(array) {
   document.getElementById("answer").disabled = false
   document.getElementById("answer").value = "";
   document.getElementById('answer').focus();
+  const startIndex = parseInt(document.getElementById("startQuestion").value);
+  const endIndex = parseInt(document.getElementById("endQuestion").value);
   const numQuestions = parseInt(document.getElementById("numQuestions").value);
   const isRandom = document.getElementById("order").value === "random";
   currentProblems = problems.slice(startIndex, endIndex + 1);
