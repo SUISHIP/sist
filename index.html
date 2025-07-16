@@ -138,6 +138,26 @@ nav ul a {
     animation: gradientBackground 0.5s 2;
 }
 
+@keyframes correctAnimation {
+    0% {
+        transform: translateX(-1%);
+        opacity: 0;
+    }
+    10% {
+        transform: translateX(0);
+        opacity: 1;
+        transform: scale(1.01);
+    }
+    60% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+#result {
+    animation: correctAnimation 0.6s ease-out;
+}
 /* その他 */
 #result, #question {
     font-size: 24px;
