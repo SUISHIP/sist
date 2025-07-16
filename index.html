@@ -343,7 +343,7 @@ nav ul a {
             setTimeout(showNextProblem, 80);
         } else {
             confirmButton.disabled = true;
-            resultElement.style.color = '#ff4444';
+            resultElement.style.color = '#ff2222';
             resultElement.innerHTML = `不正解: <span class="correctAnswer">${currentProblem.answer}</span>`;
             
             const utterance = new SpeechSynthesisUtterance(currentProblem.answer);
