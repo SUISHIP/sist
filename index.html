@@ -126,9 +126,6 @@ nav ul a {
 }
 
 /* その他 */
-.correctAnswer {
-    color: red !important;
-}
 #result, #question {
     font-size: 24px;
 }
@@ -345,9 +342,10 @@ nav ul a {
             resultElement.style.color = '#4CAF50';
             document.getElementById('correctSound').play().catch(e => console.warn('音声の再生に失敗:', e));
             currentProblems.shift();
-            setTimeout(showNextProblem, 50);
+            setTimeout(showNextProblem, 80);
         } else {
             confirmButton.disabled = true;
+            resultElement.style.color = '#ff4444';
             resultElement.innerHTML = `不正解: <span class="correctAnswer">${currentProblem.answer}</span>`;
             
             const utterance = new SpeechSynthesisUtterance(currentProblem.answer);
@@ -358,7 +356,7 @@ nav ul a {
                 currentProblems.shift();
                 confirmButton.disabled = false;
                 showNextProblem();
-            }, 1500);
+            }, 1800);
         }
         resultElement.style.display = 'block';
     }
@@ -385,7 +383,7 @@ nav ul a {
                 const tr = tableBody.insertRow();
                 tr.insertCell().textContent = result.question;
                 tr.insertCell().textContent = result.answer;
-                tr.insertCell().textContent = result.userAnswer || '(未回答)';
+                tr.insertCell().textContent = result.userAnswer || '';
             }
         });
         
