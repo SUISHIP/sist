@@ -11,8 +11,9 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
 <style>
-    body {
-        background-color: white;
+    @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
+     body {
+            font-family: 'Murecho', sans-serif;
     }
 
     h2 {
@@ -250,8 +251,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </tbody>
     </table>
     <br>
-    <label for="fileInput" class="custom-file-label">ロード</label><input type="file" id="fileInput" accept=".txt">
-    <button class="custom-file-label" onclick="download()">セーブ</button>
 <script>
     window.onload = function() {
         startTest();
@@ -451,65 +450,73 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.getElementById('answer').focus();
     }
 
-    function showResults() {
-        const tableBody = document.getElementById("resultTable").querySelector('tbody');
-        tableBody.innerHTML = '';
+function showResults() {
+    const tableBody = document.getElementById("resultTable").querySelector('tbody');
+    tableBody.innerHTML = '';
 
-        let correctAnswers = 0;
-        let totalQuestions = results.length;
-        let hasMistakes = false;
+    let correctAnswers = 0;
+    let totalQuestions = results.length;
+    let hasMistakes = false;
 
-        for (let i = 0; i < results.length; i++) {
-            if (!results[i].isCorrect) {
-                hasMistakes = true;
-                const tr = document.createElement('tr');
-                const tdQuestion = document.createElement('td');
-                const tdAnswer = document.createElement('td');
-                const tdUserAnswer = document.createElement('td');
-                tdQuestion.textContent = results[i].question;
-                tdAnswer.textContent = results[i].answer;
-                tdUserAnswer.textContent = results[i].userAnswer || '(未回答)';
-                tr.appendChild(tdQuestion);
-                tr.appendChild(tdAnswer);
-                tr.appendChild(tdUserAnswer);
-                tableBody.appendChild(tr);
-            } else {
-                correctAnswers++;
-            }
-        }
-
-        if (hasMistakes) {
-            document.getElementById('mistakes-title').style.display = 'block';
+    for (let i = 0; i < results.length; i++) {
+        if (!results[i].isCorrect) {
+            hasMistakes = true;
+            const tr = document.createElement('tr');
+            const tdQuestion = document.createElement('td');
+            const tdAnswer = document.createElement('td');
+            const tdUserAnswer = document.createElement('td');
+            tdQuestion.textContent = results[i].question;
+            tdAnswer.textContent = results[i].answer;
+            tdUserAnswer.textContent = results[i].userAnswer || '(未回答)';
+            tr.appendChild(tdQuestion);
+            tr.appendChild(tdAnswer);
+            tr.appendChild(tdUserAnswer);
+            tableBody.appendChild(tr);
         } else {
-            document.getElementById('mistakes-title').style.display = 'none';
+            correctAnswers++;
         }
-
-        const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
-
-        const resultContainer = document.getElementById("result");
-        const accuracyElement = document.createElement('p');
-        accuracyElement.textContent = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${totalQuestions})`;
-        resultContainer.innerHTML = '';
-        resultContainer.appendChild(accuracyElement);
-        resultContainer.style.display = 'block';
-
-        document.getElementById("question-container").style.display = 'none';
-
-        removeButtons();
-        const buttonContainer = document.createElement('div');
-        const resetButton = document.createElement('button');
-        resetButton.textContent = "リセット";
-        resetButton.onclick = resetTest;
-        buttonContainer.appendChild(resetButton);
-
-        if (hasMistakes) {
-            const retryButton = document.createElement('button');
-            retryButton.textContent = "リトライ";
-            retryButton.onclick = retryMistakes;
-            buttonContainer.appendChild(retryButton);
-        }
-        document.body.insertBefore(buttonContainer, document.getElementById('mistakes-title'));
     }
+
+    if (hasMistakes) {
+        document.getElementById('mistakes-title').style.display = 'block';
+    } else {
+        document.getElementById('mistakes-title').style.display = 'none';
+    }
+
+    const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+
+    const resultContainer = document.getElementById("result");
+    resultContainer.innerHTML = '';
+
+    const accuracyElement = document.createElement('p');
+    accuracyElement.textContent = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${totalQuestions})`;
+    resultContainer.appendChild(accuracyElement);
+    resultContainer.style.display = 'block';
+
+    document.getElementById("question-container").style.display = 'none';
+
+    // --- ボタンの表示 ---
+    removeButtons(); // 既存のボタンをクリア
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'result-buttons'; // 後で削除しやすいようにIDをつける
+
+    const resetButton = document.createElement('button');
+    resetButton.textContent = "リセット";
+    resetButton.onclick = resetTest;
+    buttonContainer.appendChild(resetButton);
+
+    if (hasMistakes) {
+        const retryButton = document.createElement('button');
+        retryButton.textContent = "リトライ";
+        retryButton.onclick = retryMistakes;
+        buttonContainer.appendChild(retryButton);
+    }
+
+    // 表の下にボタンを追加
+    document.getElementById("resultTable").after(buttonContainer);
+}
+
 
     function removeButtons() {
         const oldContainer = document.querySelector('button[onclick="resetTest()"]')?.parentNode;
