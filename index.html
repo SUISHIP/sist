@@ -209,56 +209,56 @@ nav ul a {
 
 <script>
     const problems = [
-        { question: "名所/landmarks", answer: "landmarks" },
-        { question: "認知症/dementia", answer: "dementia" },
-        { question: "肉/flesh", answer: "flesh" },
-        { question: "衝突/collision", answer: "collision" },
-        { question: "危険なもの/hazard", answer: "hazard" },
-        { question: "墓/tomb", answer: "tomb" },
-        { question: "注射/injections", answer: "injections" },
-        { question: "飛躍的進歩/breakthrough", answer: "breakthrough" },
-        { question: "革/leather", answer: "leather" },
-        { question: "宝石/jewelry", answer: "jewelry" },
-        { question: "合図/cues", answer: "cues" },
-        { question: "救急車/ambulance", answer: "ambulance" },
-        { question: "不動産/estate", answer: "estate" },
-        { question: "商品/commodity", answer: "commodity" },
-        { question: "出発(時刻)/departure", answer: "departure" },
-        { question: "段階/phase", answer: "phase" },
-        { question: "泥棒/thief", answer: "thief" },
-        { question: "聖/Saint", answer: "Saint" },
-        { question: "彫刻/sculpture", answer: "sculpture" },
-        { question: "悲しみ/grief", answer: "grief" },
-        { question: "車線/lane", answer: "lane" },
-        { question: "捕食動物/predators", answer: "predators" },
-        { question: "流体/fluids", answer: "fluids" },
-        { question: "はげみ/incentive", answer: "incentive" },
-        { question: "花嫁/bride", answer: "bride" },
-        { question: "介入/intervention", answer: "intervention" },
-        { question: "(大)差/margin", answer: "margin" },
-        { question: "伝記/biography", answer: "biography" },
-        { question: "同意/consent", answer: "consent" },
-        { question: "火山/volcano", answer: "volcano" },
-        { question: "反逆者/rebels", answer: "rebels" },
-        { question: "比喩/metaphor", answer: "metaphor" },
-        { question: "法律/legislation", answer: "legislation" },
-        { question: "雷/lightning", answer: "lightning" },
-        { question: "殺虫剤/pesticides", answer: "pesticides" },
-        { question: "コラム/column", answer: "column" },
-        { question: "うわさ/rumor", answer: "rumor" },
-        { question: "ほこり/dust", answer: "dust" },
-        { question: "対話/dialogue", answer: "dialogue" },
-        { question: "幼稚園/kindergarten", answer: "kindergarten" },
-        { question: "糖尿病/diabetes", answer: "diabetes" },
-        { question: "肥満/obesity", answer: "obesity" },
-        { question: "特許/patent", answer: "patent" },
-        { question: "章/chapter", answer: "chapter" },
-        { question: "宮殿/Palace", answer: "Palace" },
-        { question: "洗濯/laundry", answer: "laundry" },
-        { question: "病棟/ward", answer: "ward" },
-        { question: "ぼっ発/outbreak", answer: "outbreak" },
-        { question: "方程式/equation", answer: "equation" },
-        { question: "考古学者/archaeologist", answer: "archaeologist" }
+        { question: "l名所", answer: "landmarks" },
+        { question: "d認知症", answer: "dementia" },
+        { question: "f肉", answer: "flesh" },
+        { question: "c衝突", answer: "collision" },
+        { question: "h危険なもの", answer: "hazard" },
+        { question: "t墓", answer: "tomb" },
+        { question: "i注射", answer: "injections" },
+        { question: "b飛躍的進歩", answer: "breakthrough" },
+        { question: "l革", answer: "leather" },
+        { question: "j宝石", answer: "jewelry" },
+        { question: "c合図", answer: "cues" },
+        { question: "a救急車", answer: "ambulance" },
+        { question: "e不動産", answer: "estate" },
+        { question: "c商品", answer: "commodity" },
+        { question: "d出発(時刻)", answer: "departure" },
+        { question: "p段階", answer: "phase" },
+        { question: "t泥棒", answer: "thief" },
+        { question: "S聖", answer: "Saint" },
+        { question: "s彫刻", answer: "sculpture" },
+        { question: "g悲しみ", answer: "grief" },
+        { question: "l車線", answer: "lane" },
+        { question: "p捕食動物", answer: "predators" },
+        { question: "f流体", answer: "fluids" },
+        { question: "iはげみ", answer: "incentive" },
+        { question: "b花嫁", answer: "bride" },
+        { question: "i介入", answer: "intervention" },
+        { question: "m(大)差", answer: "margin" },
+        { question: "b伝記", answer: "biography" },
+        { question: "c同意", answer: "consent" },
+        { question: "v火山", answer: "volcano" },
+        { question: "r反逆者", answer: "rebels" },
+        { question: "m比喩", answer: "metaphor" },
+        { question: "l法律", answer: "legislation" },
+        { question: "l雷", answer: "lightning" },
+        { question: "p殺虫剤", answer: "pesticides" },
+        { question: "cコラム", answer: "column" },
+        { question: "rうわさ", answer: "rumor" },
+        { question: "dほこり", answer: "dust" },
+        { question: "d対話", answer: "dialogue" },
+        { question: "k幼稚園", answer: "kindergarten" },
+        { question: "d糖尿病", answer: "diabetes" },
+        { question: "o肥満", answer: "obesity" },
+        { question: "p特許", answer: "patent" },
+        { question: "c章", answer: "chapter" },
+        { question: "P宮殿", answer: "Palace" },
+        { question: "l洗濯", answer: "laundry" },
+        { question: "w病棟", answer: "ward" },
+        { question: "oぼっ発", answer: "outbreak" },
+        { question: "e方程式", answer: "equation" },
+        { question: "a考古学者", answer: "archaeologist" }
     ];
 
     // ALLオプションのvalueを問題数に設定
@@ -301,6 +301,7 @@ nav ul a {
     }
 
     function showNextProblem() {
+        document.getElementById("answer").value = "";
         if (currentProblems.length === 0) {
             document.getElementById("result").textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
             showResults();
@@ -309,8 +310,8 @@ nav ul a {
 
         const currentProblem = currentProblems[0];
         const questionElement = document.getElementById("question");
-        const maskedQuestion = currentProblem.question.replace(new RegExp(currentProblem.answer, 'gi'), `${currentProblem.answer[0]}_____`);
-        questionElement.textContent = maskedQuestion;
+        questionElement.textContent = currentProblem.question;
+
 
         const resultElement = document.getElementById("result");
         resultElement.textContent = '';
@@ -325,8 +326,6 @@ nav ul a {
         const correctAnswer = currentProblem.answer.toLowerCase();
         const resultElement = document.getElementById("result");
         const confirmButton = document.querySelector('button.send_button');
-        
-        document.getElementById("answer").value = "";
 
         const isCorrect = userAnswer === correctAnswer;
         results.push({
