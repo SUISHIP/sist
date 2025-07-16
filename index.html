@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
@@ -10,246 +11,224 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
-     body {
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
+        body {
             font-family: 'Murecho', sans-serif;
-    }
-
-    h2 {
-        color: #333;
-    }
-
-    #resultTable {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    #resultTable,
-    #resultTable th,
-    #resultTable td {
-        border: 1px solid #ddd;
-    }
-
-    #resultTable th,
-    #resultTable td {
-        padding: 8px;
-        text-align: left;
-    }
-
-    #resultTable tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    #resultTable tr:hover {
-        background-color: #ddd;
-    }
-
-    #resultTable th {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    .dark-mode {
-        background-color: #141414 !important;
-    }
-
-    .dark-mode h1,
-    .dark-mode h2,
-    .dark-mode p,
-    .dark-mode label,
-    .dark-mode input,
-    .dark-mode select,
-    .dark-mode span {
-        color: #C9C9C9;
-        background-color: #141414;
-    }
-
-    .dark-mode button,
-    .dark-mode nav ul a,
-    .dark-mode .custom-file-label {
-        color: #C9C9C9;
-        background-color: #424242;
-    }
-
-    .dark-mode #resultTable th,
-    .dark-mode #resultTable td {
-        color: #C9C9C9;
-        background-color: #424242;
-    }
-
-    .dark-mode ::selection {
-        background-color: #00415B;
-        color: #ddd;
-    }
-
-    .dark-mode .send_button {
-        background-color: #0C1959;
-        color: #ddd;
-    }
-
-    .dark-mode .correctAnswer {
-        color: #923436 !important;
-    }
-
-    ::selection {
-        background-color: #FFF499;
-        color: #000;
-    }
-
-    button {
-        background-color: #000000;
-        color: white;
-        padding: 8px 10px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border: none;
-        border-radius: 4px;
-    }
-
-    button:hover {
-        background-color: #191970;
-    }
-
-    input[type="text"] {
-        width: 200px;
-        height: 40px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 18px;
-    }
-
-    select {
-        width: 110px;
-        height: 40px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 18px;
-    }
-
-    nav ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    nav ul a {
-        background-color: #70EFC2;
-        color: #1A7593;
-        text-decoration: none;
-        padding: 5px 10px;
-        display: inline-block;
-    }
-
-    nav ul a:hover {
-        background-color: #ffff8e;
-    }
-
-    #fileInput {
-        display: none;
-    }
-
-    .custom-file-label {
-        display: inline-block;
-        padding: 3px 30px;
-        background-color: gray;
-        color: white;
-        cursor: pointer;
-        border-radius: 3px;
-    }
-
-    .custom-file-label:hover {
-        background-color: black;
-    }
-
-    .toggle-button {
-        display: inline;
-    }
-
-    .toggle-text {
-        display: none;
-    }
-
-    .send_button {
-        background-color: #1e90ff;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border: none;
-        border-radius: 4px;
-    }
-    .dark-mode .link_color {
-        color: red;
-    }
-    @keyframes gradientBackground {
-        0% { background-color: #DDFFBC; }
-        20% { background-color: #ADFFFF; }
-        50% { background-color: #FFFF6B; }
-        100% { background-color: #DDFFBC; }
-    }
-    #release-link {
-        animation: gradientBackground 0.5s 2;
-    }
-    #question-container {
-        display: none;
-    }
-    #result {
-        display: none;
-    }
-    #mistakes-title {
-        display: none;
-    }
-</style>
+            margin: 1em;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #resultTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        #resultTable,
+        #resultTable th,
+        #resultTable td {
+            border: 1px solid #ddd;
+        }
+        #resultTable th,
+        #resultTable td {
+            padding: 8px;
+            text-align: left;
+        }
+        #resultTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        #resultTable tr:hover {
+            background-color: #ddd;
+        }
+        #resultTable th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .dark-mode {
+            background-color: #141414 !important;
+        }
+        .dark-mode h1,
+        .dark-mode h2,
+        .dark-mode p,
+        .dark-mode label,
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode span {
+            color: #C9C9C9;
+            background-color: #141414;
+        }
+        .dark-mode button,
+        .dark-mode nav ul a,
+        .dark-mode .custom-file-label {
+            color: #C9C9C9;
+            background-color: #424242;
+        }
+        .dark-mode #resultTable th {
+            background-color: #3a3a3a;
+        }
+        .dark-mode #resultTable td {
+            color: #C9C9C9;
+            background-color: #2a2a2a;
+        }
+        .dark-mode #resultTable tr:nth-child(even) {
+            background-color: #222;
+        }
+        .dark-mode ::selection {
+            background-color: #00415B;
+            color: #ddd;
+        }
+        .dark-mode .send_button {
+            background-color: #0C1959;
+            color: #ddd;
+        }
+        .dark-mode .correctAnswer {
+            color: #ff7f7f !important;
+        }
+        ::selection {
+            background-color: #FFF499;
+            color: #000;
+        }
+        button {
+            background-color: #000000;
+            color: white;
+            padding: 8px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        input[type="text"] {
+            width: 200px;
+            height: 40px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        select {
+            height: 40px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul a {
+            background-color: #70EFC2;
+            color: #1A7593;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: inline-block;
+            border-radius: 4px;
+        }
+        nav ul a:hover {
+            background-color: #ffff8e;
+        }
+        .send_button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 15px 32px;
+        }
+        @keyframes gradientBackground {
+            0% { background-color: #DDFFBC; }
+            20% { background-color: #ADFFFF; }
+            50% { background-color: #FFFF6B; }
+            100% { background-color: #DDFFBC; }
+        }
+        #release-link {
+            animation: gradientBackground 0.5s 2;
+        }
+        /* 初期状態で非表示にする要素 */
+        #question-container,
+        #result,
+        #mistakes-title,
+        #result-buttons,
+        #resultTable thead {
+            display: none;
+        }
+    </style>
     <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZM63KK99L"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-SZM63KK99L');
     </script>
 </head>
+
 <body class="dark-mode">
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTHSXR8K"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTHSXR8K"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
     <header>
-        <b><nav>
+        <nav>
             <ul>
                 <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html" id="release-link">リリース</a>
             </ul>
-        </nav></b>
+        </nav>
     </header>
+
     <h1>みにスペ-ReTUNED</h1>
+
+    <!-- スタート設定エリア（常に表示） -->
+    <div id="start-controls">
+        <select id="numQuestions">
+            <option value="1">1問</option>
+            <option value="3">3問</option>
+            <option value="10">10問</option>
+            <option value="25" selected>25問</option>
+            <option value="50">ALL</option>
+        </select>
+        <select id="order">
+            <option value="random">ランダム</option>
+            <option value="sequential">順番どうり</option>
+        </select>
+        <button onclick="startTest()">スタート</button>
+    </div>
+
+    <!-- 問題表示エリア -->
     <div id="question-container">
         <p id="question"></p>
         <input type="text" id="answer" placeholder="回答" autocomplete="off" autofocus>
         <button type="button" onclick="checkAnswer()" class="send_button">確定</button>
         <p id="result"></p>
     </div>
-    <h2 id="mistakes-title">ミスし単語</h2>
+
+    <!-- 結果表示エリア -->
+    <h2 id="mistakes-title">ミスした単語</h2>
     <table id="resultTable">
         <thead>
-            <tr></tr>
+            <tr>
+                <th>問題</th>
+                <th>正解</th>
+                <th>あなたの回答</th>
+            </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
+    
+    <!-- 結果表示後のボタン -->
+    <div id="result-buttons">
+        <button onclick="startTest()">リセット</button>
+        <button id="retry-button" onclick="retryMistakes()">リトライ</button>
+    </div>
+
     <audio id="correctSound" src="https://suiship.github.io/sist/correct.mp3" preload="auto"></audio>
+
 <script>
-    window.onload = function() {
-        startTest();
-    };
     const problems = [
         { question: "名所/landmarks", answer: "landmarks" },
         { question: "認知症/dementia", answer: "dementia" },
@@ -303,137 +282,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         { question: "考古学者/archaeologist", answer: "archaeologist" }
     ];
 
+    // ALLオプションのvalueを問題数に設定
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#numQuestions option[value="50"]').value = problems.length;
+    });
+
     let results = [];
     let currentProblems = [];
 
-    function resetTest() {
-        results = [];
-        currentProblems = [];
-        document.getElementById("resultTable").querySelector('tbody').innerHTML = '';
-        document.getElementById("result").textContent = '';
-        document.getElementById("question-container").style.display = 'block';
-        document.getElementById("result").style.display = 'none';
-        document.getElementById("mistakes-title").style.display = 'none';
-        document.getElementById("answer").disabled = false;
-        removeButtons();
-        monsu();
-    }
-
-    function retryMistakes() {
-        document.getElementById("answer").disabled = false;
-        document.getElementById('answer').value = "";
-        document.getElementById('answer').focus();
-        removeButtons();
-        currentProblems = results.filter(result => !result.isCorrect);
-        results = [];
-        document.getElementById("resultTable").querySelector('tbody').innerHTML = "";
-        document.getElementById("question-container").style.display = 'block';
-        document.getElementById("result").style.display = 'none';
-        document.getElementById("mistakes-title").style.display = 'none';
-        if (currentProblems.length > 0) {
-            resetConfirmButton();
-            showNextProblem();
-        } else {
-            document.getElementById("result").textContent = "間違えた問題がありません。";
-            document.getElementById("result").style.display = 'block';
-        }
-    }
-
-    function resetConfirmButton() {
-        const confirmButton = document.querySelector('button.send_button');
-        confirmButton.disabled = false;
-    }
-
-    function checkAnswer() {
-        const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-        const currentProblem = currentProblems[0];
-        const correctAnswer = currentProblem.answer.toLowerCase();
-        const resultElement = document.getElementById("result");
-        const confirmButton = document.querySelector('button.send_button');
-        document.getElementById("answer").value = "";
-      
-        results.push({
-            question: currentProblem.question,
-            answer: currentProblem.answer,
-            userAnswer: userAnswer,
-            isCorrect: userAnswer === correctAnswer
-        });
-
-        if (userAnswer === correctAnswer) {
-            resultElement.textContent = "正解！";
-            resultElement.style.display = 'block';
-            currentProblems.shift();
-            sound();
-            if (currentProblems.length > 0) {
-                setTimeout(showNextProblem, 50);
-            } else {
-                resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                showResults();
-            }
-            resetConfirmButton();
-        } else {
-            confirmButton.disabled = true;
-            resultElement.style.fontSize = '26px';
-            resultElement.style.display = 'block';
-
-            const correctAnswerElement = document.createElement('span');
-            correctAnswerElement.textContent = ` 不正解: ${currentProblem.answer}`;
-            correctAnswerElement.style.color = 'red';
-            correctAnswerElement.classList.add('correctAnswer');
-            correctAnswerElement.style.fontSize = '21px';
-            resultElement.appendChild(correctAnswerElement);
-            
-            const utterance = new SpeechSynthesisUtterance(currentProblem.answer);
-            utterance.lang = 'en-US';
-            speechSynthesis.speak(utterance);
-
-            setTimeout(() => {
-                currentProblems.shift();
-                if (currentProblems.length > 0) {
-                    showNextProblem();
-                    resetConfirmButton();
-                    document.getElementById('answer').focus();
-                } else {
-                    resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-                    showResults();
-                }
-            }, 1500);
-        }
-    }
-    
+    // Fisher-Yates shuffle algorithm
     function fisherYatesShuffle(array) {
-        document.getElementById("answer").disabled = false;
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
     }
-    
-    function monsu() {
-        document.getElementById("answer").disabled = false;
-        document.getElementById("answer").value = "";
-        document.getElementById('answer').focus();
+
+    // テストを開始またはリスタートする
+    function startTest() {
+        // UIと状態をリセット
+        resetUI();
+
+        // 設定値を取得
         const numQuestions = parseInt(document.getElementById("numQuestions").value);
         const isRandom = document.getElementById("order").value === "random";
+        
+        // 問題を準備
         currentProblems = problems.slice();
         if (isRandom) {
             currentProblems = fisherYatesShuffle(currentProblems);
         }
         currentProblems = currentProblems.slice(0, numQuestions);
-        document.getElementById("question-container").style.display = 'block';
-        showNextProblem();
-        resetConfirmButton();
+        
+        if (currentProblems.length > 0) {
+            // UIを切り替え
+            document.getElementById("question-container").style.display = 'block';
+            document.getElementById("answer").disabled = false;
+            document.getElementById("answer").value = "";
+            document.getElementById('answer').focus();
+            showNextProblem();
+        }
     }
 
-    document.getElementById("answer").addEventListener("keydown", function(event) {
-        const confirmButton = document.querySelector('button.send_button');
-        if (event.key === 'Enter' && !confirmButton.disabled) {
-            checkAnswer();
-        }
-    });
-
+    // 次の問題を表示する
     function showNextProblem() {
+        if (currentProblems.length === 0) {
+            document.getElementById("result").textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
+            showResults();
+            return;
+        }
+
         const currentProblem = currentProblems[0];
         const questionElement = document.getElementById("question");
         const maskedQuestion = currentProblem.question.replace(new RegExp(currentProblem.answer, 'gi'), `${currentProblem.answer[0]}_____`);
@@ -445,138 +344,132 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.getElementById('answer').focus();
     }
 
-function showResults() {
-    const tableBody = document.getElementById("resultTable").querySelector('tbody');
-    tableBody.innerHTML = '';
+    // 回答をチェックする
+    function checkAnswer() {
+        const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+        // 空の回答でも送信できるように、空チェックを削除
 
-    let correctAnswers = 0;
-    let totalQuestions = results.length;
-    let hasMistakes = false;
+        const currentProblem = currentProblems[0];
+        const correctAnswer = currentProblem.answer.toLowerCase();
+        const resultElement = document.getElementById("result");
+        const confirmButton = document.querySelector('button.send_button');
+        
+        document.getElementById("answer").value = "";
 
-    for (let i = 0; i < results.length; i++) {
-        if (!results[i].isCorrect) {
-            hasMistakes = true;
-            const tr = document.createElement('tr');
-            const tdQuestion = document.createElement('td');
-            const tdAnswer = document.createElement('td');
-            const tdUserAnswer = document.createElement('td');
-            tdQuestion.textContent = results[i].question;
-            tdAnswer.textContent = results[i].answer;
-            tdUserAnswer.textContent = results[i].userAnswer || '(未回答)';
-            tr.appendChild(tdQuestion);
-            tr.appendChild(tdAnswer);
-            tr.appendChild(tdUserAnswer);
-            tableBody.appendChild(tr);
+        const isCorrect = userAnswer === correctAnswer;
+        results.push({
+            question: currentProblem.question,
+            answer: currentProblem.answer,
+            userAnswer: userAnswer,
+            isCorrect: isCorrect
+        });
+
+        if (isCorrect) {
+            resultElement.textContent = "正解！";
+            resultElement.style.color = '#4CAF50';
+            document.getElementById('correctSound').play().catch(e => console.warn('音声の再生に失敗:', e));
+            currentProblems.shift();
+            setTimeout(showNextProblem, 100); // 少し間を置いて次の問題へ
         } else {
-            correctAnswers++;
+            confirmButton.disabled = true;
+            resultElement.innerHTML = `不正解: <span class="correctAnswer">${currentProblem.answer}</span>`;
+            
+            const utterance = new SpeechSynthesisUtterance(currentProblem.answer);
+            utterance.lang = 'en-US';
+            speechSynthesis.speak(utterance);
+
+            setTimeout(() => {
+                currentProblems.shift();
+                confirmButton.disabled = false;
+                showNextProblem();
+            }, 1500);
+        }
+        resultElement.style.display = 'block';
+    }
+
+    // Enterキーで回答を確定
+    document.getElementById("answer").addEventListener("keydown", function(event) {
+        if (event.key === 'Enter' && !document.querySelector('button.send_button').disabled) {
+            checkAnswer();
+        }
+    });
+
+    // 結果を表示する
+    function showResults() {
+        const tableBody = document.getElementById("resultTable").querySelector('tbody');
+        tableBody.innerHTML = '';
+        
+        let correctAnswers = 0;
+        let hasMistakes = false;
+
+        results.forEach(result => {
+            if (result.isCorrect) {
+                correctAnswers++;
+            } else {
+                hasMistakes = true;
+                const tr = tableBody.insertRow();
+                tr.insertCell().textContent = result.question;
+                tr.insertCell().textContent = result.answer;
+                tr.insertCell().textContent = result.userAnswer || '(未回答)';
+            }
+        });
+        
+        const accuracy = results.length > 0 ? (correctAnswers / results.length) * 100 : 0;
+        const resultContainer = document.getElementById("result");
+        resultContainer.innerHTML = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${results.length})`;
+        resultContainer.style.display = 'block';
+
+        // UI切り替え
+        document.getElementById("question-container").style.display = 'none';
+        document.getElementById("result-buttons").style.display = 'block';
+        
+        // 間違いがあった場合のみ、タイトルとテーブルヘッダーを表示
+        if (hasMistakes) {
+            document.getElementById('mistakes-title').style.display = 'block';
+            document.getElementById("resultTable").querySelector('thead').style.display = 'table-header-group';
+        } else {
+            document.getElementById('mistakes-title').style.display = 'none';
+            document.getElementById("resultTable").querySelector('thead').style.display = 'none';
+        }
+        document.getElementById('retry-button').style.display = hasMistakes ? 'inline-block' : 'none';
+    }
+
+    // UIと状態を初期状態に戻す
+    function resetUI() {
+        results = [];
+        currentProblems = [];
+        
+        document.getElementById("question-container").style.display = 'none';
+        document.getElementById("result").style.display = 'none';
+        document.getElementById("mistakes-title").style.display = 'none';
+        document.getElementById("resultTable").querySelector('thead').style.display = 'none';
+        document.getElementById("resultTable").querySelector('tbody').innerHTML = '';
+        document.getElementById("result-buttons").style.display = 'none';
+    }
+
+    // 間違えた問題だけで再挑戦する
+    function retryMistakes() {
+        currentProblems = results.filter(result => !result.isCorrect);
+        results = [];
+        
+        if (currentProblems.length > 0) {
+            // UIをリセット
+            resetUI();
+            
+            // UIをテスト中に戻す
+            document.getElementById("question-container").style.display = 'block';
+            document.getElementById("answer").disabled = false;
+            document.getElementById('answer').focus();
+            
+            showNextProblem();
+        } else {
+            const resultContainer = document.getElementById("result");
+            resultContainer.textContent = "間違えた問題がありません。";
+            resultContainer.style.display = 'block';
         }
     }
 
-    if (hasMistakes) {
-        document.getElementById('mistakes-title').style.display = 'block';
-    } else {
-        document.getElementById('mistakes-title').style.display = 'none';
-    }
-
-    const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
-
-    const resultContainer = document.getElementById("result");
-    resultContainer.innerHTML = '';
-
-    const accuracyElement = document.createElement('p');
-    accuracyElement.textContent = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${totalQuestions})`;
-    resultContainer.appendChild(accuracyElement);
-    resultContainer.style.display = 'block';
-
-    document.getElementById("question-container").style.display = 'none';
-
-    removeButtons();
-
-    const buttonContainer = document.createElement('div');
-    buttonContainer.id = 'result-buttons';
-
-    const resetButton = document.createElement('button');
-    resetButton.textContent = "リセット";
-    resetButton.onclick = resetTest;
-    buttonContainer.appendChild(resetButton);
-
-    if (hasMistakes) {
-        const retryButton = document.createElement('button');
-        retryButton.textContent = "リトライ";
-        retryButton.onclick = retryMistakes;
-        buttonContainer.appendChild(retryButton);
-    }
-
-    document.getElementById("resultTable").after(buttonContainer);
-}
-
-function removeButtons() {
-    const oldContainer = document.getElementById('result-buttons');
-    if (oldContainer) {
-        oldContainer.remove();
-    }
-}
-
-    function startTest() {
-        document.getElementById("answer").disabled = false;
-        const container = document.createElement('div');
-        const select = document.createElement('select');
-        select.id = "numQuestions";
-        
-        const fixedOptions = [
-            { value: 1, text: "1問" },
-            { value: 3, text: "3問"},
-            { value: 10, text: "10問"},
-            { value: 25, text: "25問", selected: true},
-            { value: problems.length, text: "ALL"}
-        ];
-
-        fixedOptions.forEach(optionData => {
-            const option = document.createElement('option');
-            option.value = optionData.value;
-            option.textContent = optionData.text;
-            if (optionData.selected) {
-                option.selected = true;
-            }
-            select.appendChild(option);
-        });
-        
-        const orderSelect = document.createElement('select');
-        orderSelect.id = "order";
-        
-        const optionRandom = document.createElement('option');
-        optionRandom.value = "random";
-        optionRandom.textContent = "ランダム";
-        
-        const optionSequential = document.createElement('option');
-        optionSequential.value = "sequential";
-        optionSequential.textContent = "順番どうり";
-        
-        orderSelect.appendChild(optionRandom);
-        orderSelect.appendChild(optionSequential);
-        
-        const startButton = document.createElement('button');
-        startButton.textContent = "スタート";
-        startButton.onclick = () => {
-            monsu();
-        };
-        
-        container.appendChild(select);
-        container.appendChild(orderSelect);
-        container.appendChild(startButton);
-        
-        document.body.insertBefore(container, document.getElementById("question-container"));
-    }
-  
-function sound() {
-  const audio = document.getElementById('correctSound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play().catch(e => {
-      console.warn('音声の再生に失敗:', e);
-    });
-  }
-}
 </script>
 </body>
+
 </html>
