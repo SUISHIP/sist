@@ -518,12 +518,12 @@ function showResults() {
 }
 
 
-    function removeButtons() {
-        const oldContainer = document.querySelector('button[onclick="resetTest()"]')?.parentNode;
-        if (oldContainer) {
-            oldContainer.remove();
-        }
+function removeButtons() {
+    const oldContainer = document.getElementById('result-buttons');
+    if (oldContainer) {
+        oldContainer.remove();
     }
+}
 
     function startTest() {
         document.getElementById("answer").disabled = false;
