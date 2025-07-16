@@ -235,7 +235,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </nav></b>
     </header>
     <h1>みにスペ-ReTUNED</h1>
-
     <div id="question-container">
         <p id="question"></p>
         <input type="text" id="answer" placeholder="回答" autocomplete="off" autofocus>
@@ -250,7 +249,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <tbody>
         </tbody>
     </table>
-    <br>
+    <audio id="correctSound" src="/correct.mp3" preload="auto"></audio>
 <script>
     window.onload = function() {
         startTest();
@@ -356,7 +355,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const resultElement = document.getElementById("result");
         const confirmButton = document.querySelector('button.send_button');
         document.getElementById("answer").value = "";
-
+        sound();
         results.push({
             question: currentProblem.question,
             answer: currentProblem.answer,
@@ -365,11 +364,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         });
 
         if (userAnswer === correctAnswer) {
-            resultElement.textContent = "正解！次の問題に進んでください。";
+            resultElement.textContent = "正解！";
             resultElement.style.display = 'block';
             currentProblems.shift();
             if (currentProblems.length > 0) {
-                setTimeout(showNextProblem, 500); // Give user time to see "Correct"
+                setTimeout(showNextProblem, 150);
             } else {
                 resultElement.textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
                 showResults();
@@ -495,11 +494,10 @@ function showResults() {
 
     document.getElementById("question-container").style.display = 'none';
 
-    // --- ボタンの表示 ---
-    removeButtons(); // 既存のボタンをクリア
+    removeButtons();
 
     const buttonContainer = document.createElement('div');
-    buttonContainer.id = 'result-buttons'; // 後で削除しやすいようにIDをつける
+    buttonContainer.id = 'result-buttons';
 
     const resetButton = document.createElement('button');
     resetButton.textContent = "リセット";
@@ -574,7 +572,16 @@ function removeButtons() {
         
         document.body.insertBefore(container, document.getElementById("question-container"));
     }
-
+  
+function sound() {
+  const audio = document.getElementById('correctSound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play().catch(e => {
+      console.warn('音声の再生に失敗:', e);
+    });
+  }
+}
 </script>
 </body>
 </html>
