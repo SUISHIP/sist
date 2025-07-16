@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
@@ -12,151 +11,136 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
-        body {
-            font-family: 'Murecho', sans-serif;
-            margin: 1em;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        #resultTable {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1em;
-        }
-        #resultTable,
-        #resultTable th,
-        #resultTable td {
-            border: 1px solid #ddd;
-        }
-        #resultTable th,
-        #resultTable td {
-            padding: 8px;
-            text-align: left;
-        }
-        #resultTable tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        #resultTable tr:hover {
-            background-color: #ddd;
-        }
-        #resultTable th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .dark-mode {
-            background-color: #141414 !important;
-        }
-        .dark-mode h1,
-        .dark-mode h2,
-        .dark-mode p,
-        .dark-mode label,
-        .dark-mode input,
-        .dark-mode select,
-        .dark-mode span {
-            color: #C9C9C9;
-            background-color: #141414;
-        }
-        .dark-mode button,
-        .dark-mode nav ul a,
-        .dark-mode .custom-file-label {
-            color: #C9C9C9;
-            background-color: #424242;
-        }
-        .dark-mode #resultTable th {
-            background-color: #3a3a3a;
-        }
-        .dark-mode #resultTable td {
-            color: #C9C9C9;
-            background-color: #2a2a2a;
-        }
-        .dark-mode #resultTable tr:nth-child(even) {
-            background-color: #222;
-        }
-        .dark-mode ::selection {
-            background-color: #00415B;
-            color: #ddd;
-        }
-        .dark-mode .send_button {
-            background-color: #0C1959;
-            color: #ddd;
-        }
-        .dark-mode .correctAnswer {
-            color: #ff7f7f !important;
-        }
-        ::selection {
-            background-color: #FFF499;
-            color: #000;
-        }
-        button {
-            background-color: #000000;
-            color: white;
-            padding: 8px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-        input[type="text"] {
-            width: 200px;
-            height: 40px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        select {
-            height: 40px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        nav ul a {
-            background-color: #70EFC2;
-            color: #1A7593;
-            text-decoration: none;
-            padding: 5px 10px;
-            display: inline-block;
-            border-radius: 4px;
-        }
-        nav ul a:hover {
-            background-color: #ffff8e;
-        }
-        .send_button {
-            background-color: #1e90ff;
-            color: white;
-            padding: 15px 32px;
-        }
-        @keyframes gradientBackground {
-            0% { background-color: #DDFFBC; }
-            20% { background-color: #ADFFFF; }
-            50% { background-color: #FFFF6B; }
-            100% { background-color: #DDFFBC; }
-        }
-        #release-link {
-            animation: gradientBackground 0.5s 2;
-        }
-        /* 初期状態で非表示にする要素 */
-        #question-container,
-        #result,
-        #mistakes-title,
-        #result-buttons,
-        #resultTable thead {
-            display: none;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
+
+/* 基本設定 */
+body {
+    font-family: 'Murecho', sans-serif;
+    margin: 1em;
+    color: #C9C9C9;
+    background-color: #141414;
+}
+
+::selection {
+    background-color: #00415B;
+    color: #ddd;
+}
+
+/* テーブルスタイル */
+#resultTable {
+    width: 95%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    border: 1px solid #ddd;
+}
+
+#resultTable th,
+#resultTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#resultTable th {
+    background-color: #3a3a3a;
+    color: white;
+}
+
+#resultTable td {
+    background-color: #2a2a2a;
+    color: #C9C9C9;
+}
+
+#resultTable tr:nth-child(even) {
+    background-color: #222;
+}
+
+#resultTable tr:hover {
+    background-color: #ddd;
+}
+
+/* フォーム要素 */
+input[type="text"],
+select {
+    color: #C9C9C9;
+    background-color: #424242;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+input[type="text"] {
+    width: 200px;
+}
+
+/* ボタン */
+button,
+nav ul a {
+    color: #C9C9C9;
+    background-color: #424242;
+    padding: 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover,
+nav ul a:hover {
+    opacity: 0.8;
+    background-color: #ffff8e;
+}
+
+.send_button {
+    background-color: #0C1959;
+    padding: 15px 32px;
+}
+
+/* ナビゲーション */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    background-color: #70EFC2;
+    color: #1A7593;
+}
+
+/* アニメーション */
+@keyframes gradientBackground {
+    0% { background-color: #DDFFBC; }
+    20% { background-color: #ADFFFF; }
+    50% { background-color: #FFFF6B; }
+    100% { background-color: #DDFFBC; }
+}
+
+#release-link {
+    animation: gradientBackground 0.5s 2;
+}
+
+/* その他 */
+.correctAnswer {
+    color: red !important;
+}
+#result, #question {
+    font-size: 24px;
+}
+/* 初期非表示 */
+#question-container,
+#result,
+#mistakes-title,
+#result-buttons,
+#resultTable thead {
+    display: none;
+}
+
     </style>
     <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZM63KK99L"></script>
@@ -168,7 +152,7 @@
     </script>
 </head>
 
-<body class="dark-mode">
+<body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTHSXR8K"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -182,7 +166,7 @@
 
     <h1>みにスペ-ReTUNED</h1>
 
-    <!-- スタート設定エリア（常に表示） -->
+    <!-- セット -->
     <div id="start-controls">
         <select id="numQuestions">
             <option value="1">1問</option>
@@ -198,7 +182,7 @@
         <button onclick="startTest()">スタート</button>
     </div>
 
-    <!-- 問題表示エリア -->
+    <!-- テスト -->
     <div id="question-container">
         <p id="question"></p>
         <input type="text" id="answer" placeholder="回答" autocomplete="off" autofocus>
@@ -206,7 +190,7 @@
         <p id="result"></p>
     </div>
 
-    <!-- 結果表示エリア -->
+    <!-- リザルト -->
     <h2 id="mistakes-title">ミスした単語</h2>
     <table id="resultTable">
         <thead>
@@ -220,7 +204,6 @@
         </tbody>
     </table>
     
-    <!-- 結果表示後のボタン -->
     <div id="result-buttons">
         <button onclick="startTest()">リセット</button>
         <button id="retry-button" onclick="retryMistakes()">リトライ</button>
@@ -290,7 +273,7 @@
     let results = [];
     let currentProblems = [];
 
-    // Fisher-Yates shuffle algorithm
+    // Fisher-Yates shuffle ってやつ
     function fisherYatesShuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -299,16 +282,12 @@
         return array;
     }
 
-    // テストを開始またはリスタートする
     function startTest() {
-        // UIと状態をリセット
         resetUI();
 
-        // 設定値を取得
         const numQuestions = parseInt(document.getElementById("numQuestions").value);
         const isRandom = document.getElementById("order").value === "random";
         
-        // 問題を準備
         currentProblems = problems.slice();
         if (isRandom) {
             currentProblems = fisherYatesShuffle(currentProblems);
@@ -325,7 +304,6 @@
         }
     }
 
-    // 次の問題を表示する
     function showNextProblem() {
         if (currentProblems.length === 0) {
             document.getElementById("result").textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
@@ -344,10 +322,8 @@
         document.getElementById('answer').focus();
     }
 
-    // 回答をチェックする
     function checkAnswer() {
         const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-        // 空の回答でも送信できるように、空チェックを削除
 
         const currentProblem = currentProblems[0];
         const correctAnswer = currentProblem.answer.toLowerCase();
@@ -369,7 +345,7 @@
             resultElement.style.color = '#4CAF50';
             document.getElementById('correctSound').play().catch(e => console.warn('音声の再生に失敗:', e));
             currentProblems.shift();
-            setTimeout(showNextProblem, 100); // 少し間を置いて次の問題へ
+            setTimeout(showNextProblem, 50);
         } else {
             confirmButton.disabled = true;
             resultElement.innerHTML = `不正解: <span class="correctAnswer">${currentProblem.answer}</span>`;
@@ -387,14 +363,13 @@
         resultElement.style.display = 'block';
     }
 
-    // Enterキーで回答を確定
+    // Enterキー
     document.getElementById("answer").addEventListener("keydown", function(event) {
         if (event.key === 'Enter' && !document.querySelector('button.send_button').disabled) {
             checkAnswer();
         }
     });
 
-    // 結果を表示する
     function showResults() {
         const tableBody = document.getElementById("resultTable").querySelector('tbody');
         tableBody.innerHTML = '';
@@ -419,11 +394,9 @@
         resultContainer.innerHTML = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${results.length})`;
         resultContainer.style.display = 'block';
 
-        // UI切り替え
         document.getElementById("question-container").style.display = 'none';
         document.getElementById("result-buttons").style.display = 'block';
         
-        // 間違いがあった場合のみ、タイトルとテーブルヘッダーを表示
         if (hasMistakes) {
             document.getElementById('mistakes-title').style.display = 'block';
             document.getElementById("resultTable").querySelector('thead').style.display = 'table-header-group';
@@ -434,7 +407,6 @@
         document.getElementById('retry-button').style.display = hasMistakes ? 'inline-block' : 'none';
     }
 
-    // UIと状態を初期状態に戻す
     function resetUI() {
         results = [];
         currentProblems = [];
@@ -447,16 +419,14 @@
         document.getElementById("result-buttons").style.display = 'none';
     }
 
-    // 間違えた問題だけで再挑戦する
+    // リトライ
     function retryMistakes() {
         currentProblems = results.filter(result => !result.isCorrect);
         results = [];
         
         if (currentProblems.length > 0) {
-            // UIをリセット
             resetUI();
             
-            // UIをテスト中に戻す
             document.getElementById("question-container").style.display = 'block';
             document.getElementById("answer").disabled = false;
             document.getElementById('answer').focus();
@@ -471,5 +441,4 @@
 
 </script>
 </body>
-
 </html>
