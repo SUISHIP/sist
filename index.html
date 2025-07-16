@@ -162,7 +162,6 @@ nav ul a {
 
     <h1>みにスペ-ReTUNED</h1>
 
-    <!-- セット -->
     <div id="start-controls">
         <select id="numQuestions">
             <option value="1">1問</option>
@@ -178,7 +177,6 @@ nav ul a {
         <button onclick="startTest()">スタート</button>
     </div>
 
-    <!-- テスト -->
     <div id="question-container">
         <p id="question"></p>
         <input type="text" id="answer" placeholder="回答" autocomplete="off" autofocus>
@@ -186,7 +184,6 @@ nav ul a {
         <p id="result"></p>
     </div>
 
-    <!-- リザルト -->
     <h2 id="mistakes-title">ミスした単語</h2>
     <table id="resultTable">
         <thead>
@@ -279,16 +276,17 @@ nav ul a {
     }
 
     function startTest() {
+        currentProblems = []; 
         resetUI();
 
         const numQuestions = parseInt(document.getElementById("numQuestions").value);
         const isRandom = document.getElementById("order").value === "random";
         
-        currentProblems = problems.slice();
+        let problemsToTest = problems.slice();
         if (isRandom) {
-            currentProblems = fisherYatesShuffle(currentProblems);
+            problemsToTest = fisherYatesShuffle(problemsToTest);
         }
-        currentProblems = currentProblems.slice(0, numQuestions);
+        currentProblems = problemsToTest.slice(0, numQuestions);
         
         if (currentProblems.length > 0) {
             // UIを切り替え
@@ -405,8 +403,6 @@ nav ul a {
 
     function resetUI() {
         results = [];
-        currentProblems = [];
-        
         document.getElementById("question-container").style.display = 'none';
         document.getElementById("result").style.display = 'none';
         document.getElementById("mistakes-title").style.display = 'none';
@@ -417,8 +413,9 @@ nav ul a {
 
     // リトライ
     function retryMistakes() {
-        currentProblems = results.filter(result => !result.isCorrect);
-        results = [];
+        currentProblems = results
+            .filter(result => !result.isCorrect)
+            .map(p => ({ question: p.question, answer: p.answer }));
         
         if (currentProblems.length > 0) {
             resetUI();
