@@ -12,20 +12,12 @@
     })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
-    body {
-        font-family: 'Murecho', sans-serif;
-        background-color: #141414;
-        color: #C9C9C9;
+     body {
+            font-family: 'Murecho', sans-serif;
     }
 
-    h1, h2, p, label, input, select, span {
-        color: #C9C9C9;
-        background-color: #141414;
-    }
-
-    button, nav ul a, .custom-file-label {
-        color: #C9C9C9;
-        background-color: #424242;
+    h2 {
+        color: #333;
     }
 
     #resultTable {
@@ -37,8 +29,6 @@
     #resultTable th,
     #resultTable td {
         border: 1px solid #ddd;
-        color: #C9C9C9;
-        background-color: #424242;
     }
 
     #resultTable th,
@@ -48,11 +38,11 @@
     }
 
     #resultTable tr:nth-child(even) {
-        background-color: #424242;
+        background-color: #f2f2f2;
     }
 
     #resultTable tr:hover {
-        background-color: #555;
+        background-color: #ddd;
     }
 
     #resultTable th {
@@ -60,27 +50,51 @@
         color: white;
     }
 
-    ::selection {
+    .dark-mode {
+        background-color: #141414 !important;
+    }
+
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode p,
+    .dark-mode label,
+    .dark-mode input,
+    .dark-mode select,
+    .dark-mode span {
+        color: #C9C9C9;
+        background-color: #141414;
+    }
+
+    .dark-mode button,
+    .dark-mode nav ul a,
+    .dark-mode .custom-file-label {
+        color: #C9C9C9;
+        background-color: #424242;
+    }
+
+    .dark-mode #resultTable th,
+    .dark-mode #resultTable td {
+        color: #C9C9C9;
+        background-color: #424242;
+    }
+
+    .dark-mode ::selection {
         background-color: #00415B;
         color: #ddd;
     }
 
-    .send_button {
+    .dark-mode .send_button {
         background-color: #0C1959;
         color: #ddd;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border: none;
-        border-radius: 4px;
     }
 
-    .correctAnswer {
+    .dark-mode .correctAnswer {
         color: #923436 !important;
+    }
+
+    ::selection {
+        background-color: #FFF499;
+        color: #000;
     }
 
     button {
@@ -108,8 +122,6 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 18px;
-        background-color: #141414;
-        color: #C9C9C9;
     }
 
     select {
@@ -119,8 +131,6 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 18px;
-        background-color: #141414;
-        color: #C9C9C9;
     }
 
     nav ul {
@@ -165,10 +175,22 @@
         display: none;
     }
 
-    .link_color {
+    .send_button {
+        background-color: #1e90ff;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+    }
+    .dark-mode .link_color {
         color: red;
     }
-
     @keyframes gradientBackground {
         0% { background-color: #DDFFBC; }
         20% { background-color: #ADFFFF; }
