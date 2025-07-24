@@ -122,17 +122,27 @@ body{font-family:Murecho,sans-serif;}
     .overlay-text {
       position: fixed;
       bottom: 20px;
-      right: 20px;
-      background-color: rgba(0, 0, 0, 0.6); /* 半透明の背景 */
+      left: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
       color: white;
       padding: 10px 15px;
       border-radius: 8px;
       font-size: 16px;
-      z-index: 1000; /* 他の要素より前に表示 */
+      z-index: 1000;
+    }
+    .overlay-text-left {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      color: white;
+      padding: 10px 15px;
+      font-size: 16px;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
+<div class="overlay-text-left"><img src="https://suiship.github.io/sist/gratama.png" alt="グランメゾン田丸" height="40px"></div>
 
   <div class="total">合計: ¥<span id="total">0</span></div>
 
@@ -169,7 +179,7 @@ body{font-family:Murecho,sans-serif;}
 </button>
   </div>
   <div class="overlay-text">
-    ⚠️受付担当以外にURLを公開しないでください
+    ⚠️他クラスにURL共有禁止
   </div>
   <script>
     const items = {
