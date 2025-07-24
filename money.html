@@ -287,7 +287,7 @@ for (const key in stock) {
     console.log("注文送信成功");
 
   } catch (err) {
-    console.log("送信に失敗しました。");
+    console.error("送信に失敗しました。", err);
   }
 }
     
