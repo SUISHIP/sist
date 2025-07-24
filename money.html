@@ -2,20 +2,21 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>食券販売ターミナル</title>
   <style>
-    
     @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
-body{font-family:Murecho,sans-serif;}
+    
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
-      color:black;
+      color: black;
       touch-action: manipulation;
       text-align: center;
       background-color: #e3a688;
+      font-family: 'Murecho', sans-serif;
     }
 
     body {
@@ -23,348 +24,399 @@ body{font-family:Murecho,sans-serif;}
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 10px 0;
     }
 
     .total {
-      font-size: 60px;
+      font-size: clamp(24px, 4vw, 40px); /* フォントサイズの最小・推奨・最大を設定 */
       border: 2px solid #333;
-      padding: 0px;
-      width: 94%;
+      padding: 10px;
+      width: 90%;
+      max-width: 1000px;
       background-color: #f9f5f5;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      border-radius: 10px;
     }
 
-    .buttons {
+    /* 2x2のグリッドコンテナ */
+    .buttons-grid {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 20px;
-      width: 100vw;
+      width: 95%;
       max-width: 1000px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
-.item-btn {
-  width: 45%;
-  height: auto;
-  font-size: 18px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
-  border-radius: 10px;
-}
+    /* 各商品ペアのコンテナ */
+    .item-group {
+      display: flex;
+      width: calc(50% - 10px); /* 2列表示のための幅計算 */
+      gap: 10px;
+    }
+
+    /* 個々のボタンコンテナ */
+    .item-btn {
+      flex: 1; /* グループ内で均等に幅を分割 */
+      height: auto;
+      font-size: 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      gap: 8px;
+      border-radius: 10px;
+    }
+    
     button {
-      color:#111;
-      background-color:#ffffff00;
+      color: #111;
+      background-color: #ffffff00;
       border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.2s;
     }
+    
     button:hover {
-      background-color:#ffffff11;
+      background-color: #ffffff22;
     }
-    button:active{
-      background-color:#00000011;
+    
+    button:active {
+      background-color: #00000022;
     }
 
-.item-btn > button:first-child {
-  width: 105%;
-  height: 25vh;
-  font-size: 50px;
-}
+    /* 注文ボタン */
+    .item-btn > button:first-child {
+      width: 100%;
+      height: 22vh;
+      font-size: clamp(14px, 1.8vw, 20px);
+      font-weight: bold;
+      line-height: 1.4;
+    }
 
-.item-btn button:last-child {
-  background-color: #ff7777;
-  color: white;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  font-size: 16px;
-  cursor: pointer;
-}
-
+    /* キャンセルボタン */
+    .item-btn button:last-child {
+      background-color: #ff7777;
+      color: white;
+      border: none;
+      padding: 8px;
+      width: 100%;
+      font-size: 14px;
+    }
 
     .count {
       position: absolute;
       top: 5px;
-      right: 10px;
+      right: 5px;
       background: #ff4444;
       color: white;
-      border-radius: 10%;
-      width: 50px;
-      height: 50px;
-      line-height: 30px;
-      font-size: 34px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      font-size: 22px;
+      font-weight: bold;
     }
-    #b1 {background-color:#80bfb5}
-    #b2 {background-color:#9e6d36}
-    #b3 {background-color:#d67ea2}
-    #b4 {background-color:#4ea651}
-    #resetBtn {
-      font-size: 30px;
+
+    /* 各商品の背景色 */
+    #b1_day1, #b1_day2 { background-color: #80bfb5; }
+    #b2_day1, #b2_day2 { background-color: #9e6d36; }
+    #b3_day1, #b3_day2 { background-color: #d67ea2; }
+    #b4_day1, #b4_day2 { background-color: #4ea651; }
+
+    .action-buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    #resetBtn, #dbBtn, #sendBtn {
+      font-size: clamp(16px, 2.5vw, 24px);
       padding: 10px 20px;
-      border: solid;
+      border: 2px solid #333;
+      border-radius: 10px;
     }
+    
     #dbBtn {
-      font-size:30px;
-      padding: 5px 20px;
-      border:solid;
-      background-color:#3fd17e66;
+      background-color: #3fd17e66;
     }
+    
     #sendBtn {
-      font-size:30px;
-      padding: 5px 20px;
-      border:solid;
-      background-color:#ff564a;
+      background-color: #ff564a;
+      color: white;
+      font-weight: bold;
     }
     
     .overlay-text {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
+      bottom: 10px;
+      left: 10px;
       background-color: rgba(0, 0, 0, 0.6);
       color: white;
-      padding: 10px 15px;
+      padding: 8px 12px;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 14px;
       z-index: 1000;
     }
+    
     .overlay-text-left {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      color: white;
-      padding: 10px 15px;
-      font-size: 16px;
+      top: 10px;
+      left: 10px;
       z-index: 1000;
+    }
+
+    /* メディアクエリで画面幅に応じて調整 */
+    @media (max-width: 768px) {
+      .item-group {
+        width: 100%; /* 1列表示 */
+      }
     }
   </style>
 </head>
 <body>
 <div class="overlay-text-left"><img src="https://suiship.github.io/sist/gratama.png" alt="グランメゾン田丸" height="40px"></div>
 
-  <div class="total">合計: ¥<span id="total">0</span></div>
+<div class="total">合計: ¥<span id="total">0</span></div>
 
-<div class="buttons">
-  <div class="item-btn" id="b1">
-    <button onclick="addItem('plain')">プレーン ¥150</button>
-    <span class="count" id="plainCount">0</span>
-    <button onclick="removeItem('plain')">1つキャンセル</button>
+<div class="buttons-grid">
+  <!-- プレーンのグループ -->
+  <div class="item-group">
+    <div class="item-btn" id="b1_day1">
+      <button onclick="addItem('plain_day1')">プレーン<br>(1日目)<br>¥150</button>
+      <span class="count" id="plain_day1Count">0</span>
+      <button onclick="removeItem('plain_day1')">1つキャンセル</button>
+    </div>
+    <div class="item-btn" id="b1_day2">
+      <button onclick="addItem('plain_day2')">プレーン<br>(2日目)<br>¥150</button>
+      <span class="count" id="plain_day2Count">0</span>
+      <button onclick="removeItem('plain_day2')">1つキャンセル</button>
+    </div>
   </div>
-  <div class="item-btn" id="b2">
-    <button onclick="addItem('choco')">チョコアイス ¥250</button>
-    <span class="count" id="chocoCount">0</span>
-    <button onclick="removeItem('choco')">1つキャンセル</button>
+  <!-- チョコアイスのグループ -->
+  <div class="item-group">
+    <div class="item-btn" id="b2_day1">
+      <button onclick="addItem('choco_day1')">チョコ<br>(1日目)<br>¥250</button>
+      <span class="count" id="choco_day1Count">0</span>
+      <button onclick="removeItem('choco_day1')">1つキャンセル</button>
+    </div>
+    <div class="item-btn" id="b2_day2">
+      <button onclick="addItem('choco_day2')">チョコ<br>(2日目)<br>¥250</button>
+      <span class="count" id="choco_day2Count">0</span>
+      <button onclick="removeItem('choco_day2')">1つキャンセル</button>
+    </div>
   </div>
-  <div class="item-btn" id="b3">
-    <button onclick="addItem('strawberry')">いちごアイス ¥250</button>
-    <span class="count" id="strawberryCount">0</span>
-    <button onclick="removeItem('strawberry')">1つキャンセル</button>
+  <!-- いちごアイスのグループ -->
+  <div class="item-group">
+    <div class="item-btn" id="b3_day1">
+      <button onclick="addItem('strawberry_day1')">いちご<br>(1日目)<br>¥250</button>
+      <span class="count" id="strawberry_day1Count">0</span>
+      <button onclick="removeItem('strawberry_day1')">1つキャンセル</button>
+    </div>
+    <div class="item-btn" id="b3_day2">
+      <button onclick="addItem('strawberry_day2')">いちご<br>(2日目)<br>¥250</button>
+      <span class="count" id="strawberry_day2Count">0</span>
+      <button onclick="removeItem('strawberry_day2')">1つキャンセル</button>
+    </div>
   </div>
-  <div class="item-btn" id="b4">
-    <button onclick="addItem('matcha')">抹茶あんこアイス ¥250</button>
-    <span class="count" id="matchaCount">0</span>
-    <button onclick="removeItem('matcha')">1つキャンセル</button>
+  <!-- 抹茶あんこアイスのグループ -->
+  <div class="item-group">
+    <div class="item-btn" id="b4_day1">
+      <button onclick="addItem('matcha_day1')">抹茶<br>(1日目)<br>¥250</button>
+      <span class="count" id="matcha_day1Count">0</span>
+      <button onclick="removeItem('matcha_day1')">1つキャンセル</button>
+    </div>
+    <div class="item-btn" id="b4_day2">
+      <button onclick="addItem('matcha_day2')">抹茶<br>(2日目)<br>¥250</button>
+      <span class="count" id="matcha_day2Count">0</span>
+      <button onclick="removeItem('matcha_day2')">1つキャンセル</button>
+    </div>
   </div>
 </div>
 
-<div class="buttons">
+<div class="action-buttons">
   <button id="resetBtn" onclick="resetAll()">リセット</button>
-  <button id="dbBtn" onclick="window.open('https://docs.google.com/spreadsheets/d/1rJj1GMGcRV4MXAvEyhgI9jZMvGzNmJudf3AB-H_BXJs/edit?usp=sharing', '_blank')">
-  データベース
-</button>
-<button id="sendBtn" onclick="sendDataToSheet()">
-  <b>注文を送信</b>
-</button>
-  </div>
-  <div class="overlay-text">
-    ⚠️他クラスにURL共有禁止
-  </div>
-  <script>
-    const items = {
-      plain: { price: 150, count: 0 },
-      choco: { price: 250, count: 0 },
-      strawberry: { price: 250, count: 0 },
-      matcha: { price: 250, count: 0 }
-    };
+  <button id="dbBtn" onclick="window.open('https://docs.google.com/spreadsheets/d/1rJj1GMGcRV4MXAvEyhgI9jZMvGzNmJudf3AB-H_BXJs/edit?usp=sharing', '_blank')">データベース</button>
+  <button id="sendBtn" onclick="sendDataToSheet()"><b>注文を送信</b></button>
+</div>
 
-    const itemNames = {
-      plain: 'プレーン',
-      choco: 'チョコアイス',
-      strawberry: 'いちごアイス',
-      matcha: '抹茶あんこアイス'
-    };
+<div class="overlay-text">⚠️他クラスにURL共有禁止</div>
 
-    function addItem(key) {
-      items[key].count++;
-      updateDisplay();
-    }
-
-    function updateDisplay() {
-      let total = 0;
-      for (const key in items) {
-        const item = items[key];
-        document.getElementById(key + 'Count').textContent = item.count;
-        total += item.price * item.count;
-      }
-      document.getElementById('total').textContent = total;
-    }
-
-    function resetAll() {
-      for (const key in items) {
-        items[key].count = 0;
-      }
-      updateDisplay();
-    }
-function removeItem(key) {
-  if (items[key].count > 0) {
-    items[key].count--;
-    updateDisplay();
-  }
-}
-
-async function sendDataToSheet() {
-  const data = {
-    plain: items.plain.count,
-    choco: items.choco.count,
-    strawberry: items.strawberry.count,
-    matcha: items.matcha.count,
-    total: Object.keys(items).reduce((sum, key) => sum + items[key].price * items[key].count, 0)
+<script>
+  // 商品データ構造を日別に変更
+  const items = {
+    plain_day1: { price: 150, count: 0, name: 'プレーン(1日目)', base: 'plain' },
+    plain_day2: { price: 150, count: 0, name: 'プレーン(2日目)', base: 'plain' },
+    choco_day1: { price: 250, count: 0, name: 'チョコアイス(1日目)', base: 'choco' },
+    choco_day2: { price: 250, count: 0, name: 'チョコアイス(2日目)', base: 'choco' },
+    strawberry_day1: { price: 250, count: 0, name: 'いちごアイス(1日目)', base: 'strawberry' },
+    strawberry_day2: { price: 250, count: 0, name: 'いちごアイス(2日目)', base: 'strawberry' },
+    matcha_day1: { price: 250, count: 0, name: '抹茶あんこアイス(1日目)', base: 'matcha' },
+    matcha_day2: { price: 250, count: 0, name: '抹茶あんこアイス(2日目)', base: 'matcha' }
   };
 
-  // UIリセットは即時実行（送信前）
-  const backup = JSON.parse(JSON.stringify(items)); // 念のためバックアップ
-  resetAll();
+  // 商品を追加する関数
+  function addItem(key) {
+    items[key].count++;
+    updateDisplay();
+  }
 
-  try {
-    // ① 在庫取得
-    const res = await fetch('https://script.google.com/macros/s/AKfycbzlMhHvZ7GgR1UDgUODDhXFxhH1Wid5UBPFyo_JrFLlAtqgOUcgWBvvQrN94tkJj40p/exec');
-    const stock = await res.json();
+  // 商品を1つキャンセルする関数
+  function removeItem(key) {
+    if (items[key].count > 0) {
+      items[key].count--;
+      updateDisplay();
+    }
+  }
 
-    // ② 在庫チェック
-    for (const key in data) {
-      if (key === "total") continue;
-      if (data[key] > stock[key]) {
-        alert(`${key} の在庫が足りません！`);
-        // カウントと表示を元に戻す
-        Object.assign(items, backup);
-        updateDisplay();
+  // 表示を更新する関数
+  function updateDisplay() {
+    let total = 0;
+    for (const key in items) {
+      const item = items[key];
+      const countElement = document.getElementById(key + 'Count');
+      if (countElement) {
+        countElement.textContent = item.count;
+      }
+      total += item.price * item.count;
+    }
+    document.getElementById('total').textContent = total;
+  }
+
+  // 全ての注文をリセットする関数
+  function resetAll() {
+    for (const key in items) {
+      items[key].count = 0;
+    }
+    updateDisplay();
+  }
+
+  // データをスプレッドシートに送信する関数
+  async function sendDataToSheet() {
+    // 送信するデータを作成
+    const data = {};
+    let total = 0;
+    for (const key in items) {
+        data[key] = items[key].count;
+        total += items[key].price * items[key].count;
+    }
+    data.total = total;
+
+    // 注文がなければ何もしない
+    if (total === 0) {
+        alert("注文がありません。");
         return;
-      }
     }
 
+    // UIリセットは即時実行
+    const backup = JSON.parse(JSON.stringify(items));
+    resetAll();
 
-    // ③ データ送信
-    await fetch('https://script.google.com/macros/s/AKfycbzlMhHvZ7GgR1UDgUODDhXFxhH1Wid5UBPFyo_JrFLlAtqgOUcgWBvvQrN94tkJj40p/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
+    try {
+      const gasUrl = 'https://script.google.com/macros/s/AKfycbzIarJ9jbKI0jh5Jcu0CxvgvMGT5llnoza4bBVySR8DeSy5Gf--p4ZYhRYBTutaRlZI/exec';
+      
+      // ① 在庫取得
+      const res = await fetch(gasUrl);
+      if (!res.ok) throw new Error('在庫データの取得に失敗しました。');
+      const stock = await res.json();
 
-
-// ④ 送信成功後に、在庫更新に基づいてボタン無効化を行う
-for (const key in stock) {
-  // 在庫切れは「stock[key] <= 0」で判定するのみ
-  if (stock[key] <= 0) {
-    const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-    buttons.forEach((btn, index) => {
-      btn.disabled = true;
-      btn.style.backgroundColor = '#999';
-      btn.style.color = 'white';
-      btn.style.border = 'none';
-      btn.style.cursor = 'not-allowed';
-      btn.style.pointerEvents = 'none';
-      if (index === 0) {
-        btn.textContent = `${itemNames[key]}（在庫切れ）`;
-        btn.style.fontWeight = 'bold';
-      } else {
-        btn.style.display = 'none';
-      }
-    });
-    const countEl = document.getElementById(`${key}Count`);
-    if (countEl) {
-      countEl.textContent = '0';
-      countEl.style.opacity = '0.3';
-    }
-  } else {
-    // 在庫あればボタンを有効化して表示も戻す（必要に応じて）
-    const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-    buttons.forEach((btn, index) => {
-      btn.disabled = false;
-      btn.style.backgroundColor = '';
-      btn.style.color = '';
-      btn.style.border = '';
-      btn.style.cursor = 'pointer';
-      btn.style.pointerEvents = 'auto';
-      if (index === 0) {
-        btn.textContent = itemNames[key];
-        btn.style.fontWeight = '';
-      } else {
-        btn.style.display = 'inline-block';
-      }
-    });
-    const countEl = document.getElementById(`${key}Count`);
-    if (countEl) {
-      countEl.style.opacity = '1';
-    }
-  }
-}
-
-
-    // 成功時は通知なし or console.logだけ
-    console.log("注文送信成功");
-
-  } catch (err) {
-    console.error("送信に失敗しました。", err);
-  }
-}
-    
-    //在庫チェック
-    async function checkAndDisableOutOfStock() {
-  try {
-    const res = await fetch('https://script.google.com/macros/s/AKfycbzlMhHvZ7GgR1UDgUODDhXFxhH1Wid5UBPFyo_JrFLlAtqgOUcgWBvvQrN94tkJj40p/exec');
-    const stock = await res.json();
-
-    for (const key in stock) {
-      if (stock[key] <= 0) {
-        const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-        buttons.forEach((btn, index) => {
-          btn.disabled = true;
-          btn.style.backgroundColor = '#999';
-          btn.style.color = 'white';
-          btn.style.border = 'none';
-          btn.style.cursor = 'not-allowed';
-          btn.style.pointerEvents = 'none';
-
-          if (index === 0) {
-            btn.textContent = `${itemNames[key]}（在庫切れ）`;
-            btn.style.fontWeight = 'bold';
-          } else {
-            btn.style.display = 'none';
+      // ② 在庫チェック (日別ではなく、ベースの商品で在庫を合算してチェック)
+      const orderedStock = {};
+      for (const key in items) {
+          const baseKey = items[key].base;
+          if (!orderedStock[baseKey]) {
+              orderedStock[baseKey] = 0;
           }
-        });
+          orderedStock[baseKey] += backup[key].count; // バックアップから注文数を取得
+      }
 
-        const countEl = document.getElementById(`${key}Count`);
-        if (countEl) {
-          countEl.textContent = '0';
-          countEl.style.opacity = '0.3';
+      for (const baseKey in orderedStock) {
+        if (orderedStock[baseKey] > stock[baseKey]) {
+          alert(`${items[baseKey+'_day1'].name.split('(')[0]} の在庫が足りません！`);
+          // 注文を元に戻す
+          Object.assign(items, backup);
+          updateDisplay();
+          return;
         }
       }
-    }
-  } catch (e) {
-    console.error("在庫取得エラー:", e);
-  }
-}
-window.onload = () => {
-  checkAndDisableOutOfStock(); // 最初に一度実行
-  setInterval(checkAndDisableOutOfStock, 60000); // 60秒ごとに再確認
-};
 
-  </script>
+      // ③ データ送信
+      await fetch(gasUrl, {
+        method: 'POST',
+        mode: 'no-cors', // 'no-cors'モードではレスポンスの内容は確認できない
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      console.log("注文送信成功");
+      alert("注文を送信しました！");
+
+      // ④ 在庫状況を再確認してボタンを更新
+      checkAndDisableOutOfStock();
+
+    } catch (err) {
+      console.error("送信に失敗しました。", err);
+      alert("エラーが発生しました。注文を送信できませんでした。");
+      // 注文を元に戻す
+      Object.assign(items, backup);
+      updateDisplay();
+    }
+  }
+  
+  // 在庫をチェックして売り切れのボタンを無効化する関数
+  async function checkAndDisableOutOfStock() {
+    try {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbzIarJ9jbKI0jh5Jcu0CxvgvMGT5llnoza4bBVySR8DeSy5Gf--p4ZYhRYBTutaRlZI/exec');
+      if (!res.ok) throw new Error('Network response was not ok');
+      const stock = await res.json();
+
+      // itemsオブジェクトのキー（例: 'plain_day1'）をループ
+      for (const key in items) {
+        const baseKey = items[key].base; // 'plain'
+        const itemName = items[key].name.split('(')[0]; // 'プレーン'
+        const day = key.includes('day1') ? '(1日目)' : '(2日目)';
+        
+        const itemBtn = document.getElementById(key);
+        if (!itemBtn) continue;
+
+        const mainButton = itemBtn.querySelector('button:first-child');
+        const cancelButton = itemBtn.querySelector('button:last-child');
+        const countEl = document.getElementById(`${key}Count`);
+
+        if (mainButton && cancelButton && countEl) {
+            if (stock[baseKey] <= 0) {
+              // 在庫切れの場合
+              mainButton.disabled = true;
+              mainButton.innerHTML = `${itemName}<br>${day}<br>（在庫切れ）`;
+              itemBtn.style.backgroundColor = '#999'; // 背景色を親要素に設定
+              mainButton.style.color = 'white';
+              mainButton.style.cursor = 'not-allowed';
+              cancelButton.style.display = 'none';
+              countEl.style.opacity = '0.3';
+            } else {
+              // 在庫がある場合
+              mainButton.disabled = false;
+              mainButton.innerHTML = `${itemName}<br>${day}<br>¥${items[key].price}`;
+              itemBtn.style.backgroundColor = ''; // 背景色をリセット
+              mainButton.style.color = '';
+              mainButton.style.cursor = 'pointer';
+              cancelButton.style.display = 'block';
+              countEl.style.opacity = '1';
+            }
+        }
+      }
+    } catch (e) {
+      console.error("在庫取得エラー:", e);
+    }
+  }
+
+  // ページ読み込み時と定期的な在庫チェック
+  window.onload = () => {
+    checkAndDisableOutOfStock();
+    setInterval(checkAndDisableOutOfStock, 60000); // 60秒ごとに在庫を再確認
+  };
+</script>
 
 </body>
 </html>
