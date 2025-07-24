@@ -215,12 +215,45 @@ async function sendDataToSheet() {
       if (key === "total") continue;
       if (data[key] > stock[key]) {
         alert(`${key} の在庫が足りません！`);
-        // 在庫が足りなければ元に戻す
+
+        // 在庫が足りない商品のボタンを即座に無効化＆表示変更
+        const itemNames = {
+          plain: 'プレーン',
+          choco: 'チョコアイス',
+          strawberry: 'いちごアイス',
+          matcha: '抹茶あんこアイス'
+        };
+
+        const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+        buttons.forEach((btn, index) => {
+          btn.disabled = true;
+          btn.style.backgroundColor = '#999';
+          btn.style.color = 'white';
+          btn.style.border = 'none';
+          btn.style.cursor = 'not-allowed';
+          btn.style.pointerEvents = 'none';
+
+          if (index === 0) {
+            btn.textContent = `${itemNames[key]}（在庫切れ）`;
+            btn.style.fontWeight = 'bold';
+          } else {
+            btn.style.display = 'none'; // キャンセル非表示
+          }
+        });
+
+        const countEl = document.getElementById(`${key}Count`);
+        if (countEl) {
+          countEl.textContent = '0';
+          countEl.style.opacity = '0.3';
+        }
+
+        // カウントと表示を元に戻す
         Object.assign(items, backup);
         updateDisplay();
         return;
       }
     }
+
 
     // ③ データ送信
     await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec', {
@@ -232,14 +265,47 @@ async function sendDataToSheet() {
       body: JSON.stringify(data)
     });
 
-    // ④ 在庫更新に基づいてボタン無効化
-    for (const key in stock) {
-      const remaining = stock[key] - data[key];
-      if (remaining <= 0) {
-        const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-        buttons.forEach(btn => btn.disabled = true);
+// ④ 在庫更新に基づいてボタン無効化＆見た目変更（強制）
+const itemNames = {
+  plain: 'プレーン',
+  choco: 'チョコアイス',
+  strawberry: 'いちごアイス',
+  matcha: '抹茶あんこアイス'
+};
+
+for (const key in stock) {
+  const remaining = stock[key] - data[key]; // 更新後の在庫数
+  if (remaining <= 0) {
+    // 該当商品のボタンを全て取得（購入・キャンセル両方）
+    const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+
+    buttons.forEach((btn, index) => {
+      btn.disabled = true;
+      btn.style.backgroundColor = '#999'; // グレーアウト
+      btn.style.color = 'white';
+      btn.style.border = 'none';
+      btn.style.cursor = 'not-allowed';
+      btn.style.pointerEvents = 'none';
+
+      // ボタン表示を「在庫切れ」に変更（最初のボタンだけ）
+      if (index === 0) {
+        btn.textContent = `${itemNames[key]}（在庫切れ）`;
+        btn.style.fontWeight = 'bold';
+      } else {
+        // キャンセルボタンは非表示にする
+        btn.style.display = 'none';
       }
+    });
+
+    // カウント表示もリセット＆半透明化
+    const countEl = document.getElementById(`${key}Count`);
+    if (countEl) {
+      countEl.textContent = '0';
+      countEl.style.opacity = '0.3';
     }
+  }
+}
+
 
     // 成功時は通知なし or console.logだけ
     console.log("注文送信成功");
@@ -251,6 +317,55 @@ async function sendDataToSheet() {
     updateDisplay();
   }
 }
+    
+    //在庫チェック
+    async function checkAndDisableOutOfStock() {
+  try {
+    const res = await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec');
+    const stock = await res.json();
+
+    const itemNames = {
+      plain: 'プレーン',
+      choco: 'チョコアイス',
+      strawberry: 'いちごアイス',
+      matcha: '抹茶あんこアイス'
+    };
+
+    for (const key in stock) {
+      if (stock[key] <= 0) {
+        const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+        buttons.forEach((btn, index) => {
+          btn.disabled = true;
+          btn.style.backgroundColor = '#999';
+          btn.style.color = 'white';
+          btn.style.border = 'none';
+          btn.style.cursor = 'not-allowed';
+          btn.style.pointerEvents = 'none';
+
+          if (index === 0) {
+            btn.textContent = `${itemNames[key]}（在庫切れ）`;
+            btn.style.fontWeight = 'bold';
+          } else {
+            btn.style.display = 'none';
+          }
+        });
+
+        const countEl = document.getElementById(`${key}Count`);
+        if (countEl) {
+          countEl.textContent = '0';
+          countEl.style.opacity = '0.3';
+        }
+      }
+    }
+  } catch (e) {
+    console.error("在庫取得エラー:", e);
+  }
+}
+window.onload = () => {
+  checkAndDisableOutOfStock(); // 最初に一度実行
+  setInterval(checkAndDisableOutOfStock, 60000); // 60秒ごとに再確認
+};
+
   </script>
 
 </body>
