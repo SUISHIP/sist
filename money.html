@@ -215,38 +215,6 @@ async function sendDataToSheet() {
       if (key === "total") continue;
       if (data[key] > stock[key]) {
         alert(`${key} の在庫が足りません！`);
-
-        // 在庫が足りない商品のボタンを即座に無効化＆表示変更
-        const itemNames = {
-          plain: 'プレーン',
-          choco: 'チョコアイス',
-          strawberry: 'いちごアイス',
-          matcha: '抹茶あんこアイス'
-        };
-
-        const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-        buttons.forEach((btn, index) => {
-          btn.disabled = true;
-          btn.style.backgroundColor = '#999';
-          btn.style.color = 'white';
-          btn.style.border = 'none';
-          btn.style.cursor = 'not-allowed';
-          btn.style.pointerEvents = 'none';
-
-          if (index === 0) {
-            btn.textContent = `${itemNames[key]}（在庫切れ）`;
-            btn.style.fontWeight = 'bold';
-          } else {
-            btn.style.display = 'none'; // キャンセル非表示
-          }
-        });
-
-        const countEl = document.getElementById(`${key}Count`);
-        if (countEl) {
-          countEl.textContent = '0';
-          countEl.style.opacity = '0.3';
-        }
-
         // カウントと表示を元に戻す
         Object.assign(items, backup);
         updateDisplay();
