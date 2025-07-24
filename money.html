@@ -226,7 +226,7 @@ async function sendDataToSheet() {
     // ③ データ送信
     await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec', {
       method: 'POST',
-      mode: 'cors',
+      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json'
       },
