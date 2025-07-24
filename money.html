@@ -118,6 +118,18 @@ body{font-family:Murecho,sans-serif;}
       border:solid;
       background-color:#ff564a;
     }
+    
+    .overlay-text {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(0, 0, 0, 0.6); /* 半透明の背景 */
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      z-index: 1000; /* 他の要素より前に表示 */
+    }
   </style>
 </head>
 <body>
@@ -155,6 +167,9 @@ body{font-family:Murecho,sans-serif;}
 <button id="sendBtn" onclick="sendDataToSheet()">
   <b>注文を送信</b>
 </button>
+  </div>
+  <div class="overlay-text">
+    ⚠️受付担当以外にURLを公開しないでください
   </div>
   <script>
     const items = {
