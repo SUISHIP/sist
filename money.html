@@ -201,7 +201,7 @@ function sendDataToSheet() {
   };
 
   // ① 在庫確認（GET）
-  fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec')
+  fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec')
     .then(res => res.json())
     .then(stock => {
       // ② 在庫チェック
@@ -214,7 +214,7 @@ function sendDataToSheet() {
       }
 
       // ③ 在庫OK → POST送信
-      fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
