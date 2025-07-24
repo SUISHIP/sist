@@ -164,6 +164,13 @@ body{font-family:Murecho,sans-serif;}
       matcha: { price: 250, count: 0 }
     };
 
+    const itemNames = {
+      plain: 'プレーン',
+      choco: 'チョコアイス',
+      strawberry: 'いちごアイス',
+      matcha: '抹茶あんこアイス'
+    };
+
     function addItem(key) {
       items[key].count++;
       updateDisplay();
@@ -296,13 +303,6 @@ for (const key in stock) {
   try {
     const res = await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec');
     const stock = await res.json();
-
-    const itemNames = {
-      plain: 'プレーン',
-      choco: 'チョコアイス',
-      strawberry: 'いちごアイス',
-      matcha: '抹茶あんこアイス'
-    };
 
     for (const key in stock) {
       if (stock[key] <= 0) {
