@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>食券計算アプリ</title>
+  <title>食券販売アプリ</title>
   <style>
     
     @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
@@ -24,9 +24,9 @@ body{font-family:Murecho,sans-serif;}
     }
 
     .total {
-      font-size: 70px;
+      font-size: 60px;
       border: 2px solid #333;
-      padding: 10px;
+      padding: 0px;
       width: 94%;
       background-color: #f9f5f5;
       margin-bottom: 30px;
@@ -103,6 +103,18 @@ body{font-family:Murecho,sans-serif;}
       padding: 10px 20px;
       border: solid;
     }
+    #dbBtn {
+      font-size:30px;
+      padding: 5px 20px;
+      border:solid;
+      background-color:#3fd17e66;
+    }
+    #sendBtn {
+      font-size:30px;
+      padding: 5px 20px;
+      border:solid;
+      background-color:#ff564a;
+    }
   </style>
 </head>
 <body>
@@ -132,9 +144,13 @@ body{font-family:Murecho,sans-serif;}
   </div>
 </div>
 
-
+<div class="buttons">
   <button id="resetBtn" onclick="resetAll()">リセット</button>
-
+  <button id="dbBtn" onclick="location.href='https://docs.google.com/spreadsheets/d/1rJj1GMGcRV4MXAvEyhgI9jZMvGzNmJudf3AB-H_BXJs/edit?usp=sharing'">データベース</button>
+<button id="sendBtn" onclick="sendDataToSheet()">
+  <b>注文を送信</b>
+</button>
+  </div>
   <script>
     const items = {
       plain: { price: 150, count: 0 },
@@ -171,6 +187,29 @@ function removeItem(key) {
   }
 }
 
+    function sendDataToSheet() {
+  const data = {
+    plain: items.plain.count,
+    choco: items.choco.count,
+    strawberry: items.strawberry.count,
+    matcha: items.matcha.count,
+    total: Object.keys(items).reduce((sum, key) => sum + items[key].price * items[key].count, 0)
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbwWpH5zf4QTAiTOkqI5xHhi_5wIfQut_PY9U6XfMIWemUGZ20mApr9EXdSe1Ip6FGYz/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(() => {
+    alert("注文を記録しました！");
+    resetAll();
+  }).catch(() => {
+    alert("送信に失敗しました。");
+  });
+}
   </script>
 
 </body>
