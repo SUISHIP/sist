@@ -287,10 +287,7 @@ for (const key in stock) {
     console.log("注文送信成功");
 
   } catch (err) {
-    alert("送信に失敗しました。");
-    // 失敗したら元に戻す（必要であれば）
-    Object.assign(items, backup);
-    updateDisplay();
+    console.log("送信に失敗しました。");
   }
 }
     
