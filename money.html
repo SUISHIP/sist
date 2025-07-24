@@ -198,7 +198,7 @@ function removeItem(key) {
     total: Object.keys(items).reduce((sum, key) => sum + items[key].price * items[key].count, 0)
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbx0b4uCOyaa2JD2pVGD590l5bXF_K_-Lyzxup3m9VvHewDlhc_tX9FvswYQS2eioyiP/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbw15SFJbM7evZvLr5X_bdJG1uVI4pKCoP0v39coPCcg8LHXEiaWpsO_TxGaY7ZXWjuB/exec', {
     method: 'POST',
     mode: 'no-cors',
     headers: {
@@ -211,6 +211,18 @@ function removeItem(key) {
   }).catch(() => {
     alert("送信に失敗しました。");
   });
+  // 在庫チェック
+    fetch('https://script.google.com/macros/s/AKfycbw15SFJbM7evZvLr5X_bdJG1uVI4pKCoP0v39coPCcg8LHXEiaWpsO_TxGaY7ZXWjuB/exec')
+    .then(res => res.json())
+    .then(stock => {
+      for (const key in stock) {
+        if (stock[key] === 0) {
+          // ボタンを無効化
+          const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+          buttons.forEach(btn => btn.disabled = true);
+        }
+      }
+    });
 }
   </script>
 
