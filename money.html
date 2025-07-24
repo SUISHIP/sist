@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>食券販売アプリ</title>
   <style>
     
@@ -14,6 +15,8 @@ body{font-family:Murecho,sans-serif;}
       width: 100%;
       color:black;
       text-align: center;
+      touch-action: none;
+      overscroll-behavior: none;
       background-color: #e3a688;
     }
 
@@ -251,6 +254,19 @@ async function sendDataToSheet() {
   }
 }
 
+
+        // モバイルのタッチイベントを完全に無効化
+    document.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault(); // iOS Safari のピンチ開始イベント
+    });
   </script>
 
 </body>
