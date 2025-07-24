@@ -191,7 +191,7 @@ function removeItem(key) {
   }
 }
 
-function sendDataToSheet() {
+async function sendDataToSheet() {
   const data = {
     plain: items.plain.count,
     choco: items.choco.count,
@@ -200,45 +200,57 @@ function sendDataToSheet() {
     total: Object.keys(items).reduce((sum, key) => sum + items[key].price * items[key].count, 0)
   };
 
-  // ① 在庫確認（GET）
-  fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec')
-    .then(res => res.json())
-    .then(stock => {
-      // ② 在庫チェック
-      for (const key in data) {
-        if (key === "total") continue;
-        if (data[key] > stock[key]) {
-          alert(`${key} の在庫が足りません！`);
-          return; 
-        }
+  // UIリセットは即時実行（送信前）
+  const backup = JSON.parse(JSON.stringify(items)); // 念のためバックアップ
+  resetAll();
+
+  try {
+    // ① 在庫取得
+    const res = await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec');
+    const stock = await res.json();
+
+    // ② 在庫チェック
+    for (const key in data) {
+      if (key === "total") continue;
+      if (data[key] > stock[key]) {
+        alert(`${key} の在庫が足りません！`);
+        // 在庫が足りなければ元に戻す
+        Object.assign(items, backup);
+        updateDisplay();
+        return;
       }
+    }
 
-      // ③ 在庫OK → POST送信
-      fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      }).then(() => {
-        alert("注文を記録しました！");
-        resetAll();
-
-        // ④ 注文後の在庫確認 → ボタンを無効化
-        for (const key in stock) {
-          const remaining = stock[key] - data[key]; // 更新後在庫
-          if (remaining <= 0) {
-            const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-            buttons.forEach(btn => btn.disabled = true);
-          }
-        }
-
-      }).catch(() => {
-        alert("送信に失敗しました。");
-      });
+    // ③ データ送信
+    await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
+
+    // ④ 在庫更新に基づいてボタン無効化
+    for (const key in stock) {
+      const remaining = stock[key] - data[key];
+      if (remaining <= 0) {
+        const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+        buttons.forEach(btn => btn.disabled = true);
+      }
+    }
+
+    // 成功時は通知なし or console.logだけ
+    console.log("注文送信成功");
+
+  } catch (err) {
+    alert("送信に失敗しました。");
+    // 失敗したら元に戻す（必要であれば）
+    Object.assign(items, backup);
+    updateDisplay();
+  }
 }
+
   </script>
 
 </body>
