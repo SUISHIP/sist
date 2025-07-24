@@ -189,7 +189,7 @@ function removeItem(key) {
   }
 }
 
-    function sendDataToSheet() {
+function sendDataToSheet() {
   const data = {
     plain: items.plain.count,
     choco: items.choco.count,
@@ -198,30 +198,43 @@ function removeItem(key) {
     total: Object.keys(items).reduce((sum, key) => sum + items[key].price * items[key].count, 0)
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  }).then(() => {
-    alert("注文を記録しました！");
-    resetAll();
-  }).catch(() => {
-    alert("送信に失敗しました。");
-  });
-  // 在庫チェック
-    fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec')
+  // ① 在庫確認（GET）
+  fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec')
     .then(res => res.json())
     .then(stock => {
-      for (const key in stock) {
-        if (stock[key] === 0) {
-          // ボタンを無効化
-          const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
-          buttons.forEach(btn => btn.disabled = true);
+      // ② 在庫チェック
+      for (const key in data) {
+        if (key === "total") continue;
+        if (data[key] > stock[key]) {
+          alert(`${key} の在庫が足りません！`);
+          return; 
         }
       }
+
+      // ③ 在庫OK → POST送信
+      fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then(() => {
+        alert("注文を記録しました！");
+        resetAll();
+
+        // ④ 注文後の在庫確認 → ボタンを無効化
+        for (const key in stock) {
+          const remaining = stock[key] - data[key]; // 更新後在庫
+          if (remaining <= 0) {
+            const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+            buttons.forEach(btn => btn.disabled = true);
+          }
+        }
+
+      }).catch(() => {
+        alert("送信に失敗しました。");
+      });
     });
 }
   </script>
