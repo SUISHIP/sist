@@ -265,14 +265,54 @@ async function sendDataToSheet() {
       body: JSON.stringify(data)
     });
 
-    // ④ 在庫更新に基づいてボタン無効化
-    for (const key in stock) {
-      const remaining = stock[key] - data[key];
-      if (remaining <= 0) {
-        const buttons = document.querySelectorAll([onclick*="${key}"]);
-        buttons.forEach(btn => btn.disabled = true);
+
+// ④ 送信成功後に、在庫更新に基づいてボタン無効化を行う
+for (const key in stock) {
+  // 在庫切れは「stock[key] <= 0」で判定するのみ
+  if (stock[key] <= 0) {
+    const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+    buttons.forEach((btn, index) => {
+      btn.disabled = true;
+      btn.style.backgroundColor = '#999';
+      btn.style.color = 'white';
+      btn.style.border = 'none';
+      btn.style.cursor = 'not-allowed';
+      btn.style.pointerEvents = 'none';
+      if (index === 0) {
+        btn.textContent = `${itemNames[key]}（在庫切れ）`;
+        btn.style.fontWeight = 'bold';
+      } else {
+        btn.style.display = 'none';
       }
+    });
+    const countEl = document.getElementById(`${key}Count`);
+    if (countEl) {
+      countEl.textContent = '0';
+      countEl.style.opacity = '0.3';
     }
+  } else {
+    // 在庫あればボタンを有効化して表示も戻す（必要に応じて）
+    const buttons = document.querySelectorAll(`[onclick*="${key}"]`);
+    buttons.forEach((btn, index) => {
+      btn.disabled = false;
+      btn.style.backgroundColor = '';
+      btn.style.color = '';
+      btn.style.border = '';
+      btn.style.cursor = 'pointer';
+      btn.style.pointerEvents = 'auto';
+      if (index === 0) {
+        btn.textContent = itemNames[key];
+        btn.style.fontWeight = '';
+      } else {
+        btn.style.display = 'inline-block';
+      }
+    });
+    const countEl = document.getElementById(`${key}Count`);
+    if (countEl) {
+      countEl.style.opacity = '1';
+    }
+  }
+}
 
 
     // 成功時は通知なし or console.logだけ
