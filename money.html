@@ -97,7 +97,6 @@
 
     /* キャンセルボタン */
     .item-btn button:last-child {
-      background-color: #ff7777;
       color: white;
       border: none;
       padding: 8px;
@@ -172,6 +171,9 @@
         width: 100%; /* 1列表示 */
       }
     }
+    
+    .gr {background-color:#a8a500;}
+    .bl {background-color:#14539c;}
   </style>
 </head>
 <body>
@@ -185,12 +187,12 @@
     <div class="item-btn" id="b1_day1">
       <button onclick="addItem('plain_day1')">プレーン<br>(1日目)<br>¥150</button>
       <span class="count" id="plain_day1Count">0</span>
-      <button onclick="removeItem('plain_day1')">1つキャンセル</button>
+      <button class="gr" onclick="removeItem('plain_day1')">1つキャンセル</button>
     </div>
     <div class="item-btn" id="b1_day2">
       <button onclick="addItem('plain_day2')">プレーン<br>(2日目)<br>¥150</button>
       <span class="count" id="plain_day2Count">0</span>
-      <button onclick="removeItem('plain_day2')">1つキャンセル</button>
+      <button class="bl"onclick="removeItem('plain_day2')">1つキャンセル</button>
     </div>
   </div>
   <!-- チョコアイスのグループ -->
@@ -198,12 +200,12 @@
     <div class="item-btn" id="b2_day1">
       <button onclick="addItem('choco_day1')">チョコ<br>(1日目)<br>¥250</button>
       <span class="count" id="choco_day1Count">0</span>
-      <button onclick="removeItem('choco_day1')">1つキャンセル</button>
+      <button class="gr"onclick="removeItem('choco_day1')">1つキャンセル</button>
     </div>
     <div class="item-btn" id="b2_day2">
       <button onclick="addItem('choco_day2')">チョコ<br>(2日目)<br>¥250</button>
       <span class="count" id="choco_day2Count">0</span>
-      <button onclick="removeItem('choco_day2')">1つキャンセル</button>
+      <button class="bl"onclick="removeItem('choco_day2')">1つキャンセル</button>
     </div>
   </div>
   <!-- いちごアイスのグループ -->
@@ -211,12 +213,12 @@
     <div class="item-btn" id="b3_day1">
       <button onclick="addItem('strawberry_day1')">いちご<br>(1日目)<br>¥250</button>
       <span class="count" id="strawberry_day1Count">0</span>
-      <button onclick="removeItem('strawberry_day1')">1つキャンセル</button>
+      <button class="gr"onclick="removeItem('strawberry_day1')">1つキャンセル</button>
     </div>
     <div class="item-btn" id="b3_day2">
       <button onclick="addItem('strawberry_day2')">いちご<br>(2日目)<br>¥250</button>
       <span class="count" id="strawberry_day2Count">0</span>
-      <button onclick="removeItem('strawberry_day2')">1つキャンセル</button>
+      <button class="bl"onclick="removeItem('strawberry_day2')">1つキャンセル</button>
     </div>
   </div>
   <!-- 抹茶あんこアイスのグループ -->
@@ -224,12 +226,12 @@
     <div class="item-btn" id="b4_day1">
       <button onclick="addItem('matcha_day1')">抹茶<br>(1日目)<br>¥250</button>
       <span class="count" id="matcha_day1Count">0</span>
-      <button onclick="removeItem('matcha_day1')">1つキャンセル</button>
+      <button class="gr"onclick="removeItem('matcha_day1')">1つキャンセル</button>
     </div>
     <div class="item-btn" id="b4_day2">
       <button onclick="addItem('matcha_day2')">抹茶<br>(2日目)<br>¥250</button>
       <span class="count" id="matcha_day2Count">0</span>
-      <button onclick="removeItem('matcha_day2')">1つキャンセル</button>
+      <button class="bl"onclick="removeItem('matcha_day2')">1つキャンセル</button>
     </div>
   </div>
 </div>
@@ -241,6 +243,18 @@
 </div>
 
 <div class="overlay-text">⚠️他クラスにURL共有禁止</div>
+<details>
+  <summary>
+使い方
+  </summary>
+  ・注文されたチケットを、枚数分クリックします。<br>
+  ・間違えたら、「キャンセル」か「リセット」する<br>
+  ・注文を送信すると、データベースに記録されます<br>
+  ・合計金額分を受け取り、チケットを受け渡します<br>
+  ・通信環境が悪い場合はスマホのデザリングを使用<br>
+  ・送信ボタンでリセットされ、次の注文ができます<br>
+  ・受付に関係ない人には絶対にURLを共有しないで<br>
+</details>
 
 <script>
   // 商品データ構造を日別に変更
