@@ -198,7 +198,7 @@ function removeItem(key) {
     total: Object.keys(items).reduce((sum, key) => sum + items[key].price * items[key].count, 0)
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbw15SFJbM7evZvLr5X_bdJG1uVI4pKCoP0v39coPCcg8LHXEiaWpsO_TxGaY7ZXWjuB/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec', {
     method: 'POST',
     mode: 'no-cors',
     headers: {
@@ -212,7 +212,7 @@ function removeItem(key) {
     alert("送信に失敗しました。");
   });
   // 在庫チェック
-    fetch('https://script.google.com/macros/s/AKfycbw15SFJbM7evZvLr5X_bdJG1uVI4pKCoP0v39coPCcg8LHXEiaWpsO_TxGaY7ZXWjuB/exec')
+    fetch('https://script.google.com/macros/s/AKfycbyrOFB5pCYJ5CzodCXw-mSSxQJTUfulbRMacIDktljqWkhcekstFGzi5rHf3Wv1rBC6/exec')
     .then(res => res.json())
     .then(stock => {
       for (const key in stock) {
