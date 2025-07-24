@@ -214,7 +214,7 @@ async function sendDataToSheet() {
 
   try {
     // ① 在庫取得
-    const res = await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec');
+    const res = await fetch('https://script.google.com/macros/s/AKfycbzlMhHvZ7GgR1UDgUODDhXFxhH1Wid5UBPFyo_JrFLlAtqgOUcgWBvvQrN94tkJj40p/exec');
     const stock = await res.json();
 
     // ② 在庫チェック
@@ -231,7 +231,7 @@ async function sendDataToSheet() {
 
 
     // ③ データ送信
-    await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec', {
+    await fetch('https://script.google.com/macros/s/AKfycbzlMhHvZ7GgR1UDgUODDhXFxhH1Wid5UBPFyo_JrFLlAtqgOUcgWBvvQrN94tkJj40p/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
@@ -301,7 +301,7 @@ for (const key in stock) {
     //在庫チェック
     async function checkAndDisableOutOfStock() {
   try {
-    const res = await fetch('https://script.google.com/macros/s/AKfycbxMkoBBE597bIelB7ymvSLG_1fRCGijKcebZj6hutthFa4KhnbV5NzuntxghZbn8hQJ/exec');
+    const res = await fetch('https://script.google.com/macros/s/AKfycbzlMhHvZ7GgR1UDgUODDhXFxhH1Wid5UBPFyo_JrFLlAtqgOUcgWBvvQrN94tkJj40p/exec');
     const stock = await res.json();
 
     for (const key in stock) {
