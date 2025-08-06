@@ -52,5 +52,31 @@
 
     <p><strong>お問い合わせ: </strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSeYwVAfWOosX8EYom7sHkBmFPvl2VgK7ovopRsFGByZqafFMw/viewform">フィードバック</a></p>
   </div>
+
+  <form id="unbanForm" style="display:none;">
+  <input type="text" name="ip" placeholder="解除するIP">
+  <input type="password" name="token" placeholder="管理用パスワード">
+  <button type="submit">BAN解除</button>
+</form>
+<div id="result"></div>
+
+<script>
+document.getElementById('unbanForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+
+  fetch('https://sui.rf.gd/dos_protection.php?action=unban', {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.text())
+  .then(text => {
+    document.getElementById('result').textContent = text;
+  })
+  .catch(err => {
+    document.getElementById('result').textContent = '通信エラー';
+  });
+});
+</script>
 </body>
 </html>
