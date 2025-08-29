@@ -116,6 +116,8 @@
       line-height: 36px;
       font-size: 22px;
       font-weight: bold;
+      text-align: center;
+      justify-content: center;
     }
 
     /* 各商品の背景色 */
@@ -174,6 +176,29 @@
     
     .gr {background-color:#a8a500;}
     .bl {background-color:#14539c;}
+    /* チェックボックスを非表示に */
+    #dayToggle {
+      display: none;
+    }
+
+    /* ラベルの基本スタイル（見た目をボタンのように） */
+    #dayToggle + label {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #999;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    /* チェックされたときのラベルのスタイル */
+    #dayToggle:checked + label {
+      background-color: #2196F3;
+      border-color: #2196F3;
+    }gn: middle;
+}
   </style>
 </head>
 <body>
@@ -184,12 +209,12 @@
 <div class="buttons-grid">
   <!-- プレーンのグループ -->
   <div class="item-group">
-    <div class="item-btn" id="b1_day1">
+    <div class="item-btn day1" id="b1_day1">
       <button onclick="addItem('plain_day1')">プレーン<br>1日目<br>¥150</button>
       <span class="count" id="plain_day1Count">0</span>
       <button class="gr" onclick="removeItem('plain_day1')">1つキャンセル</button>
     </div>
-    <div class="item-btn" id="b1_day2">
+    <div class="item-btn day2" id="b1_day2">
       <button onclick="addItem('plain_day2')">プレーン<br>2日目<br>¥150</button>
       <span class="count" id="plain_day2Count">0</span>
       <button class="bl"onclick="removeItem('plain_day2')">1つキャンセル</button>
@@ -197,12 +222,12 @@
   </div>
   <!-- チョコアイスのグループ -->
   <div class="item-group">
-    <div class="item-btn" id="b2_day1">
+    <div class="item-btn day1" id="b2_day1">
       <button onclick="addItem('choco_day1')">チョコ<br>1日目<br>¥250</button>
       <span class="count" id="choco_day1Count">0</span>
       <button class="gr"onclick="removeItem('choco_day1')">1つキャンセル</button>
     </div>
-    <div class="item-btn" id="b2_day2">
+    <div class="item-btn day2" id="b2_day2">
       <button onclick="addItem('choco_day2')">チョコ<br>2日目<br>¥250</button>
       <span class="count" id="choco_day2Count">0</span>
       <button class="bl"onclick="removeItem('choco_day2')">1つキャンセル</button>
@@ -210,25 +235,25 @@
   </div>
   <!-- いちごアイスのグループ -->
   <div class="item-group">
-    <div class="item-btn" id="b3_day1">
+    <div class="item-btn day1" id="b3_day1">
       <button onclick="addItem('strawberry_day1')">いちご<br>1日目<br>¥250</button>
       <span class="count" id="strawberry_day1Count">0</span>
       <button class="gr"onclick="removeItem('strawberry_day1')">1つキャンセル</button>
     </div>
-    <div class="item-btn" id="b3_day2">
+    <div class="item-btn day2" id="b3_day2">
       <button onclick="addItem('strawberry_day2')">いちご<br>2日目<br>¥250</button>
       <span class="count" id="strawberry_day2Count">0</span>
       <button class="bl"onclick="removeItem('strawberry_day2')">1つキャンセル</button>
     </div>
   </div>
   <!-- 抹茶あんこアイスのグループ -->
-  <div class="item-group">
-    <div class="item-btn" id="b4_day1">
+  <div class="item-group ">
+    <div class="item-btn day1" id="b4_day1">
       <button onclick="addItem('matcha_day1')">抹茶<br>1日目<br>¥250</button>
       <span class="count" id="matcha_day1Count">0</span>
       <button class="gr"onclick="removeItem('matcha_day1')">1つキャンセル</button>
     </div>
-    <div class="item-btn" id="b4_day2">
+    <div class="item-btn day2" id="b4_day2">
       <button onclick="addItem('matcha_day2')">抹茶<br>2日目<br>¥250</button>
       <span class="count" id="matcha_day2Count">0</span>
       <button class="bl"onclick="removeItem('matcha_day2')">1つキャンセル</button>
@@ -257,7 +282,12 @@
   ・エラーが発生したら、利用を停止しアナログ切替<br>
   ・受付に関係ない人には絶対にURLを共有しないで<br>
 </details>
-
+<div style="margin-top: 40px;">
+  <label for="dayToggle">
+    <input type="checkbox" id="dayToggle" onchange="toggleDay()" />
+    <u><span id="dayLabel">1日目を表示中</span></u>
+  </label>
+</div>
 <script>
   // 商品データ構造を日別に変更
   const items = {
@@ -428,8 +458,43 @@
   // ページ読み込み時と定期的な在庫チェック
   window.onload = () => {
     checkAndDisableOutOfStock();
-    setInterval(checkAndDisableOutOfStock, 60000); // 60秒ごとに在庫を再確認
+    setInterval(checkAndDisableOutOfStock, 100000000); // n秒ごとに在庫を再確認
   };
+  
+  let isAutoSwitch = true; // 初期状態では自動
+  
+function toggleDay() {
+  const isDay2 = document.getElementById("dayToggle").checked;
+
+  const day1Elems = document.querySelectorAll('[id*="_day1"]');
+  const day2Elems = document.querySelectorAll('[id*="_day2"]');
+
+  day1Elems.forEach(el => el.style.display = isDay2 ? 'none' : 'flex');
+  day2Elems.forEach(el => el.style.display = isDay2 ? 'flex' : 'none');
+
+  document.getElementById("dayLabel").textContent = isDay2 ? '1日目を表示' : '2日目を表示';
+
+  // 手動切り替え時のみアラート
+  if (!isAutoSwitch) {
+    alert(isDay2 ? "注意：2日目の内容に切り替えます" : "注意：1日目の内容に切り替えます");
+  }
+
+  // 切り替え後は常に手動と見なす
+  isAutoSwitch = false;
+}
+
+
+window.onload = () => {
+  const today = new Date();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
+
+  const autoDay2 = (month === 8 && date === 31);
+  isAutoSwitch = true; // 自動切り替えフラグを有効にする
+  document.getElementById("dayToggle").checked = autoDay2;
+
+  toggleDay(); // この中でフラグを見てアラート抑制
+};
 </script>
 
 </body>
