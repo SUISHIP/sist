@@ -1,472 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="英単語のフレーズをテスト形式で定着させよう">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>みにまるスペリング【ReTUNED】</title>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KTHSXR8K');</script>
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap');
-
-/* 基本設定 */
-body {
-    font-family: 'Murecho', sans-serif;
-    margin: 1em;
-    color: #C9C9C9;
-    background-color: #141414;
-}
-
-::selection {
-    background-color: #00415B;
-    color: #ddd;
-}
-
-/* テーブルスタイル */
-#resultTable {
-    width: 95%;
-    border-collapse: collapse;
-    margin-top: 1em;
-    border: 1px solid #ddd;
-}
-
-#resultTable th,
-#resultTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-#resultTable th {
-    background-color: #3a3a3a;
-    color: white;
-}
-
-#resultTable td {
-    background-color: #2a2a2a;
-    color: #C9C9C9;
-}
-
-#resultTable tr:nth-child(even) {
-    background-color: #222;
-}
-
-#resultTable tr:hover {
-    background-color: #ddd;
-}
-
-/* フォーム要素 */
-input[type="text"],
-select {
-    border: none;
-    outline: none;
-    color: #C9C9C9;
-    background-color: #424242;
-    height: 40px;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 18px;
-}
-
-input[type="text"] {
-    width: 200px;
-}
-input[type="text"]:focus {
-    box-shadow: 0 0 0 2px #12877455;
-}
-/* ボタン */
-button,
-nav ul a {
-    color: #C9C9C9;
-    background-color: #424242;
-    padding: 8px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transform: translateY(0);
-    transition: all 0.1s ease-in-out;
-}
-
-button:active {
-     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-     top: 1px;
-}
-nav ul a:active {
-    color: #364006;
-    background-color: #cde362;
-
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-    top: 1px;
-}
-
-.send_button {
-    background-color: #0C1959;
-    padding: 15px 32px;
-}
-
-/* ナビゲーション */
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul a {
-    background-color: #70EFC2;
-    color: #1A7593;
-}
-
-/* アニメーション */
-@keyframes gradientBackground {
-    0% { background-color: #DDFFBC; }
-    20% { background-color: #ADFFFF; }
-    50% { background-color: #FFFF6B; }
-    100% { background-color: #DDFFBC; }
-}
-
-#release-link {
-    animation: gradientBackground 0.5s 2;
-}
-
-@keyframes correctAnimation {
-    0% {
-        transform: translateX(-1%);
-        opacity: 0;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>リダイレクト中 — SUI</title>
+  <meta http-equiv="refresh" content="5;url=https://sui.rf.gd/index.php" />
+  <style>
+    body {
+      background-color: #f5f5f5;
+      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    10% {
-        transform: translateX(0);
-        opacity: 1;
-        transform: scale(1.01);
+    .container {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 32px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    60% {
-        transform: scale(1);
+    h1 {
+      margin-top: 0;
+      font-size: 1.5rem;
     }
-    100% {
-        transform: scale(1);
+    p {
+      margin: 0.5em 0;
     }
-}
-#result {
-    animation: correctAnimation 0.6s ease-out;
-}
-/* その他 */
-#result, #question {
-    font-size: 24px;
-}
-/* 初期非表示 */
-#question-container,
-#result,
-#mistakes-title,
-#result-buttons,
-#resultTable thead {
-    display: none;
-}
-
-    </style>
-    <meta name="google-site-verification" content="L7UPbNJ-NeRZkV3O4SyXWtr08Ssi1EZW7HJKD6zgxNw" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZM63KK99L"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-SZM63KK99L');
-    </script>
+    .countdown {
+      font-weight: bold;
+      color: #333;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    a.button, button {
+      padding: 8px 16px;
+      border: 1px solid #888;
+      background: #e0e0e0;
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    a.button:hover, button:hover {
+      background: #ccc;
+    }
+    footer {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #666;
+      text-align: right;
+    }
+  </style>
 </head>
-
 <body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTHSXR8K"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-    <header>
-        <nav>
-            <ul>
-                <a href="make.html">メーカー</a> <a href="https://forms.gle/9QSQrSGTYJXfuzG77">フィードバック</a> <a href="release.html" id="release-link">リリース</a>
-            </ul>
-        </nav>
-    </header>
-
-    <h1>みにスペ-ReTUNED</h1>
-
-    <div id="start-controls">
-        <select id="numQuestions">
-            <option value="1">1問</option>
-            <option value="3">3問</option>
-            <option value="10">10問</option>
-            <option value="25">25問</option>
-            <option value="50" selected>ALL</option>
-        </select>
-        <select id="order">
-            <option value="random">ランダム</option>
-            <option value="sequential">順番どうり</option>
-        </select>
-        <button onclick="startTest()">スタート</button>
+  <div class="container">
+    <h1>みにまるスペリングば移動しました</h1>
+    <p>まもなく <strong>https://sui.rf.gd/index.php</strong> にリダイレクトします。</p>
+    <p>自動で転送されるまで <span class="countdown" id="count">5</span> 秒</p>
+    <div class="buttons">
+      <a class="button" href="https://sui.rf.gd/index.php" id="goNow">今すぐ移動</a>
+      <button id="cancel">中止</button>
     </div>
+    <footer>Powered by Redirector</footer>
+  </div>
 
-    <div id="question-container">
-        <p id="question"></p>
-        <input type="text" id="answer" spellcheck="false" autocorrect="off" autocomplete="off" autofocus>
-        <button type="button" onclick="checkAnswer()" class="send_button">確定</button>
-        <p id="result"></p>
-    </div>
+  <script>
+    let time = 5;
+    const countEl = document.getElementById('count');
+    const timer = setInterval(() => {
+      time--;
+      if (time <= 0) {
+        clearInterval(timer);
+        window.location.href = 'https://sui.rf.gd/index.php';
+      }
+      countEl.textContent = time;
+    }, 1000);
 
-    <h2 id="mistakes-title">ミスした単語</h2>
-    <table id="resultTable">
-        <thead>
-            <tr>
-                <th>問題</th>
-                <th>正解</th>
-                <th>あなたの回答</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    
-    <div id="result-buttons">
-        <button onclick="startTest()">リセット</button>
-        <button id="retry-button" onclick="retryMistakes()">リトライ</button>
-    </div>
-
-    <audio id="correctSound" src="https://suiship.github.io/sist/correct.mp3" preload="auto"></audio>
-
-<script>
-    const problems = [
-        { question: "l名所", answer: "landmarks" },
-        { question: "d認知症", answer: "dementia" },
-        { question: "f肉", answer: "flesh" },
-        { question: "c衝突", answer: "collision" },
-        { question: "h危険なもの", answer: "hazard" },
-        { question: "t墓", answer: "tomb" },
-        { question: "i注射", answer: "injections" },
-        { question: "b飛躍的進歩", answer: "breakthrough" },
-        { question: "l革", answer: "leather" },
-        { question: "j宝石", answer: "jewelry" },
-        { question: "c合図", answer: "cues" },
-        { question: "a救急車", answer: "ambulance" },
-        { question: "e不動産", answer: "estate" },
-        { question: "c商品", answer: "commodity" },
-        { question: "d出発(時刻)", answer: "departure" },
-        { question: "p段階", answer: "phase" },
-        { question: "t泥棒", answer: "thief" },
-        { question: "S聖", answer: "Saint" },
-        { question: "s彫刻", answer: "sculpture" },
-        { question: "g悲しみ", answer: "grief" },
-        { question: "l車線", answer: "lane" },
-        { question: "p捕食動物", answer: "predators" },
-        { question: "f流体", answer: "fluids" },
-        { question: "iはげみ", answer: "incentive" },
-        { question: "b花嫁", answer: "bride" },
-        { question: "i介入", answer: "intervention" },
-        { question: "m(大)差", answer: "margin" },
-        { question: "b伝記", answer: "biography" },
-        { question: "c同意", answer: "consent" },
-        { question: "v火山", answer: "volcano" },
-        { question: "r反逆者", answer: "rebels" },
-        { question: "m比喩", answer: "metaphor" },
-        { question: "l法律", answer: "legislation" },
-        { question: "l雷", answer: "lightning" },
-        { question: "p殺虫剤", answer: "pesticides" },
-        { question: "cコラム", answer: "column" },
-        { question: "rうわさ", answer: "rumor" },
-        { question: "dほこり", answer: "dust" },
-        { question: "d対話", answer: "dialogue" },
-        { question: "k幼稚園", answer: "kindergarten" },
-        { question: "d糖尿病", answer: "diabetes" },
-        { question: "o肥満", answer: "obesity" },
-        { question: "p特許", answer: "patent" },
-        { question: "c章", answer: "chapter" },
-        { question: "P宮殿", answer: "Palace" },
-        { question: "l洗濯", answer: "laundry" },
-        { question: "w病棟", answer: "ward" },
-        { question: "oぼっ発", answer: "outbreak" },
-        { question: "e方程式", answer: "equation" },
-        { question: "a考古学者", answer: "archaeologist" }
-    ];
-
-    // ALLオプションのvalueを問題数に設定
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelector('#numQuestions option[value="50"]').value = problems.length;
+    document.getElementById('cancel').addEventListener('click', () => {
+      clearInterval(timer);
+      countEl.textContent = '中止しました';
     });
+  </script>
 
-    let results = [];
-    let currentProblems = [];
-
-    // Fisher-Yates shuffle ってやつ
-    function fisherYatesShuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    function startTest() {
-        currentProblems = []; 
-        resetUI();
-
-        const numQuestions = parseInt(document.getElementById("numQuestions").value);
-        const isRandom = document.getElementById("order").value === "random";
-        
-        let problemsToTest = problems.slice();
-        if (isRandom) {
-            problemsToTest = fisherYatesShuffle(problemsToTest);
-        }
-        currentProblems = problemsToTest.slice(0, numQuestions);
-        
-        if (currentProblems.length > 0) {
-            // UIを切り替え
-            document.getElementById("question-container").style.display = 'block';
-            document.getElementById("answer").disabled = false;
-            document.getElementById("answer").value = "";
-            document.getElementById('answer').focus();
-            showNextProblem();
-        }
-    }
-
-    function showNextProblem() {
-        document.getElementById("answer").value = "";
-        if (currentProblems.length === 0) {
-            document.getElementById("result").textContent = "回答が完了しました。結果を確認しましょう↓ ↓ ↓";
-            showResults();
-            return;
-        }
-
-        const currentProblem = currentProblems[0];
-        const questionElement = document.getElementById("question");
-        questionElement.textContent = currentProblem.question;
-
-
-        const resultElement = document.getElementById("result");
-        resultElement.textContent = '';
-        resultElement.style.display = 'none';
-        document.getElementById('answer').focus();
-    }
-
-    function checkAnswer() {
-        const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-
-        const currentProblem = currentProblems[0];
-        const correctAnswer = currentProblem.answer.toLowerCase();
-        const resultElement = document.getElementById("result");
-        const confirmButton = document.querySelector('button.send_button');
-
-        const isCorrect = userAnswer === correctAnswer;
-        results.push({
-            question: currentProblem.question,
-            answer: currentProblem.answer,
-            userAnswer: userAnswer,
-            isCorrect: isCorrect
-        });
-
-            if (isCorrect) {
-            resultElement.textContent = "正解！";
-            resultElement.style.color = '#4CAF50';
-            document.getElementById('correctSound').play().catch(e => console.warn('音声の再生に失敗:', e));
-            currentProblems.shift();
-            setTimeout(showNextProblem, 80);
-        } else {
-            confirmButton.disabled = true;
-            resultElement.style.color = '#ff2222';
-            resultElement.innerHTML = `不正解: <span class="correctAnswer">${currentProblem.answer}</span>`;
-            
-            const utterance = new SpeechSynthesisUtterance(currentProblem.answer);
-            utterance.lang = 'en-US';
-            speechSynthesis.speak(utterance);
-
-            setTimeout(() => {
-                currentProblems.shift();
-                confirmButton.disabled = false;
-                showNextProblem();
-            }, 1800);
-        }
-        resultElement.style.display = 'block';
-    }
-
-    // Enterキー
-    document.getElementById("answer").addEventListener("keydown", function(event) {
-        if (event.key === 'Enter' && !document.querySelector('button.send_button').disabled) {
-            checkAnswer();
-        }
-    });
-
-    function showResults() {
-        const tableBody = document.getElementById("resultTable").querySelector('tbody');
-        tableBody.innerHTML = '';
-        
-        let correctAnswers = 0;
-        let hasMistakes = false;
-
-        results.forEach(result => {
-            if (result.isCorrect) {
-                correctAnswers++;
-            } else {
-                hasMistakes = true;
-                const tr = tableBody.insertRow();
-                tr.insertCell().textContent = result.question;
-                tr.insertCell().textContent = result.answer;
-                tr.insertCell().textContent = result.userAnswer || '';
-            }
-        });
-        
-        const accuracy = results.length > 0 ? (correctAnswers / results.length) * 100 : 0;
-        const resultContainer = document.getElementById("result");
-        resultContainer.innerHTML = `正答率: ${accuracy.toFixed(1)}% (${correctAnswers}/${results.length})`;
-        resultContainer.style.display = 'block';
-
-        document.getElementById("question-container").style.display = 'none';
-        document.getElementById("result-buttons").style.display = 'block';
-        
-        if (hasMistakes) {
-            document.getElementById('mistakes-title').style.display = 'block';
-            document.getElementById("resultTable").querySelector('thead').style.display = 'table-header-group';
-        } else {
-            document.getElementById('mistakes-title').style.display = 'none';
-            document.getElementById("resultTable").querySelector('thead').style.display = 'none';
-        }
-        document.getElementById('retry-button').style.display = hasMistakes ? 'inline-block' : 'none';
-    }
-
-    function resetUI() {
-        results = [];
-        
-        document.getElementById("question-container").style.display = 'none';
-        document.getElementById("result").style.display = 'none';
-        document.getElementById("mistakes-title").style.display = 'none';
-        document.getElementById("resultTable").querySelector('thead').style.display = 'none';
-        document.getElementById("resultTable").querySelector('tbody').innerHTML = '';
-        document.getElementById("result-buttons").style.display = 'none';
-    }
-
-    // リトライ
-    function retryMistakes() {
-        currentProblems = results
-            .filter(result => !result.isCorrect)
-            .map(p => ({ question: p.question, answer: p.answer }));
-        
-        if (currentProblems.length > 0) {
-            resetUI();
-            
-            document.getElementById("question-container").style.display = 'block';
-            document.getElementById("answer").disabled = false;
-            document.getElementById('answer').focus();
-            
-            showNextProblem();
-        } else {
-            const resultContainer = document.getElementById("result");
-            resultContainer.textContent = "間違えた問題がありません。";
-            resultContainer.style.display = 'block';
-        }
-    }
-
-</script>
+  <noscript>
+    <p>JavaScriptが無効になっています。自動で移動しない場合は <a href="https://sui.rf.gd/index.php">こちら</a> をクリックしてください。</p>
+  </noscript>
 </body>
 </html>
